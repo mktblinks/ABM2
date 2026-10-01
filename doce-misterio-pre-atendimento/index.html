@@ -3,24 +3,41 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="theme-color" content="#7f1839" />
+  <meta name="theme-color" content="#d4145a" />
   <meta name="description" content="Atendimento rápido Doce Mistério" />
   <title>Atendimento | Doce Mistério</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=3" />
+  <link rel="stylesheet" href="styles.css?v=6" />
   <style>[hidden]{display:none!important}</style>
 </head>
 <body>
+  <div class="page-glow glow-left" aria-hidden="true"></div>
+  <div class="page-glow glow-right" aria-hidden="true"></div>
+
   <main class="shell">
     <section class="card" aria-labelledby="page-title">
-      <div class="brand-row">
-        <div class="brand-mark" aria-hidden="true">DM</div>
-        <div>
-          <p class="eyebrow">ATENDIMENTO RÁPIDO</p>
-          <p class="brand-name" data-brand>Doce Mistério</p>
+      <div class="top-accent" aria-hidden="true"></div>
+
+      <header class="brand-hero">
+        <div class="brand-visual">
+          <div class="brand-logo-wrap">
+            <img src="assets/doce-logo.svg?v=1" alt="Logo Doce Mistério" class="brand-logo" />
+          </div>
         </div>
+
+        <div class="brand-copy">
+          <p class="eyebrow">ATENDIMENTO EXCLUSIVO</p>
+          <p class="brand-name" data-brand>Doce Mistério</p>
+          <p class="brand-subtitle">Moda feminina de alto padrão com atendimento mais elegante, rápido e certeiro.</p>
+        </div>
+
+        <div class="hero-chip">Curadoria sob medida</div>
+      </header>
+
+      <div class="luxury-note">
+        Responda em poucos segundos e nossa equipe já recebe seu atendimento mais organizado.
       </div>
 
       <div class="product-context" id="productContext" hidden>
@@ -35,9 +52,9 @@
 
       <form id="leadForm" novalidate>
         <div class="step is-active" data-step="1">
-          <p class="step-kicker">Só leva alguns segundos</p>
+          <p class="step-kicker">Seleção inicial</p>
           <h1 id="page-title">Qual é o seu tamanho?</h1>
-          <p class="step-copy">Assim nossa equipe já separa opções mais certeiras para você.</p>
+          <p class="step-copy">Assim nossa equipe já separa opções mais alinhadas ao que você procura.</p>
 
           <label class="piece-fallback" id="pieceFallbackWrap" hidden>
             <span>Qual peça chamou sua atenção?</span>
@@ -51,21 +68,21 @@
         <div class="step" data-step="2">
           <p class="step-kicker">Seu momento de compra</p>
           <h2>O que você quer fazer agora?</h2>
-          <p class="step-copy">Isso ajuda a vendedora a entender sua prioridade antes mesmo do primeiro “oi”.</p>
+          <p class="step-copy">Isso ajuda a vendedora a entender sua prioridade antes mesmo da conversa começar.</p>
           <div id="intentOptions" class="option-stack"></div>
         </div>
 
         <div class="step" data-step="3">
-          <p class="step-kicker">Recebimento</p>
+          <p class="step-kicker">Entrega ou retirada</p>
           <h2>Como você prefere receber?</h2>
-          <p class="step-copy">Escolha a opção que faz mais sentido para você.</p>
+          <p class="step-copy">Escolha a opção que faz mais sentido para você neste momento.</p>
           <div id="deliveryOptions" class="option-stack"></div>
         </div>
 
         <div class="step" data-step="4">
-          <p class="step-kicker">Última pergunta</p>
+          <p class="step-kicker">Última etapa</p>
           <h2>Onde você está?</h2>
-          <p class="step-copy">Com isso nossa equipe já consegue orientar entrega ou retirada.</p>
+          <p class="step-copy">Com isso nossa equipe já consegue orientar melhor a entrega ou retirada.</p>
           <div id="cityOptions" class="option-grid cities"></div>
           <label class="other-city" id="otherCityWrap" hidden>
             <span>Digite sua cidade</span>
@@ -90,7 +107,7 @@
         <span>•</span>
         <span>Sem cadastro</span>
         <span>•</span>
-        <span>Rápido no celular</span>
+        <span>Experiência premium</span>
       </div>
     </section>
   </main>
