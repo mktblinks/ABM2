@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#7f1839" />
+  <title>Painel | Doce Mistério</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="painel.css?v=1" />
+</head>
+<body>
+  <main class="page">
+    <header class="topbar">
+      <div>
+        <p class="eyebrow">DOCE MISTÉRIO</p>
+        <h1>Painel do formulário</h1>
+        <p class="subtitle">Acompanhe o caminho do anúncio até o clique no WhatsApp.</p>
+      </div>
+      <div class="toolbar">
+        <select id="periodSelect" aria-label="Período">
+          <option value="7">Últimos 7 dias</option>
+          <option value="30" selected>Últimos 30 dias</option>
+          <option value="90">Últimos 90 dias</option>
+        </select>
+        <button id="refreshBtn" type="button">Atualizar</button>
+      </div>
+    </header>
+
+    <p id="status" class="status">Carregando dados…</p>
+
+    <section class="cards" aria-label="Resumo">
+      <article class="metric"><span>Visitas</span><strong id="pageViews">0</strong><small>Aberturas do formulário</small></article>
+      <article class="metric"><span>Formulários concluídos</span><strong id="formCompletes">0</strong><small id="formRate">0% das visitas</small></article>
+      <article class="metric"><span>Cliques no WhatsApp</span><strong id="whatsappClicks">0</strong><small id="waRate">0% das visitas</small></article>
+      <article class="metric"><span>Contatos prontos para compra</span><strong id="hotLeads">0</strong><small>Classificação interna</small></article>
+    </section>
+
+    <section class="panel">
+      <div class="panel-head">
+        <div>
+          <p class="eyebrow">FUNIL</p>
+          <h2>Conversão do formulário</h2>
+        </div>
+      </div>
+      <div class="funnel">
+        <div><span>Visitas</span><strong id="funnelViews">0</strong><i id="barViews"></i></div>
+        <div><span>Concluíram</span><strong id="funnelComplete">0</strong><i id="barComplete"></i></div>
+        <div><span>Foram ao WhatsApp</span><strong id="funnelWa">0</strong><i id="barWa"></i></div>
+      </div>
+    </section>
+
+    <div class="grid-2">
+      <section class="panel">
+        <div class="panel-head">
+          <div><p class="eyebrow">PEÇAS</p><h2>Desempenho por produto</h2></div>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Peça</th><th>Visitas</th><th>Concluídos</th><th>WhatsApp</th><th>Prontos p/ compra</th></tr></thead>
+            <tbody id="productRows"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="panel-head">
+          <div><p class="eyebrow">CAMPANHAS</p><h2>Origem dos contatos</h2></div>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Campanha</th><th>Visitas</th><th>Concluídos</th><th>WhatsApp</th><th>Prontos p/ compra</th></tr></thead>
+            <tbody id="campaignRows"></tbody>
+          </table>
+        </div>
+      </section>
+    </div>
+
+    <section class="panel">
+      <div class="panel-head">
+        <div><p class="eyebrow">ATIVIDADE</p><h2>Últimos formulários e cliques</h2></div>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Data</th><th>Evento</th><th>Peça</th><th>Tamanho</th><th>Intenção</th><th>Cidade</th></tr></thead>
+          <tbody id="recentRows"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <footer>Dados registrados a partir da ativação deste painel. Nenhum nome ou telefone do cliente é armazenado aqui.</footer>
+  </main>
+
+  <script src="../config.js?v=5"></script>
+  <script src="painel.js?v=1"></script>
+</body>
+</html>
