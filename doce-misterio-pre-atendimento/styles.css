@@ -11,6 +11,7 @@
 }
 
 * { box-sizing: border-box; }
+[hidden] { display: none !important; }
 
 html, body { min-height: 100%; }
 
@@ -102,6 +103,31 @@ h1, h2 {
   letter-spacing: -.03em;
 }
 .step-copy { color: var(--muted); line-height: 1.55; margin: 12px 0 24px; font-size: 15px; }
+
+.piece-fallback {
+  display: grid;
+  gap: 8px;
+  margin: 0 0 18px;
+  padding: 14px;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: #fffafc;
+  color: var(--muted);
+  font-size: 13px;
+}
+.piece-fallback span { color: var(--ink); font-weight: 700; }
+.piece-fallback small { line-height: 1.4; }
+.piece-fallback input {
+  width: 100%;
+  min-height: 52px;
+  padding: 0 14px;
+  border-radius: 14px;
+  border: 1px solid var(--line);
+  outline: none;
+  color: var(--ink);
+  background: #fff;
+}
+.piece-fallback input:focus { border-color: var(--wine); box-shadow: 0 0 0 3px rgba(127, 24, 57, .08); }
 
 .option-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
 .option-grid.cities { grid-template-columns: repeat(2, 1fr); }
