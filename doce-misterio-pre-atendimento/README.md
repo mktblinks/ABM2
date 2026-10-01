@@ -5,36 +5,62 @@ Formulário universal, mobile-first, feito para campanhas de Meta Ads que hoje e
 ## O que ele faz
 
 - Pergunta tamanho, intenção, forma de recebimento e cidade.
-- Lê automaticamente parâmetros do anúncio pela URL.
+- Identifica automaticamente a peça/anúncio pela URL.
+- Se a peça não vier identificada pela URL, pede uma descrição curta ao cliente.
 - Classifica o contato como `LEAD QUENTE`, `LEAD MORNO` ou `ATENDIMENTO / DÚVIDA`.
-- Abre o WhatsApp com uma mensagem organizada para a vendedora.
+- Mostra o botão do WhatsApp somente depois que a última pergunta estiver respondida.
+- Abre o WhatsApp com a mensagem organizada para a vendedora.
 - Envia eventos para Meta Pixel quando um Pixel ID é configurado.
 - Também envia eventos para `dataLayer`, permitindo integração posterior com Google Tag Manager/GA4.
-- Não exige banco de dados, servidor ou mensalidade para a V1.
 
-## 1. Configuração obrigatória
+## WhatsApp
 
-O WhatsApp oficial já está configurado em `config.js`:
+O WhatsApp oficial está configurado em `config.js`:
 
 ```js
 whatsappNumber: "5527992275963"
 ```
 
-## 2. Meta Pixel
+## Como identificar cada peça
 
-No mesmo `config.js`, informe o ID:
+Use sempre a mesma página do formulário, mudando apenas os parâmetros da URL do anúncio.
 
-```js
-metaPixelId: "123456789012345"
+Parâmetros aceitos para a peça:
+
+- `peca`
+- `produto`
+- `product`
+- `item`
+- `anuncio`
+
+Parâmetros aceitos para código/referência:
+
+- `codigo`
+- `sku`
+- `ref`
+- `referencia`
+- `produto_id`
+
+Exemplo para um anúncio de Short Doll:
+
+```text
+?peca=Short%20Doll%20Alca&codigo=SD042
 ```
 
-Se deixar vazio, o formulário funciona normalmente, apenas sem enviar eventos ao Meta Pixel.
+Exemplo para um vestido:
 
-## 3. URL universal para os anúncios
+```text
+?peca=Vestido%20Coqueiro&codigo=VT118
+```
 
-O formulário aceita os parâmetros abaixo:
+A cliente vê no topo do formulário qual peça foi identificada e a vendedora recebe essa informação destacada no WhatsApp.
 
-- `produto`
+Se nenhum parâmetro de peça for enviado, o sistema usa `criativo`/`utm_content` como fallback. Se ainda assim não houver identificação, aparece no formulário o campo `Qual peça chamou sua atenção?` e o cliente precisa preenchê-lo para continuar.
+
+## Parâmetros de campanha
+
+O formulário também aceita:
+
 - `campanha`
 - `conjunto`
 - `criativo`
@@ -45,44 +71,49 @@ O formulário aceita os parâmetros abaixo:
 - `utm_term`
 - `fbclid`
 
-Exemplo:
+Exemplo completo:
 
 ```text
-?produto=Short%20Doll&campanha=Short%20Doll%20Outubro&conjunto=Mulheres%2025-44&criativo=Video%2003&utm_source=meta
+?peca=Short%20Doll%20Alca&codigo=SD042&campanha=Short%20Doll%20Outubro&conjunto=Mulheres%2025-44&criativo=Video%2003&utm_source=meta
 ```
 
-Você pode usar a mesma página em todos os anúncios. Só mudam os parâmetros.
-
-## 4. Mensagem que chega à vendedora
-
-Exemplo:
+## Mensagem que chega à vendedora
 
 ```text
 DOCE MISTÉRIO | LEAD QUENTE
 
-Produto/anúncio: Short Doll
+PEÇA: Short Doll Alça
+REFERÊNCIA: SD042
 Tamanho: G
 Intenção: Quero comprar agora
 Recebimento: Quero receber por entrega
 Cidade: Vila Velha
 
-Origem do anúncio
+Identificação do anúncio
 Campanha: Short Doll Outubro
 Conjunto: Mulheres 25-44
-Criativo: Video 03
+Criativo/anúncio: Video 03
 Origem: meta
 
 Pode me atender?
 ```
 
-## 5. Eventos de rastreamento
+## Meta Pixel
+
+Em `config.js`, informe o ID:
+
+```js
+metaPixelId: "123456789012345"
+```
+
+Se deixar vazio, o formulário funciona normalmente, apenas sem enviar eventos ao Meta Pixel.
+
+## Eventos de rastreamento
 
 - `PageView`
 - `FormStepComplete`
 - `FormComplete`
 - `WhatsAppClick`
-
-Os três últimos são enviados como eventos personalizados do Meta Pixel.
 
 ## Estrutura
 
@@ -93,7 +124,3 @@ app.js
 config.js
 README.md
 ```
-
-## Evolução recomendada
-
-A V2 pode adicionar Supabase para armazenar cada lead e um painel com visita → formulário iniciado → formulário concluído → clique no WhatsApp → qualidade do lead por campanha/criativo.
