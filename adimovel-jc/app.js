@@ -43,7 +43,6 @@
   const form = $("#leadForm");
   const resultState = $("#resultState");
   const nextBtn = $("#nextBtn");
-  const backBtn = $("#backBtn");
   const submitBtn = $("#submitBtn");
   const error = $("#formError");
 
@@ -180,7 +179,6 @@
     $$(".step").forEach(el => el.classList.toggle("is-active", Number(el.dataset.step) === state.step));
     $("#stepCounter").textContent = `${state.step} de 4`;
     $("#progressBar").style.width = `${state.step * 25}%`;
-    backBtn.hidden = state.step === 1;
     nextBtn.hidden = state.step === 4;
     submitBtn.hidden = state.step !== 4;
     if (state.step === 2) configureStepTwo();
@@ -191,10 +189,6 @@
   nextBtn.addEventListener("click", () => {
     if (!validateStep()) return;
     state.step += 1;
-    renderStep();
-  });
-  backBtn.addEventListener("click", () => {
-    if (state.step > 1) state.step -= 1;
     renderStep();
   });
 
