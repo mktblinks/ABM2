@@ -2,15 +2,20 @@
   const config = window.DOCE_CONFIG || {};
   const params = new URLSearchParams(window.location.search);
 
+  const creativeParam = readParam("criativo", "creative", "utm_content");
+  const explicitProduct = readParam("peca", "produto", "product", "item", "anuncio");
+  const productCode = readParam("codigo", "sku", "ref", "referencia", "produto_id");
+
   const data = {
     size: "",
     intent: "",
     delivery: "",
     city: "",
-    product: readParam("produto", "product", "item", "anuncio"),
+    product: explicitProduct || creativeParam,
+    productCode,
     campaign: readParam("campanha", "campaign", "utm_campaign"),
     adset: readParam("conjunto", "adset"),
-    creative: readParam("criativo", "creative", "utm_content"),
+    creative: creativeParam,
     source: readParam("utm_source", "source"),
     medium: readParam("utm_medium"),
     term: readParam("utm_term"),
@@ -27,12 +32,18 @@
   const formError = document.getElementById("formError");
   const otherCityWrap = document.getElementById("otherCityWrap");
   const otherCity = document.getElementById("otherCity");
+  const pieceFallbackWrap = document.getElementById("pieceFallbackWrap");
+  const pieceFallback = document.getElementById("pieceFallback");
 
   document.querySelectorAll("[data-brand]").forEach(el => el.textContent = config.brandName || "Doce Mistério");
 
   if (data.product) {
     document.getElementById("productContext").hidden = false;
-    document.getElementById("productName").textContent = data.product;
+    document.getElementById("productName").textContent = data.productCode
+      ? `${data.product} · Ref. ${data.productCode}`
+      : data.product;
+  } else {
+    pieceFallbackWrap.hidden = false;
   }
 
   renderOptions("sizeOptions", config.sizes || [], "size", true);
@@ -41,7 +52,8 @@
   renderOptions("cityOptions", config.storeCities || [], "city", true);
 
   initMetaPixel();
-  track("PageView", { product: data.product || "universal" });
+  track("PageView", { product: data.product || "nao-identificado", product_code: data.productCode || undefined });
+  updateStep();
 
   nextBtn.addEventListener("click", () => {
     if (!validateStep()) return;
@@ -56,8 +68,15 @@
     updateStep();
   });
 
+  pieceFallback.addEventListener("input", () => {
+    if (pieceFallback.value.trim()) clearError();
+  });
+
   otherCity.addEventListener("input", () => {
-    if (data.city === "Outra cidade") clearError();
+    if (data.city === "Outra cidade") {
+      clearError();
+      syncFinalCTA();
+    }
   });
 
   leadForm.addEventListener("submit", (event) => {
@@ -72,12 +91,22 @@
       return;
     }
 
+    if (!data.product) data.product = pieceFallback.value.trim();
+
     const classification = classifyLead();
     const message = buildMessage({ ...data, city, classification });
     const url = `https://wa.me/${whatsapp}?text=${encodeURIComponent(message)}`;
 
-    track("FormComplete", { classification, product: data.product || "universal" });
-    track("WhatsAppClick", { classification, product: data.product || "universal" });
+    track("FormComplete", {
+      classification,
+      product: data.product || "nao-identificado",
+      product_code: data.productCode || undefined
+    });
+    track("WhatsAppClick", {
+      classification,
+      product: data.product || "nao-identificado",
+      product_code: data.productCode || undefined
+    });
 
     setTimeout(() => {
       window.location.href = url;
@@ -115,10 +144,17 @@
     if (key === "city") {
       otherCityWrap.hidden = value !== "Outra cidade";
       if (value !== "Outra cidade") otherCity.value = "";
+      syncFinalCTA();
     }
   }
 
   function validateStep() {
+    if (step === 1 && !data.product && !pieceFallback.value.trim()) {
+      showError("Diga qual peça chamou sua atenção para a vendedora saber qual anúncio você viu.");
+      pieceFallback.focus();
+      return false;
+    }
+
     const rules = {
       1: [data.size, "Escolha seu tamanho para continuar."],
       2: [data.intent, "Diga o que você quer fazer agora."],
@@ -154,9 +190,26 @@
 
     backBtn.hidden = step === 1;
     nextBtn.hidden = step === totalSteps;
-    submitBtn.hidden = step !== totalSteps;
+
+    if (step === totalSteps) {
+      syncFinalCTA();
+    } else {
+      submitBtn.hidden = true;
+    }
+
     clearError();
     window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+
+  function syncFinalCTA() {
+    if (step !== totalSteps) {
+      submitBtn.hidden = true;
+      return;
+    }
+
+    const cityReady = Boolean(data.city);
+    const otherReady = data.city !== "Outra cidade" || Boolean(otherCity.value.trim());
+    submitBtn.hidden = !(cityReady && otherReady);
   }
 
   function classifyLead() {
@@ -171,28 +224,33 @@
   }
 
   function buildMessage(payload) {
-    const product = payload.product || "Atendimento geral";
+    const product = payload.product || "Peça não identificada";
     const intent = labelFrom(config.intents, payload.intent);
     const delivery = labelFrom(config.delivery, payload.delivery);
 
     const visible = [
       `*${config.brandName || "DOCE MISTÉRIO"} | ${payload.classification}*`,
       "",
-      `Produto/anúncio: ${product}`,
+      `*PEÇA:* ${product}`
+    ];
+
+    if (payload.productCode) visible.push(`*REFERÊNCIA:* ${payload.productCode}`);
+
+    visible.push(
       `Tamanho: ${payload.size}`,
       `Intenção: ${intent}`,
       `Recebimento: ${delivery}`,
       `Cidade: ${payload.city}`
-    ];
+    );
 
     const tracking = [];
     if (payload.campaign) tracking.push(`Campanha: ${payload.campaign}`);
     if (payload.adset) tracking.push(`Conjunto: ${payload.adset}`);
-    if (payload.creative) tracking.push(`Criativo: ${payload.creative}`);
+    if (payload.creative) tracking.push(`Criativo/anúncio: ${payload.creative}`);
     if (payload.source) tracking.push(`Origem: ${payload.source}`);
     if (payload.term) tracking.push(`Termo: ${payload.term}`);
 
-    if (tracking.length) visible.push("", "_Origem do anúncio_", ...tracking);
+    if (tracking.length) visible.push("", "_Identificação do anúncio_", ...tracking);
     visible.push("", "Pode me atender?");
 
     return visible.join("\n");
