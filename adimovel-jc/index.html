@@ -9,7 +9,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=1">
+  <link rel="stylesheet" href="styles.css?v=2">
+  <style>[hidden]{display:none!important}</style>
 </head>
 <body>
   <main class="page-shell">
@@ -99,7 +100,7 @@
             <div id="alternativeFields" class="field-stack" hidden>
               <div class="soft-card">
                 <strong id="alternativeTitle">Perfeito.</strong>
-                <p id="alternativeCopy">Vamos seguir para entender quando você pretende realizar a compra.</p>
+                <p id="alternativeCopy">Vamos seguir para entender em quanto tempo você pretende realizar a compra.</p>
               </div>
             </div>
           </section>
@@ -118,9 +119,9 @@
           </section>
 
           <section class="step" data-step="4">
-            <p class="step-label">SEUS DADOS</p>
-            <h2>Para quem vamos encaminhar este atendimento?</h2>
-            <p class="step-copy">Preencha seus dados para concluirmos.</p>
+            <p class="step-label">CONTATO</p>
+            <h2>Agora, informe seu contato para continuar pelo WhatsApp.</h2>
+            <p class="step-copy">Se o seu perfil estiver dentro da régua, o WhatsApp abre automaticamente com as informações preenchidas. Caso ainda não seja o momento ideal, você será direcionado para ver outros imóveis.</p>
 
             <div class="field-stack">
               <label>
@@ -133,15 +134,14 @@
               </label>
             </div>
 
-            <div class="privacy-note">Ao continuar, você autoriza o contato da equipe da Adimóvel sobre este imóvel e opções relacionadas.</div>
+            <div class="privacy-note">Ao concluir, você autoriza o contato da equipe da Adimóvel sobre este imóvel e oportunidades relacionadas.</div>
           </section>
 
           <p id="formError" class="form-error" role="alert" hidden></p>
 
           <div class="actions">
-            <button type="button" class="btn btn-secondary" id="backBtn" hidden>Voltar</button>
             <button type="button" class="btn btn-primary" id="nextBtn">Continuar</button>
-            <button type="submit" class="btn btn-primary" id="submitBtn" hidden>Concluir atendimento</button>
+            <button type="submit" class="btn btn-primary" id="submitBtn" hidden>Concluir no WhatsApp</button>
           </div>
         </form>
 
@@ -157,6 +157,6 @@
     </section>
   </main>
 
-  <script src="app.js?v=1"></script>
+  <script src="app.js?v=2"></script>
 </body>
 </html>
