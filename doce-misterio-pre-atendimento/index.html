@@ -23,7 +23,7 @@
       </div>
 
       <div class="product-context" id="productContext" hidden>
-        <span>Você veio por</span>
+        <span>Peça do anúncio:</span>
         <strong id="productName"></strong>
       </div>
 
@@ -37,6 +37,13 @@
           <p class="step-kicker">Só leva alguns segundos</p>
           <h1 id="page-title">Qual é o seu tamanho?</h1>
           <p class="step-copy">Assim nossa equipe já separa opções mais certeiras para você.</p>
+
+          <label class="piece-fallback" id="pieceFallbackWrap" hidden>
+            <span>Qual peça chamou sua atenção?</span>
+            <input id="pieceFallback" type="text" maxlength="80" placeholder="Ex.: vestido preto do anúncio" autocomplete="off" />
+            <small>Isso só aparece quando o anúncio não envia a identificação da peça automaticamente.</small>
+          </label>
+
           <div id="sizeOptions" class="option-grid"></div>
         </div>
 
@@ -72,7 +79,7 @@
           <button type="button" class="btn btn-primary" id="nextBtn">Continuar</button>
           <button type="submit" class="btn btn-whatsapp" id="submitBtn" hidden>
             <span class="wa-dot" aria-hidden="true"></span>
-            Continuar no WhatsApp
+            Falar com a vendedora no WhatsApp
           </button>
         </div>
       </form>
