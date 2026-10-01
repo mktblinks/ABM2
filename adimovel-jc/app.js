@@ -46,15 +46,7 @@
   const submitBtn = $("#submitBtn");
   const error = $("#formError");
 
-  const state = {
-    step: 1,
-    payment: "",
-    entry: 0,
-    income: 0,
-    months: 0,
-    name: "",
-    phone: ""
-  };
+  const state = { step: 1, payment: "", entry: 0, income: 0, months: 0, name: "", phone: "" };
 
   $("#propertyName").textContent = config.name;
   $("#propertyCode").textContent = config.code ? `Cód. ${config.code}` : "Atendimento Adimóvel";
@@ -93,37 +85,37 @@
       const btn = document.createElement("button");
       btn.type = "button";
       btn.textContent = `${percent}% · ${money.format(config.value * percent / 100)}`;
-      btn.addEventListener("click", () => setMoney($("#entryValue"), config.value * percent / 100));
+      btn.addEventListener("click", () => {
+        setMoney($("#entryValue"), config.value * percent / 100);
+        btn.animate([{ transform: "scale(.96)" }, { transform: "scale(1)" }], { duration: 220, easing: "cubic-bezier(.22,1,.36,1)" });
+      });
       wrap.appendChild(btn);
     });
   }
   renderQuickEntries();
 
+  function selectOption(containerSelector, target, stateSetter) {
+    stateSetter(target.dataset.value);
+    $$(`${containerSelector} [data-value]`).forEach(el => el.classList.toggle("is-selected", el === target));
+    target.animate([{ transform: "scale(.99)" }, { transform: "scale(1)" }], { duration: 240, easing: "cubic-bezier(.22,1,.36,1)" });
+    hideError();
+  }
+
   $("#paymentOptions").addEventListener("click", e => {
     const btn = e.target.closest("[data-value]");
     if (!btn) return;
-    state.payment = btn.dataset.value;
-    $$("#paymentOptions .option-card").forEach(el => el.classList.toggle("is-selected", el === btn));
-    hideError();
+    selectOption("#paymentOptions", btn, value => { state.payment = value; });
   });
 
   $("#timelineOptions").addEventListener("click", e => {
     const btn = e.target.closest("[data-value]");
     if (!btn) return;
-    state.months = Number(btn.dataset.value);
-    $$("#timelineOptions .choice-chip").forEach(el => el.classList.toggle("is-selected", el === btn));
-    hideError();
+    selectOption("#timelineOptions", btn, value => { state.months = Number(value); });
   });
 
   function paymentLabel(value) {
-    return ({
-      financiamento: "Financiamento",
-      avista: "À vista",
-      consorcio: "Carta contemplada",
-      permuta: "Imóvel na negociação"
-    })[value] || value;
+    return ({ financiamento: "Financiamento", avista: "À vista", consorcio: "Carta contemplada", permuta: "Imóvel na negociação" })[value] || value;
   }
-
   function timelineLabel(value) {
     if (value <= 1) return "Agora / até 30 dias";
     if (value <= 3) return "Em até 3 meses";
@@ -148,10 +140,7 @@
     }
   }
 
-  function showError(message) {
-    error.textContent = message;
-    error.hidden = false;
-  }
+  function showError(message) { error.textContent = message; error.hidden = false; }
   function hideError() { error.hidden = true; }
 
   function validateStep() {
@@ -175,6 +164,16 @@
     return true;
   }
 
+  function renderProgress() {
+    $$("[data-progress-step]").forEach(el => {
+      const step = Number(el.dataset.progressStep);
+      el.classList.toggle("is-current", step === state.step);
+      el.classList.toggle("is-complete", step < state.step);
+      const badge = el.querySelector("i");
+      if (badge) badge.textContent = step < state.step ? "✓" : String(step);
+    });
+  }
+
   function renderStep() {
     $$(".step").forEach(el => el.classList.toggle("is-active", Number(el.dataset.step) === state.step));
     $("#stepCounter").textContent = `${state.step} de 4`;
@@ -182,36 +181,33 @@
     nextBtn.hidden = state.step === 4;
     submitBtn.hidden = state.step !== 4;
     if (state.step === 2) configureStepTwo();
+    renderProgress();
     hideError();
     window.scrollTo({ top: 0, behavior: "smooth" });
   }
 
   nextBtn.addEventListener("click", () => {
     if (!validateStep()) return;
+    nextBtn.disabled = true;
     state.step += 1;
     renderStep();
+    setTimeout(() => { nextBtn.disabled = false; }, 280);
   });
 
   function isQualified() {
     const timingOk = state.months <= config.maxMonths;
     if (!timingOk) return false;
-
     if (state.payment === "financiamento") {
       const entryOk = config.minEntry <= 0 || state.entry >= config.minEntry;
       const incomeOk = config.minIncome <= 0 || state.income >= config.minIncome;
       return entryOk && incomeOk;
     }
-
     return ["avista", "consorcio", "permuta"].includes(state.payment);
   }
 
   function trackingSummary() {
     const keys = ["utm_source", "utm_medium", "utm_campaign", "utm_content", "utm_term", "fbclid", "gclid"];
-    return keys
-      .map(k => [k, qs.get(k)])
-      .filter(([,v]) => v)
-      .map(([k,v]) => `${k}: ${v}`)
-      .join("\n");
+    return keys.map(k => [k, qs.get(k)]).filter(([,v]) => v).map(([k,v]) => `${k}: ${v}`).join("\n");
   }
 
   function buildWhatsappUrl() {
@@ -231,25 +227,23 @@
       "",
       trackingSummary() ? `Origem da campanha:\n${trackingSummary()}` : ""
     ].filter(Boolean);
-
     return `https://wa.me/${config.whatsapp}?text=${encodeURIComponent(lines.join("\n"))}`;
   }
 
   form.addEventListener("submit", e => {
     e.preventDefault();
     hideError();
-
     state.name = $("#leadName").value.trim();
     state.phone = $("#leadPhone").value.trim();
     const phoneDigits = onlyDigits(state.phone);
-
     if (state.name.length < 2) { showError("Informe seu nome."); return; }
     if (phoneDigits.length < 10) { showError("Informe um WhatsApp válido com DDD."); return; }
 
+    submitBtn.disabled = true;
     const qualified = isQualified();
     form.hidden = true;
     $(".form-top").hidden = true;
-    $(".progress-track").hidden = true;
+    $(".progress-wrap").hidden = true;
     resultState.hidden = false;
 
     const title = $("#resultTitle");
@@ -259,15 +253,15 @@
     if (qualified) {
       const destination = buildWhatsappUrl();
       title.textContent = "Seu atendimento está pronto.";
-      copy.textContent = "Vamos abrir o WhatsApp com as informações que você acabou de preencher, para a equipe continuar seu atendimento sem você precisar repetir tudo.";
-      btn.textContent = "Continuar no WhatsApp";
+      copy.textContent = "Vamos abrir o WhatsApp com tudo o que você preencheu, para a equipe continuar seu atendimento sem você precisar repetir as informações.";
+      btn.querySelector("span").textContent = "Continuar no WhatsApp";
       btn.href = destination;
-      setTimeout(() => { location.href = destination; }, 1300);
+      setTimeout(() => { location.href = destination; }, 1250);
     } else {
       const destination = config.website;
-      title.textContent = "Vamos ampliar as opções para você.";
-      copy.textContent = "Pelo momento de compra e pela composição informada, vale conhecer outros imóveis que podem combinar melhor com o que você procura agora.";
-      btn.textContent = "Ver outros imóveis";
+      title.textContent = "Temos outras opções para você.";
+      copy.textContent = "Pelo momento de compra e pela composição informada, vamos mostrar imóveis que podem combinar melhor com o que você procura agora.";
+      btn.querySelector("span").textContent = "Ver outros imóveis";
       btn.href = destination;
       setTimeout(() => { location.href = destination; }, 2200);
     }
