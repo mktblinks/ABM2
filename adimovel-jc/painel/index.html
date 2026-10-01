@@ -3,220 +3,204 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="theme-color" content="#101820">
-  <title>Painel de campanhas | Adimóvel JC</title>
+  <meta name="theme-color" content="#0d141b">
+  <title>Central de campanhas | Adimóvel JC</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600&display=swap" rel="stylesheet">
   <style>
-    :root{--ink:#101820;--ink2:#1e2b36;--paper:#f1efe8;--card:#fff;--muted:#6e7780;--line:#e5e1d7;--gold:#b79a62;--green:#1f7a54;--red:#a94b4b;--shadow:0 22px 60px rgba(12,20,28,.1)}
-    *{box-sizing:border-box} body{margin:0;background:linear-gradient(145deg,#efede6,#f8f6f1);font-family:"DM Sans",sans-serif;color:var(--ink)}
-    button,input,select{font:inherit}.shell{width:min(1180px,calc(100% - 32px));margin:0 auto;padding:32px 0 60px}.topbar{display:flex;justify-content:space-between;gap:24px;align-items:center;margin-bottom:28px}.brand{display:flex;align-items:center;gap:13px}.mark{width:42px;height:42px;border:1px solid #c8b994;display:grid;place-items:center;font-family:"Playfair Display",serif;font-size:24px;color:#917746}.brand strong{display:block;letter-spacing:.12em;font-size:13px}.brand span{display:block;color:var(--muted);font-size:12px;margin-top:3px}.topbar a{color:var(--ink);font-size:12px;text-decoration:none;border-bottom:1px solid #bcae8d}
-    .hero{background:var(--ink);color:#fff;padding:36px 38px;box-shadow:var(--shadow);margin-bottom:18px;position:relative;overflow:hidden}.hero:after{content:"";position:absolute;width:330px;height:330px;border:1px solid rgba(183,154,98,.22);border-radius:50%;right:-150px;top:-185px}.hero p{margin:0 0 9px;color:#c5ad7a;font-size:11px;font-weight:700;letter-spacing:.16em}.hero h1{margin:0;font-family:"Playfair Display",serif;font-size:clamp(32px,5vw,50px);line-height:1.04;font-weight:600}.hero div{margin-top:12px;color:rgba(255,255,255,.63);max-width:720px;line-height:1.55;font-size:13px}
-    .grid{display:grid;grid-template-columns:1.05fr .95fr;gap:18px}.card{background:#fff;border:1px solid rgba(16,24,32,.07);box-shadow:0 14px 38px rgba(16,24,32,.06);padding:28px}.card h2{margin:0;font-family:"Playfair Display",serif;font-size:28px;font-weight:600}.sub{margin:7px 0 24px;color:var(--muted);font-size:12px;line-height:1.5}.fields{display:grid;grid-template-columns:1fr 1fr;gap:14px}.field.full{grid-column:1/-1}.field label{display:block;font-size:11px;font-weight:700;margin-bottom:7px;letter-spacing:.03em}.field input,.field select{width:100%;height:48px;border:1px solid var(--line);background:#fff;padding:0 12px;outline:none;color:var(--ink)}.field input:focus,.field select:focus{border-color:#baa777;box-shadow:0 0 0 3px rgba(183,154,98,.1)}.money{display:flex;align-items:center;border:1px solid var(--line)}.money:focus-within{border-color:#baa777;box-shadow:0 0 0 3px rgba(183,154,98,.1)}.money span{padding-left:12px;color:var(--muted);font-size:12px}.money input{border:0;box-shadow:none!important}.hint{display:block;margin-top:5px;color:#92989e;font-size:10px;line-height:1.4}.rulebox{grid-column:1/-1;background:#f7f4ed;border:1px solid #e7dfcf;padding:15px 16px;display:flex;gap:12px;align-items:flex-start}.rulebox b{font-size:12px}.rulebox p{margin:4px 0 0;color:var(--muted);font-size:11px;line-height:1.45}.badge{background:#ece4d3;color:#806a42;padding:4px 7px;font-size:9px;font-weight:800;letter-spacing:.08em;white-space:nowrap}.actions{display:flex;gap:10px;margin-top:20px}.btn{min-height:48px;border:1px solid transparent;padding:0 18px;font-weight:700;font-size:12px;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;justify-content:center}.primary{background:var(--ink);color:#fff;flex:1}.secondary{background:#fff;border-color:var(--line);color:var(--ink)}
-    .output{border:1px solid var(--line);background:#faf9f6;padding:16px;margin-top:22px}.output-label{font-size:10px;font-weight:800;letter-spacing:.1em;color:#82704d}.url{font-size:11px;line-height:1.55;color:#46515a;word-break:break-all;margin:8px 0 13px}.output-actions{display:flex;gap:8px}.smallbtn{border:1px solid var(--line);background:#fff;padding:8px 10px;font-size:10px;font-weight:700;cursor:pointer;color:var(--ink)}.smallbtn.ok{background:#eef5f0;color:var(--green);border-color:#d8e9de}
-    .preview{background:#111923;color:white;min-height:100%;display:flex;flex-direction:column;justify-content:space-between;padding:26px;position:relative;overflow:hidden}.preview:after{content:"";position:absolute;inset:auto -80px -90px auto;width:230px;height:230px;border:1px solid rgba(183,154,98,.19);border-radius:50%}.preview .k{font-size:10px;color:#c7ad77;letter-spacing:.16em;font-weight:700}.preview h3{font-family:"Playfair Display",serif;font-size:40px;line-height:1;margin:18px 0 10px;max-width:440px}.preview .meta{color:rgba(255,255,255,.64);font-size:12px}.preview .journey{margin-top:80px;border-top:1px solid rgba(255,255,255,.11);padding-top:20px}.preview .journey strong{font-size:12px}.preview .journey p{color:rgba(255,255,255,.58);font-size:11px;line-height:1.5;margin:6px 0 0}.saved{margin-top:18px}.saved-head{display:flex;justify-content:space-between;align-items:end;margin-bottom:12px}.saved h2{margin:0;font-family:"Playfair Display",serif;font-weight:600}.saved-head span{color:var(--muted);font-size:11px}.table-wrap{overflow:auto;background:#fff;border:1px solid rgba(16,24,32,.07);box-shadow:0 12px 34px rgba(16,24,32,.05)}table{width:100%;border-collapse:collapse;min-width:780px}th,td{text-align:left;border-bottom:1px solid #eeece7;padding:13px 14px;font-size:11px}th{color:#7d858d;font-size:9px;letter-spacing:.08em}td strong{display:block;font-size:12px}.muted{color:var(--muted)}.table-actions{display:flex;gap:6px}.empty{text-align:center!important;color:var(--muted);padding:32px!important}.danger{color:var(--red)!important}
-    @media(max-width:840px){.shell{width:100%;padding:0 0 40px}.topbar{padding:18px 18px 0}.topbar a{display:none}.hero{margin-top:18px;padding:28px 20px}.grid{grid-template-columns:1fr;gap:0}.card{border-left:0;border-right:0;padding:24px 18px}.preview{min-height:340px}.saved{padding:0 18px}.fields{grid-template-columns:1fr}.field.full,.rulebox{grid-column:auto}.actions{position:sticky;bottom:0;background:#fff;padding:12px 0 max(8px,env(safe-area-inset-bottom));z-index:3}}
-    @media(max-width:480px){.hero h1{font-size:35px}.preview h3{font-size:34px}.output-actions{flex-wrap:wrap}.smallbtn{flex:1}}
+    :root{--ink:#0d141b;--ink2:#182530;--paper:#f1efe9;--card:#fbfaf7;--white:#fff;--muted:#707981;--muted2:#989fa5;--line:rgba(13,20,27,.10);--line2:rgba(13,20,27,.16);--gold:#b99a5e;--gold2:#d9be82;--goldsoft:#f5efe3;--green:#1f7a54;--red:#a94b4b;--shadow:0 24px 70px rgba(13,20,27,.10);--radius:22px;--ease:cubic-bezier(.22,1,.36,1)}
+    *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;min-height:100vh;background:radial-gradient(circle at 4% 4%,rgba(185,154,94,.12),transparent 27%),radial-gradient(circle at 95% 86%,rgba(24,42,57,.07),transparent 29%),linear-gradient(135deg,#ece9e1,#f7f5ef 52%,#ece9e1);font-family:"DM Sans",sans-serif;color:var(--ink)}
+    button,input,select{font:inherit}button{cursor:pointer;-webkit-tap-highlight-color:transparent}button:focus-visible,input:focus-visible,select:focus-visible,a:focus-visible{outline:3px solid rgba(185,154,94,.26);outline-offset:3px}[hidden]{display:none!important}
+    .shell{width:min(1320px,calc(100% - 36px));margin:0 auto;padding:24px 0 56px;animation:pageIn .55s var(--ease) both}@keyframes pageIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+    .topbar{display:flex;justify-content:space-between;align-items:center;gap:18px;margin-bottom:18px}.brand{display:flex;align-items:center;gap:12px}.mark{width:43px;height:43px;border-radius:13px;border:1px solid rgba(13,20,27,.12);background:rgba(255,255,255,.54);display:grid;place-items:center;font-family:"Playfair Display",serif;font-size:23px;color:#8b7143;box-shadow:0 8px 22px rgba(13,20,27,.05)}.brand strong{display:block;font-size:12px;letter-spacing:.15em}.brand span{display:block;color:var(--muted);font-size:10px;margin-top:3px}.top-actions{display:flex;align-items:center;gap:9px}.status-pill{display:inline-flex;align-items:center;gap:7px;min-height:36px;padding:0 12px;border:1px solid var(--line);border-radius:999px;background:rgba(255,255,255,.62);color:var(--muted);font-size:10px}.status-pill i{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 0 5px rgba(31,122,84,.08);animation:pulse 2s ease-in-out infinite}@keyframes pulse{50%{box-shadow:0 0 0 9px rgba(31,122,84,0)}}.link-btn{min-height:38px;padding:0 14px;border:1px solid var(--line);border-radius:11px;background:#fff;color:var(--ink);text-decoration:none;display:inline-flex;align-items:center;gap:8px;font-size:10px;font-weight:700;transition:.2s var(--ease)}.link-btn:hover{transform:translateY(-1px);box-shadow:0 8px 20px rgba(13,20,27,.07)}
+    .hero{position:relative;overflow:hidden;border-radius:28px;padding:30px 32px;background:linear-gradient(145deg,#0b1117,#162532);color:#fff;box-shadow:var(--shadow);margin-bottom:16px}.hero:before{content:"";position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.022) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.022) 1px,transparent 1px);background-size:42px 42px;mask-image:linear-gradient(90deg,#000,transparent 88%)}.hero:after{content:"";position:absolute;width:410px;height:410px;border-radius:50%;right:-190px;top:-225px;border:1px solid rgba(217,190,130,.18);box-shadow:0 0 0 65px rgba(217,190,130,.025),0 0 0 130px rgba(217,190,130,.016)}.hero-content{position:relative;z-index:2;display:grid;grid-template-columns:1fr auto;gap:28px;align-items:end}.hero-kicker{margin:0 0 8px;color:#d0b678;font-size:9px;font-weight:800;letter-spacing:.18em}.hero h1{margin:0;max-width:700px;font-family:"Playfair Display",serif;font-weight:600;font-size:clamp(34px,4.4vw,54px);line-height:1.02;letter-spacing:-.035em}.hero-copy{margin:11px 0 0;color:rgba(255,255,255,.60);font-size:12px;line-height:1.6;max-width:700px}.hero-stats{display:grid;grid-template-columns:repeat(2,minmax(115px,1fr));gap:8px}.stat{min-width:125px;padding:13px 14px;border:1px solid rgba(255,255,255,.10);border-radius:14px;background:rgba(255,255,255,.04);backdrop-filter:blur(10px)}.stat strong{display:block;font-size:18px;font-family:"Playfair Display",serif;font-weight:600}.stat span{display:block;margin-top:3px;color:rgba(255,255,255,.46);font-size:9px}
+    .workspace{display:grid;grid-template-columns:minmax(0,1.12fr) minmax(360px,.88fr);gap:16px;align-items:start}.card{background:rgba(251,250,247,.90);border:1px solid rgba(255,255,255,.72);border-radius:var(--radius);box-shadow:0 15px 45px rgba(13,20,27,.07);backdrop-filter:blur(16px)}.builder{padding:26px}.section-head{display:flex;justify-content:space-between;gap:18px;align-items:flex-start;margin-bottom:22px}.section-title{display:flex;gap:12px;align-items:flex-start}.section-number{width:32px;height:32px;border-radius:10px;display:grid;place-items:center;background:var(--ink);color:#fff;font-size:9px;font-weight:800}.section-head h2{margin:0;font-family:"Playfair Display",serif;font-weight:600;font-size:27px;letter-spacing:-.025em}.section-head p{margin:5px 0 0;color:var(--muted);font-size:11px;line-height:1.5}.autosave{display:inline-flex;align-items:center;gap:6px;color:var(--muted2);font-size:9px;white-space:nowrap;padding-top:5px}.autosave i{width:6px;height:6px;border-radius:50%;background:var(--gold)}
+    .fields{display:grid;grid-template-columns:1fr 1fr;gap:12px}.field.full{grid-column:1/-1}.field label{display:block;margin:0 0 7px;font-size:9px;font-weight:800;letter-spacing:.09em;color:#53606b}.fieldbox{height:54px;border:1px solid var(--line);border-radius:14px;background:#fff;display:flex;align-items:center;transition:border-color .2s,box-shadow .2s,transform .2s}.fieldbox:focus-within{border-color:rgba(185,154,94,.65);box-shadow:0 0 0 4px rgba(185,154,94,.08);transform:translateY(-1px)}.fieldbox input,.fieldbox select{width:100%;height:100%;border:0;background:transparent;outline:0;padding:0 14px;color:var(--ink);font-size:13px;font-weight:600}.fieldbox input::placeholder{color:#b1b6ba;font-weight:500}.fieldbox .prefix{padding-left:14px;color:var(--muted);font-size:11px;font-weight:700}.fieldbox .prefix+input{padding-left:8px}.fieldbox.disabled{background:#f5f5f2}.fieldbox.disabled input{color:#7d858c}.hint{display:block;margin-top:6px;color:#9aa0a5;font-size:9px;line-height:1.45}
+    .rule-card{grid-column:1/-1;position:relative;overflow:hidden;padding:17px;border:1px solid #eadfc9;border-radius:16px;background:linear-gradient(135deg,#f7f2e8,#fcfaf6)}.rule-card:after{content:"";position:absolute;width:120px;height:120px;border-radius:50%;background:radial-gradient(circle,rgba(185,154,94,.16),transparent 70%);right:-40px;top:-45px}.rule-top{position:relative;z-index:1;display:flex;justify-content:space-between;gap:14px;align-items:flex-start}.rule-badge{display:inline-flex;align-items:center;min-height:25px;padding:0 9px;border-radius:999px;background:#eee3cf;color:#7c653b;font-size:8px;font-weight:800;letter-spacing:.10em}.rule-card strong{display:block;margin-top:9px;font-size:12px}.rule-card p{margin:5px 0 0;max-width:580px;color:var(--muted);font-size:10px;line-height:1.5}.rule-value{text-align:right;white-space:nowrap}.rule-value b{display:block;font-family:"Playfair Display",serif;font-size:22px;color:#725c37}.rule-value span{display:block;margin-top:2px;color:#9a8c72;font-size:8px}
+    .builder-actions{display:flex;gap:9px;margin-top:20px}.btn{position:relative;overflow:hidden;min-height:52px;border:1px solid transparent;border-radius:14px;padding:0 17px;font-weight:700;font-size:11px;display:inline-flex;align-items:center;justify-content:center;gap:10px;transition:transform .2s var(--ease),box-shadow .2s var(--ease),background .2s}.btn:active{transform:scale(.985)}.btn.primary{flex:1;background:linear-gradient(135deg,#0c1319,#1a2935);color:#fff;box-shadow:0 12px 28px rgba(13,20,27,.16)}.btn.primary:hover{transform:translateY(-2px);box-shadow:0 17px 34px rgba(13,20,27,.20)}.btn.secondary{background:#fff;border-color:var(--line);color:var(--ink)}.btn.secondary:hover{background:#f7f6f2}.btn .arrow{font-size:15px;transition:transform .2s}.btn:hover .arrow{transform:translateX(3px)}
+    .output{margin-top:16px;padding:15px;border:1px solid rgba(31,122,84,.18);border-radius:16px;background:linear-gradient(135deg,#f3faf6,#fbfdfa);animation:outputIn .42s var(--ease) both}@keyframes outputIn{from{opacity:0;transform:translateY(8px) scale(.99)}to{opacity:1;transform:none}}.output-head{display:flex;justify-content:space-between;align-items:center;gap:12px}.output-label{display:flex;align-items:center;gap:7px;color:#537260;font-size:9px;font-weight:800;letter-spacing:.08em}.output-label i{width:7px;height:7px;border-radius:50%;background:var(--green)}.url{margin:10px 0 12px;padding:11px 12px;border:1px solid rgba(13,20,27,.07);border-radius:11px;background:#fff;color:#58636b;font-size:9px;line-height:1.5;word-break:break-all}.output-actions{display:flex;gap:7px}.smallbtn{min-height:34px;border:1px solid var(--line);border-radius:10px;background:#fff;padding:0 11px;color:var(--ink);font-size:9px;font-weight:700;transition:.2s}.smallbtn:hover{transform:translateY(-1px);border-color:rgba(185,154,94,.5)}.smallbtn.ok{background:#eaf5ee;color:var(--green);border-color:#d3e7da}
+    .preview-card{position:sticky;top:18px;overflow:hidden}.preview-top{padding:20px 20px 0;display:flex;justify-content:space-between;align-items:center}.preview-top strong{font-size:11px}.preview-top span{font-size:9px;color:var(--muted)}.device-wrap{padding:18px 20px 20px}.device{position:relative;min-height:510px;border-radius:26px;padding:8px;background:#0c1319;box-shadow:0 28px 60px rgba(13,20,27,.20);overflow:hidden}.device:before{content:"";position:absolute;width:90px;height:19px;border-radius:0 0 12px 12px;background:#0c1319;left:50%;top:0;transform:translateX(-50%);z-index:4}.device-screen{position:relative;min-height:494px;border-radius:20px;overflow:hidden;background:linear-gradient(160deg,#101b24,#172a36);padding:25px 21px;color:#fff;display:flex;flex-direction:column}.device-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px);background-size:34px 34px;mask-image:linear-gradient(#000,transparent 90%)}.device-glow{position:absolute;width:250px;height:250px;border-radius:50%;right:-120px;top:70px;background:radial-gradient(circle,rgba(185,154,94,.21),transparent 70%)}.preview-brand{position:relative;z-index:2;display:flex;align-items:center;gap:8px}.preview-mark{width:30px;height:30px;border:1px solid rgba(255,255,255,.23);border-radius:9px;display:grid;place-items:center;font-family:"Playfair Display",serif;color:#d5ba7d}.preview-brand strong{font-size:8px;letter-spacing:.13em}.preview-body{position:relative;z-index:2;margin-top:auto;margin-bottom:auto}.preview-kicker{color:#d0b678;font-size:7px;font-weight:800;letter-spacing:.16em}.preview-body h3{margin:11px 0 9px;font-family:"Playfair Display",serif;font-size:39px;line-height:.98;font-weight:600;letter-spacing:-.035em}.preview-meta{color:rgba(255,255,255,.55);font-size:9px}.preview-question{position:relative;z-index:2;margin-top:auto;padding:15px;border-radius:15px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.10);backdrop-filter:blur(12px)}.preview-question small{display:block;color:#d0b678;font-size:7px;font-weight:800;letter-spacing:.12em}.preview-question strong{display:block;margin-top:6px;font-size:11px;line-height:1.35}.preview-flow{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:11px}.flow-card{padding:10px;border:1px solid var(--line);border-radius:12px;background:#fff}.flow-card b{display:block;font-size:9px}.flow-card span{display:block;margin-top:3px;color:var(--muted);font-size:8px;line-height:1.35}.flow-card.good{border-color:rgba(31,122,84,.18);background:#f8fcf9}.flow-card.good b{color:var(--green)}
+    .saved{margin-top:16px;padding:23px}.saved-head{display:flex;justify-content:space-between;gap:16px;align-items:flex-end;margin-bottom:14px}.saved-head h2{margin:0;font-family:"Playfair Display",serif;font-size:25px;font-weight:600}.saved-head p{margin:4px 0 0;color:var(--muted);font-size:10px}.saved-count{min-height:29px;padding:0 10px;border-radius:999px;background:#f2efe8;color:#806a43;display:inline-flex;align-items:center;font-size:9px;font-weight:700}.table-wrap{overflow:auto;border:1px solid var(--line);border-radius:15px;background:#fff}table{width:100%;border-collapse:collapse;min-width:810px}th,td{text-align:left;border-bottom:1px solid #efede8;padding:13px 14px;font-size:10px}th{color:#8a9298;font-size:8px;letter-spacing:.09em;background:#faf9f6}tbody tr{transition:background .2s}tbody tr:hover{background:#fcfbf8}td strong{display:block;font-size:11px}.muted{color:var(--muted);font-size:8px;margin-top:2px;display:block}.table-actions{display:flex;gap:5px}.empty{text-align:center!important;color:var(--muted);padding:35px!important}.danger{color:var(--red)!important}
+    .toast{position:fixed;right:22px;bottom:22px;z-index:20;min-width:220px;max-width:330px;padding:13px 15px;border-radius:13px;background:#0e171e;color:#fff;box-shadow:0 18px 40px rgba(13,20,27,.24);font-size:10px;transform:translateY(20px);opacity:0;pointer-events:none;transition:.3s var(--ease)}.toast.show{transform:none;opacity:1}.toast strong{display:block;font-size:11px}.toast span{display:block;color:rgba(255,255,255,.58);margin-top:3px}
+    @media(max-width:970px){.workspace{grid-template-columns:1fr}.preview-card{position:relative;top:auto}.device-wrap{display:grid;grid-template-columns:minmax(280px,420px) 1fr;gap:18px;align-items:center}.device{min-height:450px}.device-screen{min-height:434px}.preview-flow{margin-top:0;grid-template-columns:1fr}.hero-content{grid-template-columns:1fr}.hero-stats{grid-template-columns:repeat(2,130px)}}
+    @media(max-width:720px){.shell{width:100%;padding:0 0 38px}.topbar{padding:15px 15px 0}.status-pill{display:none}.hero{margin:15px 10px 12px;border-radius:22px;padding:25px 20px}.hero h1{font-size:37px}.hero-stats{grid-template-columns:1fr 1fr}.workspace{gap:10px}.card{border-radius:20px;margin:0 10px}.builder{padding:20px 15px}.fields{grid-template-columns:1fr}.field.full,.rule-card{grid-column:auto}.section-head{margin-bottom:18px}.autosave{display:none}.preview-card{margin-top:0}.device-wrap{grid-template-columns:1fr;padding:14px}.device{max-width:390px;margin:0 auto;width:100%}.preview-flow{grid-template-columns:1fr 1fr}.saved{padding:19px 14px}.top-actions .link-btn{font-size:0;width:38px;padding:0;justify-content:center}.top-actions .link-btn:after{content:"↗";font-size:14px}.builder-actions{position:sticky;bottom:0;z-index:5;padding:18px 0 max(8px,env(safe-area-inset-bottom));background:linear-gradient(to bottom,rgba(251,250,247,0),#fbfaf7 31%)}.toast{left:12px;right:12px;bottom:12px;max-width:none}}
+    @media(max-width:480px){.brand span{display:none}.hero-stats{gap:6px}.stat{min-width:0;padding:11px}.hero-copy{font-size:11px}.section-head h2{font-size:24px}.device-wrap{display:block}.preview-flow{grid-template-columns:1fr}.builder-actions .secondary{width:86px}.saved-head{align-items:center}.saved-head p{display:none}}
+    @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}}
   </style>
 </head>
 <body>
   <main class="shell">
     <header class="topbar">
-      <div class="brand"><div class="mark">A</div><div><strong>ADIMÓVEL</strong><span>Gerador de campanhas · Jardim Camburi</span></div></div>
-      <a href="../" target="_blank" rel="noopener">Abrir formulário base</a>
+      <div class="brand"><div class="mark">A</div><div><strong>ADIMÓVEL</strong><span>Central de campanhas · Jardim Camburi</span></div></div>
+      <div class="top-actions">
+        <div class="status-pill"><i></i><span>Sistema pronto</span></div>
+        <a class="link-btn" href="../" target="_blank" rel="noopener">Abrir formulário <span>↗</span></a>
+      </div>
     </header>
 
     <section class="hero">
-      <p>ABM · PRÉ-ATENDIMENTO IMOBILIÁRIO</p>
-      <h1>Um link inteligente para cada imóvel.</h1>
-      <div>Cadastre nome, código e valor. O painel gera o formulário exclusivo daquele anúncio e aplica a régua comercial antes de direcionar o lead.</div>
+      <div class="hero-content">
+        <div>
+          <p class="hero-kicker">ABM · PRÉ-ATENDIMENTO IMOBILIÁRIO</p>
+          <h1>Crie a jornada de cada imóvel em segundos.</h1>
+          <p class="hero-copy">Cadastre o imóvel, defina a régua comercial e gere um link pronto para campanha. O formulário decide o melhor destino sem expor essa lógica ao cliente.</p>
+        </div>
+        <div class="hero-stats">
+          <div class="stat"><strong id="totalLinks">0</strong><span>links criados</span></div>
+          <div class="stat"><strong>20%</strong><span>entrada sugerida</span></div>
+        </div>
+      </div>
     </section>
 
-    <section class="grid">
-      <section class="card">
-        <h2>Novo imóvel</h2>
-        <p class="sub">O link é gerado na hora. Você pode usar o mesmo formulário em Meta Ads, legenda, Stories, bio ou WhatsApp.</p>
+    <section class="workspace">
+      <section class="card builder">
+        <div class="section-head">
+          <div class="section-title"><span class="section-number">01</span><div><h2>Novo imóvel</h2><p>Preencha os dados principais. A prévia acompanha tudo em tempo real.</p></div></div>
+          <div class="autosave"><i></i><span>Salvo neste navegador</span></div>
+        </div>
 
         <div class="fields">
           <div class="field full">
             <label for="propertyName">NOME DO IMÓVEL</label>
-            <input id="propertyName" placeholder="Ex.: Mirage Residence" autocomplete="off">
+            <div class="fieldbox"><input id="propertyName" placeholder="Ex.: Mirage Residence" autocomplete="off"></div>
           </div>
           <div class="field">
             <label for="propertyCode">CÓDIGO DO SITE</label>
-            <input id="propertyCode" placeholder="Ex.: AP03698" autocomplete="off">
-            <span class="hint">Use exatamente a referência que aparece no site da Adimóvel.</span>
+            <div class="fieldbox"><input id="propertyCode" placeholder="Ex.: AP03698" autocomplete="off"></div>
+            <span class="hint">Use a referência exata do site da Adimóvel.</span>
           </div>
           <div class="field">
             <label for="propertyValue">VALOR DO IMÓVEL</label>
-            <div class="money"><span>R$</span><input id="propertyValue" inputmode="numeric" placeholder="0"></div>
+            <div class="fieldbox"><span class="prefix">R$</span><input id="propertyValue" inputmode="numeric" placeholder="0"></div>
           </div>
 
-          <div class="rulebox">
-            <span class="badge">RÉGUA</span>
-            <div><b>Triagem comercial automática</b><p>Por padrão, a entrada mínima acompanha 20% do valor do imóvel. Você pode alterar a entrada, adicionar renda mínima e definir o prazo máximo antes de gerar o link.</p></div>
+          <div class="rule-card">
+            <div class="rule-top">
+              <div><span class="rule-badge">RÉGUA INTELIGENTE</span><strong>Triagem comercial automática</strong><p>A entrada sugerida acompanha 20% do valor. Você pode alterar a regra antes de gerar o link.</p></div>
+              <div class="rule-value"><b id="rulePercent">20%</b><span>entrada sugerida</span></div>
+            </div>
           </div>
 
           <div class="field">
             <label for="minEntry">ENTRADA MÍNIMA</label>
-            <div class="money"><span>R$</span><input id="minEntry" inputmode="numeric" placeholder="0"></div>
+            <div class="fieldbox"><span class="prefix">R$</span><input id="minEntry" inputmode="numeric" placeholder="0"></div>
             <span class="hint" id="entryHint">Sugestão automática: 20% do imóvel.</span>
           </div>
           <div class="field">
             <label for="minIncome">RENDA FAMILIAR MÍNIMA · OPCIONAL</label>
-            <div class="money"><span>R$</span><input id="minIncome" inputmode="numeric" placeholder="Deixe vazio para não filtrar"></div>
-            <span class="hint">Se vazio, a renda será coletada, mas não eliminará o lead.</span>
+            <div class="fieldbox"><span class="prefix">R$</span><input id="minIncome" inputmode="numeric" placeholder="Sem filtro"></div>
+            <span class="hint">Se vazio, a renda é coletada, mas não elimina o lead.</span>
           </div>
           <div class="field">
             <label for="maxMonths">PRAZO MÁXIMO PARA COMPRA</label>
-            <select id="maxMonths">
-              <option value="3">Até 3 meses</option>
-              <option value="6" selected>Até 6 meses</option>
-              <option value="12">Até 12 meses</option>
-              <option value="24">Sem filtro de prazo</option>
-            </select>
+            <div class="fieldbox"><select id="maxMonths"><option value="3">Até 3 meses</option><option value="6" selected>Até 6 meses</option><option value="12">Até 12 meses</option><option value="24">Sem filtro de prazo</option></select></div>
           </div>
           <div class="field">
-            <label>DESTINO DO LEAD</label>
-            <input value="WhatsApp Adimóvel · 27 98166-7186" disabled>
-            <span class="hint">Leads fora da régua seguem para adimoveljc.com.br.</span>
+            <label>DESTINO DO LEAD QUALIFICADO</label>
+            <div class="fieldbox disabled"><input value="WhatsApp Adimóvel · 27 98166-7186" disabled></div>
+            <span class="hint">Fora da régua: site da Adimóvel para explorar outros imóveis.</span>
           </div>
         </div>
 
-        <div class="actions">
+        <div class="builder-actions">
           <button class="btn secondary" id="clearBtn" type="button">Limpar</button>
-          <button class="btn primary" id="generateBtn" type="button">Gerar link do imóvel</button>
+          <button class="btn primary" id="generateBtn" type="button"><span>Gerar link do imóvel</span><span class="arrow">→</span></button>
         </div>
 
         <div class="output" id="output" hidden>
-          <div class="output-label">LINK GERADO</div>
+          <div class="output-head"><div class="output-label"><i></i><span>LINK PRONTO PARA CAMPANHA</span></div></div>
           <div class="url" id="generatedUrl"></div>
-          <div class="output-actions">
-            <button class="smallbtn" id="copyBtn" type="button">Copiar link</button>
-            <button class="smallbtn" id="openBtn" type="button">Abrir formulário</button>
-          </div>
+          <div class="output-actions"><button class="smallbtn" id="copyBtn" type="button">Copiar link</button><button class="smallbtn" id="openBtn" type="button">Abrir formulário</button></div>
         </div>
       </section>
 
-      <aside class="preview">
-        <div>
-          <div class="k">PRÉVIA DO CONTEXTO</div>
-          <h3 id="previewName">Seu imóvel aparece aqui</h3>
-          <div class="meta"><span id="previewCode">Código do site</span> · <span id="previewValue">Valor do imóvel</span></div>
+      <aside class="card preview-card">
+        <div class="preview-top"><strong>Prévia ao vivo</strong><span>Atualiza enquanto você digita</span></div>
+        <div class="device-wrap">
+          <div class="device">
+            <div class="device-screen">
+              <div class="device-grid"></div><div class="device-glow"></div>
+              <div class="preview-brand"><div class="preview-mark">A</div><strong>ADIMÓVEL</strong></div>
+              <div class="preview-body"><div class="preview-kicker">ATENDIMENTO PERSONALIZADO</div><h3 id="previewName">Seu imóvel aparece aqui</h3><div class="preview-meta"><span id="previewCode">Código do site</span> · <span id="previewValue">Valor do imóvel</span></div></div>
+              <div class="preview-question"><small>ETAPA 1 DE 4</small><strong>Como você pretende comprar este imóvel?</strong></div>
+            </div>
+          </div>
+          <div class="preview-flow">
+            <div class="flow-card good"><b>Dentro da régua</b><span>Vai para o WhatsApp com os dados preenchidos.</span></div>
+            <div class="flow-card"><b>Fora da régua</b><span>Vai para o site conhecer opções mais compatíveis.</span></div>
+          </div>
         </div>
-        <div class="journey"><strong>Fluxo automático</strong><p>Perfil dentro da régua → WhatsApp com todos os dados preenchidos.<br>Perfil fora da régua → site da Adimóvel para explorar outras oportunidades.</p></div>
       </aside>
     </section>
 
-    <section class="saved">
-      <div class="saved-head"><h2>Links gerados</h2><span>Salvos neste navegador</span></div>
-      <div class="table-wrap">
-        <table>
-          <thead><tr><th>IMÓVEL</th><th>CÓDIGO</th><th>VALOR</th><th>ENTRADA MÍN.</th><th>PRAZO</th><th>AÇÕES</th></tr></thead>
-          <tbody id="savedBody"></tbody>
-        </table>
-      </div>
+    <section class="card saved">
+      <div class="saved-head"><div><h2>Links gerados</h2><p>Seu histórico fica salvo localmente neste navegador.</p></div><span class="saved-count" id="savedCount">0 links</span></div>
+      <div class="table-wrap"><table><thead><tr><th>IMÓVEL</th><th>CÓDIGO</th><th>VALOR</th><th>ENTRADA MÍN.</th><th>PRAZO</th><th>AÇÕES</th></tr></thead><tbody id="savedBody"></tbody></table></div>
     </section>
   </main>
 
+  <div class="toast" id="toast"><strong id="toastTitle">Pronto</strong><span id="toastText">Ação concluída.</span></div>
+
   <script>
-    (() => {
-      const BASE = "https://mktblinks.github.io/ABM2/adimovel-jc/";
-      const STORAGE = "adimovel-jc-links-v1";
-      const $ = s => document.querySelector(s);
-      const money = new Intl.NumberFormat("pt-BR", {style:"currency",currency:"BRL",maximumFractionDigits:0});
-      let entryTouched = false;
-      let lastUrl = "";
+    (()=>{
+      const BASE="https://mktblinks.github.io/ABM2/adimovel-jc/";
+      const STORAGE="adimovel-jc-links-v1";
+      const $=s=>document.querySelector(s);
+      const money=new Intl.NumberFormat("pt-BR",{style:"currency",currency:"BRL",maximumFractionDigits:0});
+      let entryTouched=false,lastUrl="",toastTimer;
 
       function digits(v){return String(v||"").replace(/\D/g,"")}
       function readMoney(el){return Number(digits(el.value)||0)}
       function setMoney(el,v){el.value=v?new Intl.NumberFormat("pt-BR").format(Math.round(v)):""}
       function bindMoney(el){el.addEventListener("input",()=>{const d=digits(el.value);el.value=d?new Intl.NumberFormat("pt-BR").format(Number(d)):""})}
-      bindMoney($("#propertyValue")); bindMoney($("#minEntry")); bindMoney($("#minIncome"));
+      bindMoney($("#propertyValue"));bindMoney($("#minEntry"));bindMoney($("#minIncome"));
+
+      function toast(title,text){clearTimeout(toastTimer);$("#toastTitle").textContent=title;$("#toastText").textContent=text;$("#toast").classList.add("show");toastTimer=setTimeout(()=>$("#toast").classList.remove("show"),2200)}
 
       function updatePreview(){
-        const name=$("#propertyName").value.trim(); const code=$("#propertyCode").value.trim(); const value=readMoney($("#propertyValue"));
+        const name=$("#propertyName").value.trim(),code=$("#propertyCode").value.trim(),value=readMoney($("#propertyValue"));
         $("#previewName").textContent=name||"Seu imóvel aparece aqui";
         $("#previewCode").textContent=code?`Cód. ${code}`:"Código do site";
         $("#previewValue").textContent=value?money.format(value):"Valor do imóvel";
       }
 
-      $("#propertyName").addEventListener("input",updatePreview); $("#propertyCode").addEventListener("input",updatePreview);
+      $("#propertyName").addEventListener("input",updatePreview);$("#propertyCode").addEventListener("input",updatePreview);
       $("#propertyValue").addEventListener("input",()=>{
         const value=readMoney($("#propertyValue"));
-        if(!entryTouched) setMoney($("#minEntry"), value*.20);
+        if(!entryTouched)setMoney($("#minEntry"),value*.20);
         $("#entryHint").textContent=value?`Sugestão automática: ${money.format(value*.20)} (20%).`:"Sugestão automática: 20% do imóvel.";
         updatePreview();
       });
       $("#minEntry").addEventListener("input",()=>{entryTouched=true});
 
-      function encode(obj){
-        const bytes=new TextEncoder().encode(JSON.stringify(obj));
-        let binary=""; bytes.forEach(b=>binary+=String.fromCharCode(b));
-        return btoa(binary).replace(/\+/g,"-").replace(/\//g,"_").replace(/=+$/g,"");
-      }
-
-      function validate(){
-        const name=$("#propertyName").value.trim(); const code=$("#propertyCode").value.trim(); const value=readMoney($("#propertyValue"));
-        if(!name){alert("Informe o nome do imóvel.");return false}
-        if(!code){alert("Informe o código do imóvel no site.");return false}
-        if(!value){alert("Informe o valor do imóvel.");return false}
-        return true;
-      }
-
-      function getPayload(){
-        return {
-          n:$("#propertyName").value.trim(),
-          c:$("#propertyCode").value.trim(),
-          v:readMoney($("#propertyValue")),
-          e:readMoney($("#minEntry")),
-          r:readMoney($("#minIncome")),
-          t:Number($("#maxMonths").value),
-          s:"https://adimoveljc.com.br/",
-          w:"5527981667186"
-        };
-      }
-
+      function encode(obj){const bytes=new TextEncoder().encode(JSON.stringify(obj));let binary="";bytes.forEach(b=>binary+=String.fromCharCode(b));return btoa(binary).replace(/\+/g,"-").replace(/\//g,"_").replace(/=+$/g,"")}
+      function validate(){const name=$("#propertyName").value.trim(),code=$("#propertyCode").value.trim(),value=readMoney($("#propertyValue"));if(!name){toast("Falta o nome","Informe o nome do imóvel para continuar.");$("#propertyName").focus();return false}if(!code){toast("Falta o código","Informe a referência do imóvel no site.");$("#propertyCode").focus();return false}if(!value){toast("Falta o valor","Informe o valor anunciado do imóvel.");$("#propertyValue").focus();return false}return true}
+      function getPayload(){return{n:$("#propertyName").value.trim(),c:$("#propertyCode").value.trim(),v:readMoney($("#propertyValue")),e:readMoney($("#minEntry")),r:readMoney($("#minIncome")),t:Number($("#maxMonths").value),s:"https://adimoveljc.com.br/",w:"5527981667186"}}
       function loadSaved(){try{return JSON.parse(localStorage.getItem(STORAGE)||"[]")}catch(_){return[]}}
-      function saveItem(item){
-        const items=loadSaved().filter(x=>!(x.code===item.code&&x.name===item.name));
-        items.unshift(item); localStorage.setItem(STORAGE,JSON.stringify(items.slice(0,100))); renderSaved();
-      }
-      function removeItem(id){localStorage.setItem(STORAGE,JSON.stringify(loadSaved().filter(x=>x.id!==id)));renderSaved()}
+      function updateCounts(){const n=loadSaved().length;$("#totalLinks").textContent=n;$("#savedCount").textContent=`${n} ${n===1?"link":"links"}`}
+      function saveItem(item){const items=loadSaved().filter(x=>!(x.code===item.code&&x.name===item.name));items.unshift(item);localStorage.setItem(STORAGE,JSON.stringify(items.slice(0,100)));renderSaved()}
+      function removeItem(id){localStorage.setItem(STORAGE,JSON.stringify(loadSaved().filter(x=>x.id!==id)));renderSaved();toast("Link removido","O item saiu do histórico deste navegador.")}
+      function escapeHtml(s){const d=document.createElement("div");d.textContent=s;return d.innerHTML}
+      function copyText(text,button){navigator.clipboard.writeText(text).then(()=>{const old=button.textContent;button.textContent="Copiado";button.classList.add("ok");toast("Link copiado","Pronto para colar na campanha.");setTimeout(()=>{button.textContent=old;button.classList.remove("ok")},1400)}).catch(()=>prompt("Copie o link:",text))}
 
       function renderSaved(){
-        const body=$("#savedBody"); const items=loadSaved(); body.innerHTML="";
-        if(!items.length){body.innerHTML='<tr><td class="empty" colspan="6">Nenhum link gerado ainda.</td></tr>';return}
-        items.forEach(item=>{
-          const tr=document.createElement("tr");
-          tr.innerHTML=`<td><strong>${escapeHtml(item.name)}</strong><span class="muted">${new Date(item.createdAt).toLocaleDateString("pt-BR")}</span></td><td>${escapeHtml(item.code)}</td><td>${money.format(item.value)}</td><td>${item.entry?money.format(item.entry):"Sem filtro"}</td><td>${item.months>=24?"Sem filtro":`Até ${item.months} meses`}</td><td><div class="table-actions"><button class="smallbtn copy-row">Copiar</button><button class="smallbtn open-row">Abrir</button><button class="smallbtn danger delete-row">Excluir</button></div></td>`;
-          tr.querySelector(".copy-row").onclick=()=>copyText(item.url,tr.querySelector(".copy-row"));
-          tr.querySelector(".open-row").onclick=()=>window.open(item.url,"_blank","noopener");
-          tr.querySelector(".delete-row").onclick=()=>removeItem(item.id);
-          body.appendChild(tr);
-        });
-      }
-      function escapeHtml(s){const d=document.createElement("div");d.textContent=s;return d.innerHTML}
-
-      function copyText(text,button){
-        navigator.clipboard.writeText(text).then(()=>{const old=button.textContent;button.textContent="Copiado";button.classList.add("ok");setTimeout(()=>{button.textContent=old;button.classList.remove("ok")},1400)}).catch(()=>prompt("Copie o link:",text));
+        const body=$("#savedBody"),items=loadSaved();body.innerHTML="";updateCounts();
+        if(!items.length){body.innerHTML='<tr><td class="empty" colspan="6">Seus links de imóveis aparecerão aqui.</td></tr>';return}
+        items.forEach((item,index)=>{const tr=document.createElement("tr");tr.style.animation=`pageIn .35s ${Math.min(index*35,220)}ms var(--ease) both`;tr.innerHTML=`<td><strong>${escapeHtml(item.name)}</strong><span class="muted">${new Date(item.createdAt).toLocaleDateString("pt-BR")}</span></td><td>${escapeHtml(item.code)}</td><td>${money.format(item.value)}</td><td>${item.entry?money.format(item.entry):"Sem filtro"}</td><td>${item.months>=24?"Sem filtro":`Até ${item.months} meses`}</td><td><div class="table-actions"><button class="smallbtn copy-row">Copiar</button><button class="smallbtn open-row">Abrir</button><button class="smallbtn danger delete-row">Excluir</button></div></td>`;tr.querySelector(".copy-row").onclick=()=>copyText(item.url,tr.querySelector(".copy-row"));tr.querySelector(".open-row").onclick=()=>window.open(item.url,"_blank","noopener");tr.querySelector(".delete-row").onclick=()=>removeItem(item.id);body.appendChild(tr)})
       }
 
       $("#generateBtn").addEventListener("click",()=>{
         if(!validate())return;
-        const payload=getPayload(); const url=`${BASE}?imovel=${encodeURIComponent(payload.n.toLowerCase().replace(/[^a-z0-9à-ú]+/gi,"-").replace(/^-|-$/g,""))}&d=${encode(payload)}`;
-        lastUrl=url; $("#generatedUrl").textContent=url; $("#output").hidden=false;
+        const payload=getPayload(),slug=payload.n.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"");
+        const url=`${BASE}?imovel=${encodeURIComponent(slug)}&d=${encode(payload)}`;lastUrl=url;$("#generatedUrl").textContent=url;$("#output").hidden=false;
         saveItem({id:Date.now()+"-"+Math.random().toString(36).slice(2,7),name:payload.n,code:payload.c,value:payload.v,entry:payload.e,income:payload.r,months:payload.t,url,createdAt:new Date().toISOString()});
-        $("#output").scrollIntoView({behavior:"smooth",block:"nearest"});
+        $("#output").scrollIntoView({behavior:"smooth",block:"nearest"});toast("Link criado","O formulário deste imóvel já está pronto para uso.")
       });
       $("#copyBtn").addEventListener("click",e=>lastUrl&&copyText(lastUrl,e.currentTarget));
       $("#openBtn").addEventListener("click",()=>lastUrl&&window.open(lastUrl,"_blank","noopener"));
-      $("#clearBtn").addEventListener("click",()=>{
-        ["#propertyName","#propertyCode","#propertyValue","#minEntry","#minIncome"].forEach(id=>$(id).value="");
-        $("#maxMonths").value="6"; $("#output").hidden=true; lastUrl="";entryTouched=false;updatePreview();
-      });
-      renderSaved(); updatePreview();
+      $("#clearBtn").addEventListener("click",()=>{["#propertyName","#propertyCode","#propertyValue","#minEntry","#minIncome"].forEach(id=>$(id).value="");$("#maxMonths").value="6";$("#output").hidden=true;lastUrl="";entryTouched=false;updatePreview();toast("Campos limpos","Pronto para cadastrar outro imóvel.")});
+      renderSaved();updatePreview();
     })();
   </script>
 </body>
