@@ -94,7 +94,7 @@
     if (!data.product) data.product = pieceFallback.value.trim();
 
     const classification = classifyLead();
-    const message = buildMessage({ ...data, city, classification });
+    const message = buildMessage({ ...data, city });
     const url = `https://wa.me/${whatsapp}?text=${encodeURIComponent(message)}`;
 
     track("FormComplete", {
@@ -229,29 +229,21 @@
     const delivery = labelFrom(config.delivery, payload.delivery);
 
     const visible = [
-      `*${config.brandName || "DOCE MISTÉRIO"} | ${payload.classification}*`,
+      `Olá! Vim pelo anúncio da ${config.brandName || "Doce Mistério"} e gostaria de atendimento.`,
       "",
-      `*PEÇA:* ${product}`
+      `*Peça:* ${product}`
     ];
 
-    if (payload.productCode) visible.push(`*REFERÊNCIA:* ${payload.productCode}`);
+    if (payload.productCode) visible.push(`*Referência:* ${payload.productCode}`);
 
     visible.push(
-      `Tamanho: ${payload.size}`,
-      `Intenção: ${intent}`,
-      `Recebimento: ${delivery}`,
-      `Cidade: ${payload.city}`
+      `*Tamanho:* ${payload.size}`,
+      `*O que procuro:* ${intent}`,
+      `*Recebimento:* ${delivery}`,
+      `*Cidade:* ${payload.city}`,
+      "",
+      "Pode me atender?"
     );
-
-    const tracking = [];
-    if (payload.campaign) tracking.push(`Campanha: ${payload.campaign}`);
-    if (payload.adset) tracking.push(`Conjunto: ${payload.adset}`);
-    if (payload.creative) tracking.push(`Criativo/anúncio: ${payload.creative}`);
-    if (payload.source) tracking.push(`Origem: ${payload.source}`);
-    if (payload.term) tracking.push(`Termo: ${payload.term}`);
-
-    if (tracking.length) visible.push("", "_Identificação do anúncio_", ...tracking);
-    visible.push("", "Pode me atender?");
 
     return visible.join("\n");
   }
