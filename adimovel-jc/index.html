@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#0f1720">
+  <meta name="description" content="Pré-atendimento imobiliário Adimóvel Jardim Camburi">
+  <title>Atendimento | Adimóvel Jardim Camburi</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css?v=1">
+</head>
+<body>
+  <main class="page-shell">
+    <section class="experience">
+      <aside class="property-panel" aria-label="Imóvel anunciado">
+        <div class="brand-row">
+          <div class="brand-mark">A</div>
+          <div>
+            <strong>ADIMÓVEL</strong>
+            <span>Jardim Camburi</span>
+          </div>
+        </div>
+
+        <div class="property-copy">
+          <p class="eyebrow">ATENDIMENTO PERSONALIZADO</p>
+          <h1 id="propertyName">Imóvel selecionado</h1>
+          <div class="property-meta">
+            <span id="propertyCode">Código</span>
+            <span class="dot">•</span>
+            <span id="propertyPrice">Valor sob consulta</span>
+          </div>
+          <p>Responda algumas perguntas rápidas para encaminharmos seu atendimento da forma mais adequada.</p>
+        </div>
+
+        <div class="panel-foot">
+          <span>Vitória · ES</span>
+          <span>Adimóvel Consultoria de Imóveis</span>
+        </div>
+      </aside>
+
+      <section class="form-panel">
+        <div class="form-top">
+          <div>
+            <p class="mini-brand">Adimóvel Jardim Camburi</p>
+            <p class="microcopy">Pré-atendimento</p>
+          </div>
+          <span id="stepCounter">1 de 4</span>
+        </div>
+
+        <div class="progress-track" aria-label="Progresso do formulário">
+          <div id="progressBar" class="progress-bar"></div>
+        </div>
+
+        <form id="leadForm" novalidate>
+          <section class="step is-active" data-step="1">
+            <p class="step-label">FORMA DE COMPRA</p>
+            <h2>Como você pretende comprar este imóvel?</h2>
+            <p class="step-copy">Escolha a opção que mais se aproxima do seu momento atual.</p>
+            <div class="option-stack" id="paymentOptions">
+              <button type="button" class="option-card" data-value="financiamento">
+                <span class="option-icon">01</span>
+                <span><strong>Financiamento</strong><small>Quero financiar parte do valor</small></span>
+              </button>
+              <button type="button" class="option-card" data-value="avista">
+                <span class="option-icon">02</span>
+                <span><strong>À vista</strong><small>Tenho o valor disponível para compra</small></span>
+              </button>
+              <button type="button" class="option-card" data-value="consorcio">
+                <span class="option-icon">03</span>
+                <span><strong>Carta contemplada</strong><small>Quero utilizar consórcio já contemplado</small></span>
+              </button>
+              <button type="button" class="option-card" data-value="permuta">
+                <span class="option-icon">04</span>
+                <span><strong>Imóvel na negociação</strong><small>Tenho outro imóvel para compor o pagamento</small></span>
+              </button>
+            </div>
+          </section>
+
+          <section class="step" data-step="2">
+            <p class="step-label">CAPACIDADE DE COMPRA</p>
+            <h2 id="financeTitle">Vamos entender a composição da compra.</h2>
+            <p class="step-copy" id="financeCopy">Essas informações servem apenas para direcionar o atendimento comercial.</p>
+
+            <div id="financingFields" class="field-stack">
+              <label>
+                <span>Quanto você tem disponível para entrada?</span>
+                <div class="money-field"><span>R$</span><input id="entryValue" inputmode="numeric" autocomplete="off" placeholder="0"></div>
+              </label>
+              <div class="quick-values" id="entryQuickValues"></div>
+
+              <label>
+                <span>Qual é sua renda familiar mensal aproximada?</span>
+                <div class="money-field"><span>R$</span><input id="incomeValue" inputmode="numeric" autocomplete="off" placeholder="0"></div>
+              </label>
+            </div>
+
+            <div id="alternativeFields" class="field-stack" hidden>
+              <div class="soft-card">
+                <strong id="alternativeTitle">Perfeito.</strong>
+                <p id="alternativeCopy">Vamos seguir para entender quando você pretende realizar a compra.</p>
+              </div>
+            </div>
+          </section>
+
+          <section class="step" data-step="3">
+            <p class="step-label">MOMENTO DE COMPRA</p>
+            <h2>Quando você pretende comprar?</h2>
+            <p class="step-copy">Isso nos ajuda a priorizar o atendimento de acordo com o seu momento.</p>
+            <div class="option-grid" id="timelineOptions">
+              <button type="button" class="choice-chip" data-value="1">Agora / até 30 dias</button>
+              <button type="button" class="choice-chip" data-value="3">Em até 3 meses</button>
+              <button type="button" class="choice-chip" data-value="6">Em até 6 meses</button>
+              <button type="button" class="choice-chip" data-value="12">De 6 a 12 meses</button>
+              <button type="button" class="choice-chip" data-value="24">Ainda estou pesquisando</button>
+            </div>
+          </section>
+
+          <section class="step" data-step="4">
+            <p class="step-label">SEUS DADOS</p>
+            <h2>Para quem vamos encaminhar este atendimento?</h2>
+            <p class="step-copy">Preencha seus dados para concluirmos.</p>
+
+            <div class="field-stack">
+              <label>
+                <span>Nome</span>
+                <input id="leadName" type="text" autocomplete="name" placeholder="Seu nome">
+              </label>
+              <label>
+                <span>WhatsApp</span>
+                <input id="leadPhone" type="tel" inputmode="tel" autocomplete="tel" placeholder="(27) 99999-9999">
+              </label>
+            </div>
+
+            <div class="privacy-note">Ao continuar, você autoriza o contato da equipe da Adimóvel sobre este imóvel e opções relacionadas.</div>
+          </section>
+
+          <p id="formError" class="form-error" role="alert" hidden></p>
+
+          <div class="actions">
+            <button type="button" class="btn btn-secondary" id="backBtn" hidden>Voltar</button>
+            <button type="button" class="btn btn-primary" id="nextBtn">Continuar</button>
+            <button type="submit" class="btn btn-primary" id="submitBtn" hidden>Concluir atendimento</button>
+          </div>
+        </form>
+
+        <div id="resultState" class="result-state" hidden>
+          <div class="result-icon">✓</div>
+          <h2 id="resultTitle">Tudo certo.</h2>
+          <p id="resultCopy">Estamos preparando o próximo passo.</p>
+          <a id="resultButton" class="btn btn-primary" href="#">Continuar</a>
+        </div>
+
+        <div class="form-footer">Adimóvel Jardim Camburi · CRECI 04431-J-ES</div>
+      </section>
+    </section>
+  </main>
+
+  <script src="app.js?v=1"></script>
+</body>
+</html>
