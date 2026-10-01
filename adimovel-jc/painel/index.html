@@ -1,0 +1,223 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#101820">
+  <title>Painel de campanhas | Adimóvel JC</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <style>
+    :root{--ink:#101820;--ink2:#1e2b36;--paper:#f1efe8;--card:#fff;--muted:#6e7780;--line:#e5e1d7;--gold:#b79a62;--green:#1f7a54;--red:#a94b4b;--shadow:0 22px 60px rgba(12,20,28,.1)}
+    *{box-sizing:border-box} body{margin:0;background:linear-gradient(145deg,#efede6,#f8f6f1);font-family:"DM Sans",sans-serif;color:var(--ink)}
+    button,input,select{font:inherit}.shell{width:min(1180px,calc(100% - 32px));margin:0 auto;padding:32px 0 60px}.topbar{display:flex;justify-content:space-between;gap:24px;align-items:center;margin-bottom:28px}.brand{display:flex;align-items:center;gap:13px}.mark{width:42px;height:42px;border:1px solid #c8b994;display:grid;place-items:center;font-family:"Playfair Display",serif;font-size:24px;color:#917746}.brand strong{display:block;letter-spacing:.12em;font-size:13px}.brand span{display:block;color:var(--muted);font-size:12px;margin-top:3px}.topbar a{color:var(--ink);font-size:12px;text-decoration:none;border-bottom:1px solid #bcae8d}
+    .hero{background:var(--ink);color:#fff;padding:36px 38px;box-shadow:var(--shadow);margin-bottom:18px;position:relative;overflow:hidden}.hero:after{content:"";position:absolute;width:330px;height:330px;border:1px solid rgba(183,154,98,.22);border-radius:50%;right:-150px;top:-185px}.hero p{margin:0 0 9px;color:#c5ad7a;font-size:11px;font-weight:700;letter-spacing:.16em}.hero h1{margin:0;font-family:"Playfair Display",serif;font-size:clamp(32px,5vw,50px);line-height:1.04;font-weight:600}.hero div{margin-top:12px;color:rgba(255,255,255,.63);max-width:720px;line-height:1.55;font-size:13px}
+    .grid{display:grid;grid-template-columns:1.05fr .95fr;gap:18px}.card{background:#fff;border:1px solid rgba(16,24,32,.07);box-shadow:0 14px 38px rgba(16,24,32,.06);padding:28px}.card h2{margin:0;font-family:"Playfair Display",serif;font-size:28px;font-weight:600}.sub{margin:7px 0 24px;color:var(--muted);font-size:12px;line-height:1.5}.fields{display:grid;grid-template-columns:1fr 1fr;gap:14px}.field.full{grid-column:1/-1}.field label{display:block;font-size:11px;font-weight:700;margin-bottom:7px;letter-spacing:.03em}.field input,.field select{width:100%;height:48px;border:1px solid var(--line);background:#fff;padding:0 12px;outline:none;color:var(--ink)}.field input:focus,.field select:focus{border-color:#baa777;box-shadow:0 0 0 3px rgba(183,154,98,.1)}.money{display:flex;align-items:center;border:1px solid var(--line)}.money:focus-within{border-color:#baa777;box-shadow:0 0 0 3px rgba(183,154,98,.1)}.money span{padding-left:12px;color:var(--muted);font-size:12px}.money input{border:0;box-shadow:none!important}.hint{display:block;margin-top:5px;color:#92989e;font-size:10px;line-height:1.4}.rulebox{grid-column:1/-1;background:#f7f4ed;border:1px solid #e7dfcf;padding:15px 16px;display:flex;gap:12px;align-items:flex-start}.rulebox b{font-size:12px}.rulebox p{margin:4px 0 0;color:var(--muted);font-size:11px;line-height:1.45}.badge{background:#ece4d3;color:#806a42;padding:4px 7px;font-size:9px;font-weight:800;letter-spacing:.08em;white-space:nowrap}.actions{display:flex;gap:10px;margin-top:20px}.btn{min-height:48px;border:1px solid transparent;padding:0 18px;font-weight:700;font-size:12px;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;justify-content:center}.primary{background:var(--ink);color:#fff;flex:1}.secondary{background:#fff;border-color:var(--line);color:var(--ink)}
+    .output{border:1px solid var(--line);background:#faf9f6;padding:16px;margin-top:22px}.output-label{font-size:10px;font-weight:800;letter-spacing:.1em;color:#82704d}.url{font-size:11px;line-height:1.55;color:#46515a;word-break:break-all;margin:8px 0 13px}.output-actions{display:flex;gap:8px}.smallbtn{border:1px solid var(--line);background:#fff;padding:8px 10px;font-size:10px;font-weight:700;cursor:pointer;color:var(--ink)}.smallbtn.ok{background:#eef5f0;color:var(--green);border-color:#d8e9de}
+    .preview{background:#111923;color:white;min-height:100%;display:flex;flex-direction:column;justify-content:space-between;padding:26px;position:relative;overflow:hidden}.preview:after{content:"";position:absolute;inset:auto -80px -90px auto;width:230px;height:230px;border:1px solid rgba(183,154,98,.19);border-radius:50%}.preview .k{font-size:10px;color:#c7ad77;letter-spacing:.16em;font-weight:700}.preview h3{font-family:"Playfair Display",serif;font-size:40px;line-height:1;margin:18px 0 10px;max-width:440px}.preview .meta{color:rgba(255,255,255,.64);font-size:12px}.preview .journey{margin-top:80px;border-top:1px solid rgba(255,255,255,.11);padding-top:20px}.preview .journey strong{font-size:12px}.preview .journey p{color:rgba(255,255,255,.58);font-size:11px;line-height:1.5;margin:6px 0 0}.saved{margin-top:18px}.saved-head{display:flex;justify-content:space-between;align-items:end;margin-bottom:12px}.saved h2{margin:0;font-family:"Playfair Display",serif;font-weight:600}.saved-head span{color:var(--muted);font-size:11px}.table-wrap{overflow:auto;background:#fff;border:1px solid rgba(16,24,32,.07);box-shadow:0 12px 34px rgba(16,24,32,.05)}table{width:100%;border-collapse:collapse;min-width:780px}th,td{text-align:left;border-bottom:1px solid #eeece7;padding:13px 14px;font-size:11px}th{color:#7d858d;font-size:9px;letter-spacing:.08em}td strong{display:block;font-size:12px}.muted{color:var(--muted)}.table-actions{display:flex;gap:6px}.empty{text-align:center!important;color:var(--muted);padding:32px!important}.danger{color:var(--red)!important}
+    @media(max-width:840px){.shell{width:100%;padding:0 0 40px}.topbar{padding:18px 18px 0}.topbar a{display:none}.hero{margin-top:18px;padding:28px 20px}.grid{grid-template-columns:1fr;gap:0}.card{border-left:0;border-right:0;padding:24px 18px}.preview{min-height:340px}.saved{padding:0 18px}.fields{grid-template-columns:1fr}.field.full,.rulebox{grid-column:auto}.actions{position:sticky;bottom:0;background:#fff;padding:12px 0 max(8px,env(safe-area-inset-bottom));z-index:3}}
+    @media(max-width:480px){.hero h1{font-size:35px}.preview h3{font-size:34px}.output-actions{flex-wrap:wrap}.smallbtn{flex:1}}
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <header class="topbar">
+      <div class="brand"><div class="mark">A</div><div><strong>ADIMÓVEL</strong><span>Gerador de campanhas · Jardim Camburi</span></div></div>
+      <a href="../" target="_blank" rel="noopener">Abrir formulário base</a>
+    </header>
+
+    <section class="hero">
+      <p>ABM · PRÉ-ATENDIMENTO IMOBILIÁRIO</p>
+      <h1>Um link inteligente para cada imóvel.</h1>
+      <div>Cadastre nome, código e valor. O painel gera o formulário exclusivo daquele anúncio e aplica a régua comercial antes de direcionar o lead.</div>
+    </section>
+
+    <section class="grid">
+      <section class="card">
+        <h2>Novo imóvel</h2>
+        <p class="sub">O link é gerado na hora. Você pode usar o mesmo formulário em Meta Ads, legenda, Stories, bio ou WhatsApp.</p>
+
+        <div class="fields">
+          <div class="field full">
+            <label for="propertyName">NOME DO IMÓVEL</label>
+            <input id="propertyName" placeholder="Ex.: Mirage Residence" autocomplete="off">
+          </div>
+          <div class="field">
+            <label for="propertyCode">CÓDIGO DO SITE</label>
+            <input id="propertyCode" placeholder="Ex.: AP03698" autocomplete="off">
+            <span class="hint">Use exatamente a referência que aparece no site da Adimóvel.</span>
+          </div>
+          <div class="field">
+            <label for="propertyValue">VALOR DO IMÓVEL</label>
+            <div class="money"><span>R$</span><input id="propertyValue" inputmode="numeric" placeholder="0"></div>
+          </div>
+
+          <div class="rulebox">
+            <span class="badge">RÉGUA</span>
+            <div><b>Triagem comercial automática</b><p>Por padrão, a entrada mínima acompanha 20% do valor do imóvel. Você pode alterar a entrada, adicionar renda mínima e definir o prazo máximo antes de gerar o link.</p></div>
+          </div>
+
+          <div class="field">
+            <label for="minEntry">ENTRADA MÍNIMA</label>
+            <div class="money"><span>R$</span><input id="minEntry" inputmode="numeric" placeholder="0"></div>
+            <span class="hint" id="entryHint">Sugestão automática: 20% do imóvel.</span>
+          </div>
+          <div class="field">
+            <label for="minIncome">RENDA FAMILIAR MÍNIMA · OPCIONAL</label>
+            <div class="money"><span>R$</span><input id="minIncome" inputmode="numeric" placeholder="Deixe vazio para não filtrar"></div>
+            <span class="hint">Se vazio, a renda será coletada, mas não eliminará o lead.</span>
+          </div>
+          <div class="field">
+            <label for="maxMonths">PRAZO MÁXIMO PARA COMPRA</label>
+            <select id="maxMonths">
+              <option value="3">Até 3 meses</option>
+              <option value="6" selected>Até 6 meses</option>
+              <option value="12">Até 12 meses</option>
+              <option value="24">Sem filtro de prazo</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>DESTINO DO LEAD</label>
+            <input value="WhatsApp Adimóvel · 27 98166-7186" disabled>
+            <span class="hint">Leads fora da régua seguem para adimoveljc.com.br.</span>
+          </div>
+        </div>
+
+        <div class="actions">
+          <button class="btn secondary" id="clearBtn" type="button">Limpar</button>
+          <button class="btn primary" id="generateBtn" type="button">Gerar link do imóvel</button>
+        </div>
+
+        <div class="output" id="output" hidden>
+          <div class="output-label">LINK GERADO</div>
+          <div class="url" id="generatedUrl"></div>
+          <div class="output-actions">
+            <button class="smallbtn" id="copyBtn" type="button">Copiar link</button>
+            <button class="smallbtn" id="openBtn" type="button">Abrir formulário</button>
+          </div>
+        </div>
+      </section>
+
+      <aside class="preview">
+        <div>
+          <div class="k">PRÉVIA DO CONTEXTO</div>
+          <h3 id="previewName">Seu imóvel aparece aqui</h3>
+          <div class="meta"><span id="previewCode">Código do site</span> · <span id="previewValue">Valor do imóvel</span></div>
+        </div>
+        <div class="journey"><strong>Fluxo automático</strong><p>Perfil dentro da régua → WhatsApp com todos os dados preenchidos.<br>Perfil fora da régua → site da Adimóvel para explorar outras oportunidades.</p></div>
+      </aside>
+    </section>
+
+    <section class="saved">
+      <div class="saved-head"><h2>Links gerados</h2><span>Salvos neste navegador</span></div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>IMÓVEL</th><th>CÓDIGO</th><th>VALOR</th><th>ENTRADA MÍN.</th><th>PRAZO</th><th>AÇÕES</th></tr></thead>
+          <tbody id="savedBody"></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    (() => {
+      const BASE = "https://mktblinks.github.io/ABM2/adimovel-jc/";
+      const STORAGE = "adimovel-jc-links-v1";
+      const $ = s => document.querySelector(s);
+      const money = new Intl.NumberFormat("pt-BR", {style:"currency",currency:"BRL",maximumFractionDigits:0});
+      let entryTouched = false;
+      let lastUrl = "";
+
+      function digits(v){return String(v||"").replace(/\D/g,"")}
+      function readMoney(el){return Number(digits(el.value)||0)}
+      function setMoney(el,v){el.value=v?new Intl.NumberFormat("pt-BR").format(Math.round(v)):""}
+      function bindMoney(el){el.addEventListener("input",()=>{const d=digits(el.value);el.value=d?new Intl.NumberFormat("pt-BR").format(Number(d)):""})}
+      bindMoney($("#propertyValue")); bindMoney($("#minEntry")); bindMoney($("#minIncome"));
+
+      function updatePreview(){
+        const name=$("#propertyName").value.trim(); const code=$("#propertyCode").value.trim(); const value=readMoney($("#propertyValue"));
+        $("#previewName").textContent=name||"Seu imóvel aparece aqui";
+        $("#previewCode").textContent=code?`Cód. ${code}`:"Código do site";
+        $("#previewValue").textContent=value?money.format(value):"Valor do imóvel";
+      }
+
+      $("#propertyName").addEventListener("input",updatePreview); $("#propertyCode").addEventListener("input",updatePreview);
+      $("#propertyValue").addEventListener("input",()=>{
+        const value=readMoney($("#propertyValue"));
+        if(!entryTouched) setMoney($("#minEntry"), value*.20);
+        $("#entryHint").textContent=value?`Sugestão automática: ${money.format(value*.20)} (20%).`:"Sugestão automática: 20% do imóvel.";
+        updatePreview();
+      });
+      $("#minEntry").addEventListener("input",()=>{entryTouched=true});
+
+      function encode(obj){
+        const bytes=new TextEncoder().encode(JSON.stringify(obj));
+        let binary=""; bytes.forEach(b=>binary+=String.fromCharCode(b));
+        return btoa(binary).replace(/\+/g,"-").replace(/\//g,"_").replace(/=+$/g,"");
+      }
+
+      function validate(){
+        const name=$("#propertyName").value.trim(); const code=$("#propertyCode").value.trim(); const value=readMoney($("#propertyValue"));
+        if(!name){alert("Informe o nome do imóvel.");return false}
+        if(!code){alert("Informe o código do imóvel no site.");return false}
+        if(!value){alert("Informe o valor do imóvel.");return false}
+        return true;
+      }
+
+      function getPayload(){
+        return {
+          n:$("#propertyName").value.trim(),
+          c:$("#propertyCode").value.trim(),
+          v:readMoney($("#propertyValue")),
+          e:readMoney($("#minEntry")),
+          r:readMoney($("#minIncome")),
+          t:Number($("#maxMonths").value),
+          s:"https://adimoveljc.com.br/",
+          w:"5527981667186"
+        };
+      }
+
+      function loadSaved(){try{return JSON.parse(localStorage.getItem(STORAGE)||"[]")}catch(_){return[]}}
+      function saveItem(item){
+        const items=loadSaved().filter(x=>!(x.code===item.code&&x.name===item.name));
+        items.unshift(item); localStorage.setItem(STORAGE,JSON.stringify(items.slice(0,100))); renderSaved();
+      }
+      function removeItem(id){localStorage.setItem(STORAGE,JSON.stringify(loadSaved().filter(x=>x.id!==id)));renderSaved()}
+
+      function renderSaved(){
+        const body=$("#savedBody"); const items=loadSaved(); body.innerHTML="";
+        if(!items.length){body.innerHTML='<tr><td class="empty" colspan="6">Nenhum link gerado ainda.</td></tr>';return}
+        items.forEach(item=>{
+          const tr=document.createElement("tr");
+          tr.innerHTML=`<td><strong>${escapeHtml(item.name)}</strong><span class="muted">${new Date(item.createdAt).toLocaleDateString("pt-BR")}</span></td><td>${escapeHtml(item.code)}</td><td>${money.format(item.value)}</td><td>${item.entry?money.format(item.entry):"Sem filtro"}</td><td>${item.months>=24?"Sem filtro":`Até ${item.months} meses`}</td><td><div class="table-actions"><button class="smallbtn copy-row">Copiar</button><button class="smallbtn open-row">Abrir</button><button class="smallbtn danger delete-row">Excluir</button></div></td>`;
+          tr.querySelector(".copy-row").onclick=()=>copyText(item.url,tr.querySelector(".copy-row"));
+          tr.querySelector(".open-row").onclick=()=>window.open(item.url,"_blank","noopener");
+          tr.querySelector(".delete-row").onclick=()=>removeItem(item.id);
+          body.appendChild(tr);
+        });
+      }
+      function escapeHtml(s){const d=document.createElement("div");d.textContent=s;return d.innerHTML}
+
+      function copyText(text,button){
+        navigator.clipboard.writeText(text).then(()=>{const old=button.textContent;button.textContent="Copiado";button.classList.add("ok");setTimeout(()=>{button.textContent=old;button.classList.remove("ok")},1400)}).catch(()=>prompt("Copie o link:",text));
+      }
+
+      $("#generateBtn").addEventListener("click",()=>{
+        if(!validate())return;
+        const payload=getPayload(); const url=`${BASE}?imovel=${encodeURIComponent(payload.n.toLowerCase().replace(/[^a-z0-9à-ú]+/gi,"-").replace(/^-|-$/g,""))}&d=${encode(payload)}`;
+        lastUrl=url; $("#generatedUrl").textContent=url; $("#output").hidden=false;
+        saveItem({id:Date.now()+"-"+Math.random().toString(36).slice(2,7),name:payload.n,code:payload.c,value:payload.v,entry:payload.e,income:payload.r,months:payload.t,url,createdAt:new Date().toISOString()});
+        $("#output").scrollIntoView({behavior:"smooth",block:"nearest"});
+      });
+      $("#copyBtn").addEventListener("click",e=>lastUrl&&copyText(lastUrl,e.currentTarget));
+      $("#openBtn").addEventListener("click",()=>lastUrl&&window.open(lastUrl,"_blank","noopener"));
+      $("#clearBtn").addEventListener("click",()=>{
+        ["#propertyName","#propertyCode","#propertyValue","#minEntry","#minIncome"].forEach(id=>$(id).value="");
+        $("#maxMonths").value="6"; $("#output").hidden=true; lastUrl="";entryTouched=false;updatePreview();
+      });
+      renderSaved(); updatePreview();
+    })();
+  </script>
+</body>
+</html>
