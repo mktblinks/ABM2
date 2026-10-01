@@ -4,111 +4,103 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="theme-color" content="#d4145a" />
-  <meta name="description" content="Atendimento rápido Doce Mistério" />
+  <meta name="description" content="Atendimento Doce Mistério" />
   <title>Atendimento | Doce Mistério</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=6" />
+  <link rel="stylesheet" href="styles.css?v=7" />
   <style>[hidden]{display:none!important}</style>
 </head>
 <body>
-  <div class="page-glow glow-left" aria-hidden="true"></div>
-  <div class="page-glow glow-right" aria-hidden="true"></div>
-
   <main class="shell">
-    <section class="card" aria-labelledby="page-title">
-      <div class="top-accent" aria-hidden="true"></div>
-
-      <header class="brand-hero">
-        <div class="brand-visual">
-          <div class="brand-logo-wrap">
-            <img src="assets/doce-logo.svg?v=1" alt="Logo Doce Mistério" class="brand-logo" />
+    <section class="experience" aria-labelledby="page-title">
+      <aside class="brand-panel">
+        <div class="brand-panel-inner">
+          <div class="logo-frame">
+            <img src="assets/doce-logo.png?v=2" alt="Doce Mistério" class="brand-logo" />
           </div>
+          <div class="brand-panel-copy">
+            <p class="brand-kicker">ATENDIMENTO PERSONALIZADO</p>
+            <h2 class="brand-title">Doce Mistério</h2>
+            <p class="brand-text">Escolha seus detalhes e fale com nossa equipe já com o atendimento encaminhado.</p>
+          </div>
+          <div class="brand-signature">DOCE MISTÉRIO</div>
+        </div>
+      </aside>
+
+      <section class="form-panel">
+        <div class="form-head">
+          <div>
+            <p class="mini-brand">Doce Mistério</p>
+            <p class="form-label">Atendimento rápido</p>
+          </div>
+          <div class="progress-count"><span id="stepLabel">1 de 4</span></div>
         </div>
 
-        <div class="brand-copy">
-          <p class="eyebrow">ATENDIMENTO EXCLUSIVO</p>
-          <p class="brand-name" data-brand>Doce Mistério</p>
-          <p class="brand-subtitle">Moda feminina de alto padrão com atendimento mais elegante, rápido e certeiro.</p>
+        <div class="progress-track" aria-label="Progresso do formulário">
+          <div id="progressBar" class="progress-bar"></div>
+        </div>
+        <span id="progressPercent" class="progress-percent">25%</span>
+
+        <div class="product-context" id="productContext" hidden>
+          <span>Você veio pela peça</span>
+          <strong id="productName"></strong>
         </div>
 
-        <div class="hero-chip">Curadoria sob medida</div>
-      </header>
+        <form id="leadForm" novalidate>
+          <div class="step is-active" data-step="1">
+            <p class="step-kicker">Tamanho</p>
+            <h1 id="page-title">Qual tamanho você usa?</h1>
+            <p class="step-copy">Selecione uma opção.</p>
 
-      <div class="luxury-note">
-        Responda em poucos segundos e nossa equipe já recebe seu atendimento mais organizado.
-      </div>
+            <label class="piece-fallback" id="pieceFallbackWrap" hidden>
+              <span>Qual peça você viu no anúncio?</span>
+              <input id="pieceFallback" type="text" maxlength="80" placeholder="Ex.: vestido rosa, pijama, short doll..." autocomplete="off" />
+            </label>
 
-      <div class="product-context" id="productContext" hidden>
-        <span>Peça do anúncio:</span>
-        <strong id="productName"></strong>
-      </div>
+            <div id="sizeOptions" class="option-grid"></div>
+          </div>
 
-      <div class="progress-wrap" aria-label="Progresso do formulário">
-        <div class="progress-text"><span id="stepLabel">1 de 4</span><span id="progressPercent">25%</span></div>
-        <div class="progress-track"><div id="progressBar" class="progress-bar"></div></div>
-      </div>
+          <div class="step" data-step="2">
+            <p class="step-kicker">Intenção</p>
+            <h2>Como podemos te ajudar?</h2>
+            <p class="step-copy">Escolha a opção que mais combina com o que você procura.</p>
+            <div id="intentOptions" class="option-stack"></div>
+          </div>
 
-      <form id="leadForm" novalidate>
-        <div class="step is-active" data-step="1">
-          <p class="step-kicker">Seleção inicial</p>
-          <h1 id="page-title">Qual é o seu tamanho?</h1>
-          <p class="step-copy">Assim nossa equipe já separa opções mais alinhadas ao que você procura.</p>
+          <div class="step" data-step="3">
+            <p class="step-kicker">Recebimento</p>
+            <h2>Como prefere receber?</h2>
+            <p class="step-copy">Selecione uma opção.</p>
+            <div id="deliveryOptions" class="option-stack"></div>
+          </div>
 
-          <label class="piece-fallback" id="pieceFallbackWrap" hidden>
-            <span>Qual peça chamou sua atenção?</span>
-            <input id="pieceFallback" type="text" maxlength="80" placeholder="Ex.: vestido preto do anúncio" autocomplete="off" />
-            <small>Isso só aparece quando o anúncio não envia a identificação da peça automaticamente.</small>
-          </label>
+          <div class="step" data-step="4">
+            <p class="step-kicker">Localização</p>
+            <h2>Onde você está?</h2>
+            <p class="step-copy">Selecione sua cidade.</p>
+            <div id="cityOptions" class="option-grid cities"></div>
+            <label class="other-city" id="otherCityWrap" hidden>
+              <span>Digite sua cidade</span>
+              <input id="otherCity" type="text" autocomplete="address-level2" placeholder="Ex.: Guarapari" />
+            </label>
+          </div>
 
-          <div id="sizeOptions" class="option-grid"></div>
-        </div>
+          <p id="formError" class="form-error" role="alert" hidden></p>
 
-        <div class="step" data-step="2">
-          <p class="step-kicker">Seu momento de compra</p>
-          <h2>O que você quer fazer agora?</h2>
-          <p class="step-copy">Isso ajuda a vendedora a entender sua prioridade antes mesmo da conversa começar.</p>
-          <div id="intentOptions" class="option-stack"></div>
-        </div>
+          <div class="actions">
+            <button type="button" class="btn btn-ghost" id="backBtn" hidden>Voltar</button>
+            <button type="button" class="btn btn-primary" id="nextBtn">Continuar</button>
+            <button type="submit" class="btn btn-whatsapp" id="submitBtn" hidden>
+              <span class="wa-dot" aria-hidden="true"></span>
+              Continuar no WhatsApp
+            </button>
+          </div>
+        </form>
 
-        <div class="step" data-step="3">
-          <p class="step-kicker">Entrega ou retirada</p>
-          <h2>Como você prefere receber?</h2>
-          <p class="step-copy">Escolha a opção que faz mais sentido para você neste momento.</p>
-          <div id="deliveryOptions" class="option-stack"></div>
-        </div>
-
-        <div class="step" data-step="4">
-          <p class="step-kicker">Última etapa</p>
-          <h2>Onde você está?</h2>
-          <p class="step-copy">Com isso nossa equipe já consegue orientar melhor a entrega ou retirada.</p>
-          <div id="cityOptions" class="option-grid cities"></div>
-          <label class="other-city" id="otherCityWrap" hidden>
-            <span>Digite sua cidade</span>
-            <input id="otherCity" type="text" autocomplete="address-level2" placeholder="Ex.: Guarapari" />
-          </label>
-        </div>
-
-        <p id="formError" class="form-error" role="alert" hidden></p>
-
-        <div class="actions">
-          <button type="button" class="btn btn-ghost" id="backBtn" hidden>Voltar</button>
-          <button type="button" class="btn btn-primary" id="nextBtn">Continuar</button>
-          <button type="submit" class="btn btn-whatsapp" id="submitBtn" hidden>
-            <span class="wa-dot" aria-hidden="true"></span>
-            Falar com a vendedora no WhatsApp
-          </button>
-        </div>
-      </form>
-
-      <div class="trust-row">
-        <span>Atendimento humano</span>
-        <span>•</span>
-        <span>Sem cadastro</span>
-        <span>•</span>
-        <span>Experiência premium</span>
-      </div>
+        <div class="form-footer">Atendimento direto com a equipe Doce Mistério</div>
+      </section>
     </section>
   </main>
 
