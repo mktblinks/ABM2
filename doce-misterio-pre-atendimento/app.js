@@ -1,6 +1,7 @@
 (() => {
   const config = window.DOCE_CONFIG || {};
   const params = new URLSearchParams(window.location.search);
+  const sessionId = getSessionId();
 
   const creativeParam = readParam("criativo", "creative", "utm_content");
   const explicitProduct = readParam("peca", "produto", "product", "item", "anuncio");
@@ -92,6 +93,7 @@
     }
 
     if (!data.product) data.product = pieceFallback.value.trim();
+    data.city = city;
 
     const classification = classifyLead();
     const message = buildMessage({ ...data, city });
@@ -110,8 +112,18 @@
 
     setTimeout(() => {
       window.location.href = url;
-    }, 120);
+    }, 180);
   });
+
+  function getSessionId() {
+    const key = "dm_form_session";
+    let value = sessionStorage.getItem(key);
+    if (!value) {
+      value = (crypto.randomUUID ? crypto.randomUUID() : `${Date.now()}-${Math.random().toString(36).slice(2)}`);
+      sessionStorage.setItem(key, value);
+    }
+    return value;
+  }
 
   function readParam(...names) {
     for (const name of names) {
@@ -288,5 +300,44 @@
 
     window.dataLayer = window.dataLayer || [];
     window.dataLayer.push({ event: eventName, ...payload });
+    sendToPanel(eventName, details);
+  }
+
+  function sendToPanel(eventName, details = {}) {
+    const base = String(config.supabaseUrl || "").replace(/\/$/, "");
+    const key = String(config.supabaseAnonKey || "").trim();
+    if (!base || !key) return;
+
+    const row = {
+      session_id: sessionId,
+      event_name: eventName,
+      step: details.step || null,
+      product: data.product || null,
+      product_code: data.productCode || null,
+      campaign: data.campaign || null,
+      adset: data.adset || null,
+      creative: data.creative || null,
+      source: data.source || null,
+      medium: data.medium || null,
+      term: data.term || null,
+      fbclid: data.fbclid || null,
+      size: data.size || null,
+      intent: data.intent || null,
+      delivery: data.delivery || null,
+      city: data.city === "Outra cidade" ? (otherCity.value.trim() || "Outra cidade") : (data.city || null),
+      classification: details.classification || null
+    };
+
+    fetch(`${base}/rest/v1/dm_form_events`, {
+      method: "POST",
+      keepalive: true,
+      headers: {
+        "Content-Type": "application/json",
+        apikey: key,
+        Authorization: `Bearer ${key}`,
+        Prefer: "return=minimal"
+      },
+      body: JSON.stringify(row)
+    }).catch(() => {});
   }
 })();
