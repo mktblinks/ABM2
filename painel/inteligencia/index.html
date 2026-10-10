@@ -183,7 +183,7 @@ async function ensureAnalysis(force){
 }
 function renderAudit(a){
   if(!a){sourceWarning.style.display='block';sourceWarning.textContent='Ainda não há relatório concluído. A análise automática será iniciada em seguida.';totalScore.innerHTML='--<small>/100</small>';itemCount.textContent='0';categoryCount.textContent='0';avgPrice.textContent='--';agentSummary.innerHTML='<div class="muted">Aguardando análise.</div>';topActions.innerHTML='<li>Aguardando análise.</li>';auditSources.innerHTML='<div class="empty">Nenhuma fonte registrada ainda.</div>';return}
-  totalScore.innerHTML=(a.score_total==null?'--':a.score_total)+'<small>/100</small>';
+  const scoreParts=[a.score_photos,a.score_structure,a.score_price,a.score_descriptions,a.score_upsell,a.score_availability].filter(v=>v!=null&&Number.isFinite(Number(v)));const calculatedScore=scoreParts.length?Math.round(scoreParts.reduce((s,v)=>s+Number(v),0)/scoreParts.length):null;const displayScore=a.score_total==null?calculatedScore:a.score_total;totalScore.innerHTML=(displayScore==null?'--':displayScore)+'<small>/100</small>';
   itemCount.textContent=num(a.item_count);categoryCount.textContent=num(a.category_count);avgPrice.textContent=money(a.avg_price);
   auditDate.textContent='Atualizado '+new Date(a.captured_at).toLocaleString('pt-BR');
   setScore('sPhotos','bPhotos',a.score_photos);setScore('sStructure','bStructure',a.score_structure);setScore('sPrice','bPrice',a.score_price);
