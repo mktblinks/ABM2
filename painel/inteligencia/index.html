@@ -121,7 +121,8 @@ async function post(action,extra){
       openai_invalid_key:'A OpenAI API Key informada é inválida ou não tem acesso à API.',
       openai_rate_limit:'A OpenAI atingiu o limite momentâneo de uso. Tente novamente em alguns instantes.',
       openai_invalid_json:'O agente concluiu a pesquisa, mas a resposta veio fora do formato esperado. Gere novamente.',
-      openai_missing_client_analysis:'O agente não conseguiu concluir a análise do cliente.'
+      openai_missing_client_analysis:'O agente não conseguiu concluir a análise do cliente.',
+      openai_agents_error:'O navegador da OpenAI não conseguiu concluir a leitura do iFood. Tente novamente em alguns instantes.'
     };
     alert(errors[j.error]||(j.detail?'OpenAI: '+j.detail:'Não foi possível concluir a análise. Tente novamente.'));
     return null
@@ -163,8 +164,22 @@ async function load(){
   }catch(e){status.textContent='Indisponível';sourceWarning.style.display='block';sourceWarning.textContent='Não foi possível carregar a inteligência de cardápio agora.'}
 }
 saveOpenAI.onclick=async()=>{const key=openaiKey.value.trim();if(!key){alert('Cole sua OpenAI API Key.');return}const j=await post('save_openai_key',{openai_api_key:key});if(j){openaiKey.value='';alert('OpenAI conectada ao MKTB Intelligence.');load()}};
-runAudit.onclick=async()=>{const j=await post('analyze_client');if(j)load()};
-scanCompetitors.onclick=async()=>{const j=await post('analyze_competitors');if(j)load()};
+runAudit.onclick=async()=>{
+    const original=runAudit.textContent;
+    runAudit.disabled=true;runAudit.textContent='Abrindo iFood com IA...';status.textContent='Navegador da OpenAI analisando o cardápio...';
+    try{
+      const j=await post('analyze_client');
+      if(j){status.textContent='Análise concluída';await load()}
+    }finally{
+      runAudit.disabled=false;runAudit.textContent=original;
+    }
+  };
+scanCompetitors.onclick=async()=>{
+    const original=scanCompetitors.textContent;
+    scanCompetitors.disabled=true;scanCompetitors.textContent='Lendo concorrentes...';status.textContent='Navegador da OpenAI analisando concorrentes...';
+    try{const j=await post('analyze_competitors');if(j)await load()}
+    finally{scanCompetitors.disabled=false;scanCompetitors.textContent=original}
+  };
 addCompetitor.onclick=async()=>{const url=competitorUrl.value.trim(),name=competitorName.value.trim();if(!url){alert('Cole o link da loja concorrente no iFood.');return}const j=await post('add_competitor',{ifood_url:url,name:name});if(j){competitorUrl.value='';competitorName.value='';load()}};
 load();
 </script>
