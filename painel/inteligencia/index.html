@@ -59,7 +59,7 @@ h1{font-size:34px;margin:0 0 5px}.sub{margin:0}.status{font-size:12px;color:var(
       <h2>Assistente MKTB</h2><p>A análise agora é feita pelo nosso agente usando OpenAI e busca pública na web.</p>
       <div id="openaiState" class="ai-state bad"><span class="ai-dot"></span><span>OpenAI não configurado</span></div>
       <div class="authbox">
-        <div class="formrow"><input id="adminKey" type="password" autocomplete="off" placeholder="Chave administrativa MKTB"></div>
+        <div class="formrow"><input id="adminKey" name="mktb-admin-code" type="password" autocomplete="one-time-code" autocapitalize="none" spellcheck="false" placeholder="Chave administrativa MKTB"></div>
         <div class="formrow"><input id="openaiKey" type="password" autocomplete="new-password" placeholder="OpenAI API Key"><button class="btn primary" id="saveOpenAI">Salvar OpenAI</button></div>
       </div>
       <div class="source">A chave da OpenAI é enviada somente ao backend e armazenada criptografada no Supabase Vault. Ela não é gravada no GitHub nem fica salva no navegador. Modelo atual: <b id="modelName">GPT</b>.</div>
@@ -108,7 +108,7 @@ const money=v=>v==null?'--':Number(v).toLocaleString('pt-BR',{style:'currency',c
 const num=v=>v==null?'--':Number(v).toLocaleString('pt-BR');
 const esc=s=>String(s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 function setScore(id,bar,v){document.getElementById(id).textContent=v==null?'--':v+'/100';document.getElementById(bar).style.width=(v==null?0:v)+'%'}
-function admin(){const v=adminKey.value.trim();if(!v){alert('Digite a chave administrativa.');return null}return v}
+function admin(){const v=adminKey.value.normalize('NFKC').replace(/\s+/g,'').trim();if(!v){alert('Digite a chave administrativa.');return null}adminKey.value=v;return v}
 async function post(action,extra){
   const k=admin();if(!k)return null;status.textContent='Processando...';
   const r=await fetch(API,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(Object.assign({client:CLIENT,action:action,admin_key:k},extra||{}))});
