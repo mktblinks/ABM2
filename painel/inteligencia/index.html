@@ -16,7 +16,7 @@ h1{font-size:34px;margin:0 0 5px}.sub{margin:0}.status{font-size:12px;color:var(
 .section{display:grid;grid-template-columns:1.15fr .85fr;gap:14px;margin-top:14px}.box h2{font-size:16px;margin:0 0 5px}.box p{color:var(--muted);font-size:13px;margin:0}.finding{margin-top:12px;padding:14px;background:var(--panel2);border:1px solid var(--line);border-radius:12px}.finding b{display:block;margin-bottom:5px}.tag{font-size:10px;text-transform:uppercase;letter-spacing:.07em;padding:4px 7px;border:1px solid var(--line);border-radius:999px;color:var(--muted);margin-right:7px}.tag.alta{color:#ffaaaa;border-color:#64383a}.tag.media{color:#f4d77a;border-color:#5d5129}
 .table{margin-top:14px}.row{display:grid;grid-template-columns:1.5fr .65fr .65fr .65fr;gap:10px;padding:11px 0;border-bottom:1px solid var(--line);font-size:13px}.row.head{font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}.row span:nth-child(n+2){text-align:right}.itemdesc{color:var(--muted);font-size:11px;margin-top:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:520px}
 .authbox{margin-top:14px}.formrow{justify-content:flex-start;flex-wrap:wrap;margin-top:12px}.formrow input{flex:1;min-width:180px;background:#0d0f14;border:1px solid var(--line);color:#fff;padding:12px;border-radius:10px}.formrow input.url{min-width:320px}.btn.danger{color:#efaaaa}.btn.small{padding:7px 9px;font-size:11px}
-.comps{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:14px}.comp{background:var(--panel2);border:1px solid var(--line);border-radius:13px;padding:15px}.comp h3{margin:0;font-size:15px}.compmetrics{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:14px}.cm{padding:9px;background:#111319;border-radius:9px}.cm span{display:block;color:var(--muted);font-size:10px}.cm b{font-size:16px}.empty{color:var(--muted);padding:22px 0;text-align:center}.source{margin-top:8px;font-size:11px;color:var(--muted)}.warning{padding:12px 14px;background:#17150e;border:1px solid #554b22;border-radius:11px;color:#dec86d;font-size:12px;margin-top:14px}
+.comps{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:14px}.comp{background:var(--panel2);border:1px solid var(--line);border-radius:13px;padding:15px}.ai-state{display:inline-flex;align-items:center;gap:7px;padding:7px 10px;border:1px solid var(--line);border-radius:999px;font-size:11px;color:var(--muted);margin-top:12px}.ai-state.ok{color:#8ff0bd;border-color:#285b43}.ai-state.bad{color:#f2c94c;border-color:#5d5129}.ai-dot{width:7px;height:7px;border-radius:50%;background:currentColor}.sources a{display:block;color:var(--accent);font-size:12px;margin-top:8px;word-break:break-word}.actions-list{margin:12px 0 0;padding-left:20px;color:var(--text)}.actions-list li{margin:8px 0;color:var(--muted)}.comp h3{margin:0;font-size:15px}.compmetrics{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:14px}.cm{padding:9px;background:#111319;border-radius:9px}.cm span{display:block;color:var(--muted);font-size:10px}.cm b{font-size:16px}.empty{color:var(--muted);padding:22px 0;text-align:center}.source{margin-top:8px;font-size:11px;color:var(--muted)}.warning{padding:12px 14px;background:#17150e;border:1px solid #554b22;border-radius:11px;color:#dec86d;font-size:12px;margin-top:14px}
 @media(max-width:900px){.grid{grid-template-columns:repeat(2,1fr)}.section{grid-template-columns:1fr}.comps{grid-template-columns:1fr}.head{align-items:flex-start;flex-direction:column}.top{align-items:flex-start;flex-direction:column}.compmetrics{grid-template-columns:repeat(2,1fr)}}@media(max-width:540px){.grid{grid-template-columns:1fr}.formrow input,.formrow input.url{min-width:100%;width:100%}.actions{align-items:flex-start;flex-direction:column}h1{font-size:29px}}
 </style>
 </head>
@@ -56,15 +56,35 @@ h1{font-size:34px;margin:0 0 5px}.sub{margin:0}.status{font-size:12px;color:var(
       <div id="findings"><div class="empty">Aguardando análise.</div></div>
     </div>
     <div class="box">
-      <h2>Controle da análise</h2><p>Use a chave administrativa do MKTB e uma chave de coleta para ler o cardápio público do iFood.</p>
-      <div class="authbox"><div class="formrow"><input id="adminKey" type="password" autocomplete="off" placeholder="Chave administrativa"><input id="brscrappKey" type="password" autocomplete="off" placeholder="Chave de coleta iFood (sk_live_...)"></div></div>
-      <div class="source">O iFood bloqueia coleta direta por servidores externos. A chave de coleta usa a BrScrapp para acessar somente dados públicos do cardápio. Ela fica apenas nesta sessão do navegador e não é salva no banco. <a href="https://brscrapp.com/signup" target="_blank" rel="noopener" style="color:var(--accent);text-decoration:underline">Criar chave gratuita</a>.</div>
+      <h2>Assistente MKTB</h2><p>A análise agora é feita pelo nosso agente usando OpenAI e busca pública na web.</p>
+      <div id="openaiState" class="ai-state bad"><span class="ai-dot"></span><span>OpenAI não configurado</span></div>
+      <div class="authbox">
+        <div class="formrow"><input id="adminKey" type="password" autocomplete="off" placeholder="Chave administrativa MKTB"></div>
+        <div class="formrow"><input id="openaiKey" type="password" autocomplete="new-password" placeholder="OpenAI API Key"><button class="btn primary" id="saveOpenAI">Salvar OpenAI</button></div>
+      </div>
+      <div class="source">A chave da OpenAI é enviada somente ao backend e armazenada criptografada no Supabase Vault. Ela não é gravada no GitHub nem fica salva no navegador. Modelo atual: <b id="modelName">GPT</b>.</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="box">
+      <h2>Leitura do agente</h2><p>Resumo estratégico gerado a partir das evidências públicas encontradas.</p>
+      <div class="finding" id="agentSummary"><div class="muted">Aguardando análise.</div></div>
+    </div>
+    <div class="box">
+      <h2>Ações prioritárias</h2><p>Recomendações para melhorar conversão, ticket e organização.</p>
+      <ol class="actions-list" id="topActions"><li>Aguardando análise.</li></ol>
     </div>
   </div>
 
   <div class="box" style="margin-top:14px">
-    <h2>Itens identificados</h2><p>Preço, foto e descrição capturados no cardápio público.</p>
+    <h2>Itens identificados</h2><p>Produtos que o assistente conseguiu observar em fontes públicas.</p>
     <div class="table" id="itemsTable"><div class="empty">Nenhum item identificado ainda.</div></div>
+  </div>
+
+  <div class="box" style="margin-top:14px">
+    <h2>Fontes da análise</h2><p>Referências públicas usadas pelo agente. Dados não encontrados não entram como fato.</p>
+    <div class="sources" id="auditSources"><div class="empty">Nenhuma fonte registrada ainda.</div></div>
   </div>
 
   <div class="box" style="margin-top:14px">
@@ -83,7 +103,7 @@ const API='https://rqpemniasklmmlaknlrs.supabase.co/functions/v1/mktb-menu-intel
 const params=new URLSearchParams(location.search),CLIENT=params.get('client')||'';
 const clients={saexpress:{name:'SA EXPRESS',back:'../saexpress/'},classysmash:{name:'CLASSY SMASH',back:'../classysmash/'},originalfabrica:{name:'ORIGINAL FÁBRICA',back:'../originalfabrica/'}};
 if(!clients[CLIENT])location.replace('../');
-clientName.textContent=clients[CLIENT].name;backLink.href=clients[CLIENT].back;brscrappKey.value=sessionStorage.getItem('mktb_brscrapp_key')||'';brscrappKey.addEventListener('input',()=>sessionStorage.setItem('mktb_brscrapp_key',brscrappKey.value.trim()));
+clientName.textContent=clients[CLIENT].name;backLink.href=clients[CLIENT].back;
 const money=v=>v==null?'--':Number(v).toLocaleString('pt-BR',{style:'currency',currency:'BRL'});
 const num=v=>v==null?'--':Number(v).toLocaleString('pt-BR');
 const esc=s=>String(s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -91,37 +111,39 @@ function setScore(id,bar,v){document.getElementById(id).textContent=v==null?'--'
 function admin(){const v=adminKey.value.trim();if(!v){alert('Digite a chave administrativa.');return null}return v}
 async function post(action,extra){
   const k=admin();if(!k)return null;status.textContent='Processando...';
-  const provider=brscrappKey.value.trim();sessionStorage.setItem('mktb_brscrapp_key',provider);
-  const r=await fetch(API,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(Object.assign({client:CLIENT,action:action,admin_key:k,brscrapp_key:provider},extra||{}))});
+  const r=await fetch(API,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(Object.assign({client:CLIENT,action:action,admin_key:k},extra||{}))});
   const j=await r.json().catch(()=>({}));
   if(!r.ok){
     status.textContent='Erro';
     const errors={
       unauthorized:'Chave administrativa incorreta.',
-      provider_key_required:'Informe a chave de coleta iFood. Você pode criar uma gratuitamente no link ao lado.',
-      provider_unauthorized:'A chave de coleta iFood é inválida ou foi revogada.',
-      provider_no_credits:'A chave de coleta está sem créditos.',
-      provider_rate_limit:'Muitas consultas em sequência. Aguarde alguns instantes e tente novamente.',
-      provider_pending:'O iFood ainda está sendo coletado. Aguarde alguns segundos e gere a análise novamente.'
+      openai_not_configured:'Configure a OpenAI API Key antes de gerar a análise.',
+      openai_invalid_key:'A OpenAI API Key informada é inválida ou não tem acesso à API.',
+      openai_rate_limit:'A OpenAI atingiu o limite momentâneo de uso. Tente novamente em alguns instantes.',
+      openai_invalid_json:'O agente concluiu a pesquisa, mas a resposta veio fora do formato esperado. Gere novamente.',
+      openai_missing_client_analysis:'O agente não conseguiu concluir a análise do cliente.'
     };
-    alert(errors[j.error]||'Não foi possível concluir a análise. Tente novamente.');
+    alert(errors[j.error]||(j.detail?'OpenAI: '+j.detail:'Não foi possível concluir a análise. Tente novamente.'));
     return null
   }
   status.textContent='Atualizando...';return j;
 }
 function renderAudit(a){
-  if(!a){sourceWarning.style.display='block';sourceWarning.textContent='Ainda não há uma análise concluída. Informe as duas chaves em Controle da análise e toque em “Gerar nova análise”.';totalScore.innerHTML='--<small>/100</small>';itemCount.textContent='0';categoryCount.textContent='0';avgPrice.textContent='--';return}
+  if(!a){sourceWarning.style.display='block';sourceWarning.textContent='Ainda não há uma análise da OpenAI para este cardápio. Configure a OpenAI uma única vez e toque em “Gerar nova análise”.';totalScore.innerHTML='--<small>/100</small>';itemCount.textContent='0';categoryCount.textContent='0';avgPrice.textContent='--';agentSummary.innerHTML='<div class="muted">Aguardando análise.</div>';topActions.innerHTML='<li>Aguardando análise.</li>';auditSources.innerHTML='<div class="empty">Nenhuma fonte registrada ainda.</div>';return}
   totalScore.innerHTML=(a.score_total==null?'--':a.score_total)+'<small>/100</small>';
   itemCount.textContent=num(a.item_count);categoryCount.textContent=num(a.category_count);avgPrice.textContent=money(a.avg_price);
   auditDate.textContent='Atualizado '+new Date(a.captured_at).toLocaleString('pt-BR');
   setScore('sPhotos','bPhotos',a.score_photos);setScore('sStructure','bStructure',a.score_structure);setScore('sPrice','bPrice',a.score_price);
   setScore('sDescriptions','bDescriptions',a.score_descriptions);setScore('sUpsell','bUpsell',a.score_upsell);setScore('sAvailability','bAvailability',a.score_availability);
-  const st=a.stats||{};priceCompare.textContent=st.competitor_avg_price?'Concorrentes: '+money(st.competitor_avg_price):'Cadastre concorrentes para comparar';
-  if(a.source_status!=='ok'){sourceWarning.style.display='block';sourceWarning.textContent='A última captura não foi concluída.'}else sourceWarning.style.display='none';
+  const st=a.stats||{};priceCompare.textContent=st.market_summary&&st.market_summary.price_position?st.market_summary.price_position:'Cadastre concorrentes para comparar';
+  if(st.coverage==='limited'||a.source_status==='limited'){sourceWarning.style.display='block';sourceWarning.textContent='Cobertura limitada: o agente só pontuou o que encontrou em fontes públicas e deixou o restante sem inventar.'}else sourceWarning.style.display='none';
+  agentSummary.innerHTML='<b>'+(esc(st.title)||esc(clients[CLIENT].name))+'</b><div class="muted" style="margin-top:7px">'+esc(st.summary||'Sem resumo disponível.')+'</div>';
+  const acts=(st.market_summary&&st.market_summary.top_actions)||st.opportunities||[];topActions.innerHTML=acts.length?acts.slice(0,8).map(x=>'<li>'+esc(x)+'</li>').join(''):'<li>Nenhuma ação prioritária registrada.</li>';
+  const src=st.sources||[];auditSources.innerHTML=src.length?src.map(x=>'<a href="'+esc(x.url)+'" target="_blank" rel="noopener">'+esc(x.title||x.url)+'</a>').join(''):'<div class="empty">Nenhuma fonte registrada nesta análise.</div>';
   const fs=a.findings||[];
   findings.innerHTML=fs.length?fs.map(x=>'<div class="finding"><span class="tag '+esc(x.priority)+'">'+esc(x.priority)+'</span><span class="tag">'+esc(x.type)+'</span><b>'+esc(x.title)+'</b><div class="muted">'+esc(x.detail)+'</div></div>').join(''):'<div class="finding"><b>Nenhum alerta crítico na captura atual</b><div class="muted">Continue acompanhando preço, cobertura de fotos, descrições e estrutura.</div></div>';
   const its=a.menu_items||[];
-  itemsTable.innerHTML=its.length?'<div class="row head"><span>Produto</span><span>Preço</span><span>Foto</span><span>Descrição</span></div>'+its.slice(0,100).map(x=>'<div class="row"><span><b>'+esc(x.name)+'</b><div class="itemdesc">'+esc(x.description||'Sem descrição capturada')+'</div></span><span>'+money(x.price)+'</span><span>'+(x.image?'Sim':'Não')+'</span><span>'+(x.description&&x.description.length>=25?'OK':'Revisar')+'</span></div>').join(''):'<div class="empty">O cardápio público não entregou itens suficientes nesta captura.</div>';
+  itemsTable.innerHTML=its.length?'<div class="row head"><span>Produto</span><span>Preço</span><span>Foto</span><span>Descrição</span></div>'+its.slice(0,100).map(x=>'<div class="row"><span><b>'+esc(x.name)+'</b><div class="itemdesc">'+esc(x.description||'Sem descrição capturada')+'</div></span><span>'+money(x.price)+'</span><span>'+(x.photo_observed||x.image_url?'Sim':'Não observado')+'</span><span>'+(x.description&&x.description.length>=25?'OK':'Revisar')+'</span></div>').join(''):'<div class="empty">O cardápio público não entregou itens suficientes nesta captura.</div>';
 }
 function renderCompetitors(list){
   if(!list||!list.length){competitors.innerHTML='<div class="empty">Nenhum concorrente cadastrado.</div>';return}
@@ -133,10 +155,14 @@ async function load(){
   try{
     const r=await fetch(API+'?client='+encodeURIComponent(CLIENT),{cache:'no-store'}),j=await r.json();
     renderAudit(j.audit);renderCompetitors(j.competitors);
-    if(j.provider_required&&!j.audit){sourceWarning.style.display='block';sourceWarning.textContent='Para a primeira análise, informe a chave administrativa e a chave de coleta iFood em Controle da análise.'}
+    modelName.textContent=j.model||'OpenAI';
+    openaiState.className='ai-state '+(j.openai_configured?'ok':'bad');
+    openaiState.innerHTML='<span class="ai-dot"></span><span>'+(j.openai_configured?'OpenAI conectada':'OpenAI não configurada')+'</span>';
+    if(!j.openai_configured){sourceWarning.style.display='block';sourceWarning.textContent='Configure sua OpenAI API Key no quadro Assistente MKTB para habilitar a análise.'}
     status.textContent='Dados atualizados'
   }catch(e){status.textContent='Indisponível';sourceWarning.style.display='block';sourceWarning.textContent='Não foi possível carregar a inteligência de cardápio agora.'}
 }
+saveOpenAI.onclick=async()=>{const key=openaiKey.value.trim();if(!key){alert('Cole sua OpenAI API Key.');return}const j=await post('save_openai_key',{openai_api_key:key});if(j){openaiKey.value='';alert('OpenAI conectada ao MKTB Intelligence.');load()}};
 runAudit.onclick=async()=>{const j=await post('analyze_client');if(j)load()};
 scanCompetitors.onclick=async()=>{const j=await post('analyze_competitors');if(j)load()};
 addCompetitor.onclick=async()=>{const url=competitorUrl.value.trim(),name=competitorName.value.trim();if(!url){alert('Cole o link da loja concorrente no iFood.');return}const j=await post('add_competitor',{ifood_url:url,name:name});if(j){competitorUrl.value='';competitorName.value='';load()}};
