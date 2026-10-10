@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Inteligência de Cardápio | MKTB Links</title>
+<style>
+:root{--bg:#0b0c10;--panel:#12141a;--panel2:#0e1015;--line:#272b35;--text:#f5f7fb;--muted:#8f97a6;--accent:#d6b54c;--ok:#48d597;--warn:#f2c94c;--danger:#e56b6f}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;min-height:100vh}
+.wrap{max-width:1220px;margin:auto;padding:28px 20px 50px}.top,.head,.actions,.formrow,.comphead{display:flex;align-items:center;justify-content:space-between;gap:14px}.top{margin-bottom:24px}.brand{display:flex;align-items:center;gap:12px}.mark{width:38px;height:38px;border:1px solid var(--line);border-radius:10px;display:grid;place-items:center;color:var(--accent);font-weight:900}.brand b{letter-spacing:.08em}.brand small,.muted,.sub,.note{color:var(--muted)}.brand small{display:block}
+a{color:inherit;text-decoration:none}.nav{display:flex;gap:8px;flex-wrap:wrap}.nav a,.btn{border:1px solid var(--line);background:#111319;color:#fff;padding:10px 13px;border-radius:10px;font-weight:700;cursor:pointer}.nav a.active,.btn.primary{background:var(--accent);color:#111;border-color:var(--accent)}
+h1{font-size:34px;margin:0 0 5px}.sub{margin:0}.status{font-size:12px;color:var(--muted)}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:20px}.card,.box{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:20px}
+.scorehero{display:flex;align-items:center;gap:18px}.score{font-size:58px;font-weight:900;line-height:1}.score small{font-size:18px;color:var(--muted)}.label{font-size:12px;color:var(--muted);margin-bottom:8px}.value{font-size:28px;font-weight:800}.scorebar{height:7px;background:#222631;border-radius:99px;margin-top:12px;overflow:hidden}.scorebar i{display:block;height:100%;background:var(--accent)}
+.section{display:grid;grid-template-columns:1.15fr .85fr;gap:14px;margin-top:14px}.box h2{font-size:16px;margin:0 0 5px}.box p{color:var(--muted);font-size:13px;margin:0}.finding{margin-top:12px;padding:14px;background:var(--panel2);border:1px solid var(--line);border-radius:12px}.finding b{display:block;margin-bottom:5px}.tag{font-size:10px;text-transform:uppercase;letter-spacing:.07em;padding:4px 7px;border:1px solid var(--line);border-radius:999px;color:var(--muted);margin-right:7px}.tag.alta{color:#ffaaaa;border-color:#64383a}.tag.media{color:#f4d77a;border-color:#5d5129}
+.table{margin-top:14px}.row{display:grid;grid-template-columns:1.5fr .65fr .65fr .65fr;gap:10px;padding:11px 0;border-bottom:1px solid var(--line);font-size:13px}.row.head{font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}.row span:nth-child(n+2){text-align:right}.itemdesc{color:var(--muted);font-size:11px;margin-top:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:520px}
+.authbox{margin-top:14px}.formrow{justify-content:flex-start;flex-wrap:wrap;margin-top:12px}.formrow input{flex:1;min-width:180px;background:#0d0f14;border:1px solid var(--line);color:#fff;padding:12px;border-radius:10px}.formrow input.url{min-width:320px}.btn.danger{color:#efaaaa}.btn.small{padding:7px 9px;font-size:11px}
+.comps{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:14px}.comp{background:var(--panel2);border:1px solid var(--line);border-radius:13px;padding:15px}.comp h3{margin:0;font-size:15px}.compmetrics{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:14px}.cm{padding:9px;background:#111319;border-radius:9px}.cm span{display:block;color:var(--muted);font-size:10px}.cm b{font-size:16px}.empty{color:var(--muted);padding:22px 0;text-align:center}.source{margin-top:8px;font-size:11px;color:var(--muted)}.warning{padding:12px 14px;background:#17150e;border:1px solid #554b22;border-radius:11px;color:#dec86d;font-size:12px;margin-top:14px}
+@media(max-width:900px){.grid{grid-template-columns:repeat(2,1fr)}.section{grid-template-columns:1fr}.comps{grid-template-columns:1fr}.head{align-items:flex-start;flex-direction:column}.top{align-items:flex-start;flex-direction:column}.compmetrics{grid-template-columns:repeat(2,1fr)}}@media(max-width:540px){.grid{grid-template-columns:1fr}.formrow input,.formrow input.url{min-width:100%;width:100%}.actions{align-items:flex-start;flex-direction:column}h1{font-size:29px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top">
+    <div class="brand"><div class="mark">M</div><div><b>MKTB LINKS</b><small>Inteligência de cardápio</small></div></div>
+    <div class="nav"><a id="backLink" href="#">Métricas</a><a class="active" href="#">Cardápio & concorrentes</a></div>
+  </div>
+
+  <div class="head">
+    <div><h1 id="clientName">Cardápio</h1><p class="sub">Pontuação, oportunidades e comparação com concorrentes no iFood.</p></div>
+    <div class="status" id="status">Carregando análise...</div>
+  </div>
+
+  <div class="warning" id="sourceWarning" style="display:none"></div>
+
+  <div class="grid">
+    <div class="card scorehero"><div class="score" id="totalScore">--<small>/100</small></div><div><div class="label">Score do cardápio</div><div class="muted" id="auditDate">Aguardando análise</div></div></div>
+    <div class="card"><div class="label">Itens identificados</div><div class="value" id="itemCount">0</div><div class="source">Fonte pública do iFood</div></div>
+    <div class="card"><div class="label">Categorias identificadas</div><div class="value" id="categoryCount">0</div><div class="source">Estrutura atual capturada</div></div>
+    <div class="card"><div class="label">Preço médio identificado</div><div class="value" id="avgPrice">--</div><div class="source" id="priceCompare">Aguardando concorrentes</div></div>
+  </div>
+
+  <div class="grid">
+    <div class="card"><div class="label">Fotos</div><div class="value" id="sPhotos">--</div><div class="scorebar"><i id="bPhotos" style="width:0%"></i></div><div class="source">Cobertura visual dos itens</div></div>
+    <div class="card"><div class="label">Estrutura</div><div class="value" id="sStructure">--</div><div class="scorebar"><i id="bStructure" style="width:0%"></i></div><div class="source">Organização por categorias</div></div>
+    <div class="card"><div class="label">Preço</div><div class="value" id="sPrice">--</div><div class="scorebar"><i id="bPrice" style="width:0%"></i></div><div class="source">Comparação com concorrentes</div></div>
+    <div class="card"><div class="label">Descrições</div><div class="value" id="sDescriptions">--</div><div class="scorebar"><i id="bDescriptions" style="width:0%"></i></div><div class="source">Cobertura e completude</div></div>
+    <div class="card"><div class="label">Upsell</div><div class="value" id="sUpsell">--</div><div class="scorebar"><i id="bUpsell" style="width:0%"></i></div><div class="source">Combos, adicionais e complementos</div></div>
+    <div class="card"><div class="label">Disponibilidade</div><div class="value" id="sAvailability">--</div><div class="scorebar"><i id="bAvailability" style="width:0%"></i></div><div class="source">Exige API oficial para precisão</div></div>
+  </div>
+
+  <div class="section">
+    <div class="box">
+      <div class="actions"><div><h2>Sugestões prioritárias</h2><p>Problemas e oportunidades encontrados na análise.</p></div><button class="btn primary" id="runAudit">Gerar nova análise</button></div>
+      <div id="findings"><div class="empty">Aguardando análise.</div></div>
+    </div>
+    <div class="box">
+      <h2>Controle da análise</h2><p>Use a mesma chave administrativa utilizada na configuração do Pixel.</p>
+      <div class="authbox"><div class="formrow"><input id="adminKey" type="password" autocomplete="off" placeholder="Chave administrativa"></div></div>
+      <div class="source">A chave não é salva no navegador. A análise pública é uma leitura best-effort. Para disponibilidade, estoque e catálogo integral, será necessária a integração oficial da loja com a API do iFood.</div>
+    </div>
+  </div>
+
+  <div class="box" style="margin-top:14px">
+    <h2>Itens identificados</h2><p>Preço, foto e descrição capturados no cardápio público.</p>
+    <div class="table" id="itemsTable"><div class="empty">Nenhum item identificado ainda.</div></div>
+  </div>
+
+  <div class="box" style="margin-top:14px">
+    <div class="actions"><div><h2>Painel de concorrentes</h2><p>Cadastre URLs públicas de lojas no iFood e compare preço, tamanho do cardápio e estrutura.</p></div><button class="btn" id="scanCompetitors">Atualizar concorrentes</button></div>
+    <div class="formrow">
+      <input id="competitorName" placeholder="Nome do concorrente">
+      <input id="competitorUrl" class="url" placeholder="Cole o link da loja no iFood">
+      <button class="btn primary" id="addCompetitor">Adicionar</button>
+    </div>
+    <div class="comps" id="competitors"><div class="empty">Nenhum concorrente cadastrado.</div></div>
+  </div>
+</div>
+
+<script>
+const API='https://rqpemniasklmmlaknlrs.supabase.co/functions/v1/mktb-menu-intelligence';
+const params=new URLSearchParams(location.search),CLIENT=params.get('client')||'';
+const clients={saexpress:{name:'SA EXPRESS',back:'../saexpress/'},classysmash:{name:'CLASSY SMASH',back:'../classysmash/'},originalfabrica:{name:'ORIGINAL FÁBRICA',back:'../originalfabrica/'}};
+if(!clients[CLIENT])location.replace('../');
+clientName.textContent=clients[CLIENT].name;backLink.href=clients[CLIENT].back;
+const money=v=>v==null?'--':Number(v).toLocaleString('pt-BR',{style:'currency',currency:'BRL'});
+const num=v=>v==null?'--':Number(v).toLocaleString('pt-BR');
+const esc=s=>String(s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+function setScore(id,bar,v){document.getElementById(id).textContent=v==null?'--':v+'/100';document.getElementById(bar).style.width=(v==null?0:v)+'%'}
+function admin(){const v=adminKey.value.trim();if(!v){alert('Digite a chave administrativa.');return null}return v}
+async function post(action,extra){
+  const k=admin();if(!k)return null;status.textContent='Processando...';
+  const r=await fetch(API,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(Object.assign({client:CLIENT,action:action,admin_key:k},extra||{}))});
+  const j=await r.json().catch(()=>({}));
+  if(!r.ok){status.textContent='Erro';alert(j.error==='unauthorized'?'Chave administrativa incorreta.':'Não foi possível concluir a operação.');return null}
+  status.textContent='Atualizando...';return j;
+}
+function renderAudit(a){
+  if(!a){sourceWarning.style.display='block';sourceWarning.textContent='Ainda não há uma análise disponível para este cardápio.';return}
+  totalScore.innerHTML=(a.score_total==null?'--':a.score_total)+'<small>/100</small>';
+  itemCount.textContent=num(a.item_count);categoryCount.textContent=num(a.category_count);avgPrice.textContent=money(a.avg_price);
+  auditDate.textContent='Atualizado '+new Date(a.captured_at).toLocaleString('pt-BR');
+  setScore('sPhotos','bPhotos',a.score_photos);setScore('sStructure','bStructure',a.score_structure);setScore('sPrice','bPrice',a.score_price);
+  setScore('sDescriptions','bDescriptions',a.score_descriptions);setScore('sUpsell','bUpsell',a.score_upsell);setScore('sAvailability','bAvailability',a.score_availability);
+  const st=a.stats||{};priceCompare.textContent=st.competitor_avg_price?'Concorrentes: '+money(st.competitor_avg_price):'Cadastre concorrentes para comparar';
+  if(a.source_status!=='ok'){sourceWarning.style.display='block';sourceWarning.textContent='Leitura pública parcial do iFood. O painel mostra apenas o que foi possível identificar automaticamente. A integração oficial da loja permitirá uma auditoria integral.'}else sourceWarning.style.display='none';
+  const fs=a.findings||[];
+  findings.innerHTML=fs.length?fs.map(x=>'<div class="finding"><span class="tag '+esc(x.priority)+'">'+esc(x.priority)+'</span><span class="tag">'+esc(x.type)+'</span><b>'+esc(x.title)+'</b><div class="muted">'+esc(x.detail)+'</div></div>').join(''):'<div class="finding"><b>Nenhum alerta crítico na captura atual</b><div class="muted">Continue acompanhando preço, cobertura de fotos, descrições e estrutura.</div></div>';
+  const its=a.menu_items||[];
+  itemsTable.innerHTML=its.length?'<div class="row head"><span>Produto</span><span>Preço</span><span>Foto</span><span>Descrição</span></div>'+its.slice(0,100).map(x=>'<div class="row"><span><b>'+esc(x.name)+'</b><div class="itemdesc">'+esc(x.description||'Sem descrição capturada')+'</div></span><span>'+money(x.price)+'</span><span>'+(x.image?'Sim':'Não')+'</span><span>'+(x.description&&x.description.length>=25?'OK':'Revisar')+'</span></div>').join(''):'<div class="empty">O cardápio público não entregou itens suficientes nesta captura.</div>';
+}
+function renderCompetitors(list){
+  if(!list||!list.length){competitors.innerHTML='<div class="empty">Nenhum concorrente cadastrado.</div>';return}
+  competitors.innerHTML=list.map(c=>{const s=c.latest||{};return '<div class="comp"><div class="comphead"><div><h3>'+esc(c.name)+'</h3><div class="source">'+esc((s.data&&s.data.title)||'iFood')+'</div></div><button class="btn danger small" data-remove="'+esc(c.id)+'">Remover</button></div><div class="compmetrics"><div class="cm"><span>Score</span><b>'+(s.score_total==null?'--':s.score_total)+'</b></div><div class="cm"><span>Preço médio</span><b>'+money(s.avg_price)+'</b></div><div class="cm"><span>Itens</span><b>'+num(s.item_count||0)+'</b></div><div class="cm"><span>Categorias</span><b>'+num(s.category_count||0)+'</b></div></div><div class="source">'+(s.captured_at?'Atualizado '+new Date(s.captured_at).toLocaleString('pt-BR'):'Ainda não analisado')+'</div></div>'}).join('');
+  document.querySelectorAll('[data-remove]').forEach(b=>b.onclick=async()=>{if(!confirm('Remover este concorrente do painel?'))return;const j=await post('remove_competitor',{id:b.dataset.remove});if(j)load()});
+}
+async function load(){
+  status.textContent='Carregando...';
+  try{const r=await fetch(API+'?client='+encodeURIComponent(CLIENT),{cache:'no-store'}),j=await r.json();renderAudit(j.audit);renderCompetitors(j.competitors);status.textContent='Dados atualizados'}catch(e){status.textContent='Indisponível';sourceWarning.style.display='block';sourceWarning.textContent='Não foi possível carregar a inteligência de cardápio agora.'}
+}
+runAudit.onclick=async()=>{const j=await post('analyze_client');if(j)load()};
+scanCompetitors.onclick=async()=>{const j=await post('analyze_competitors');if(j)load()};
+addCompetitor.onclick=async()=>{const url=competitorUrl.value.trim(),name=competitorName.value.trim();if(!url){alert('Cole o link da loja concorrente no iFood.');return}const j=await post('add_competitor',{ifood_url:url,name:name});if(j){competitorUrl.value='';competitorName.value='';load()}};
+load();
+</script>
+</body>
+</html>
