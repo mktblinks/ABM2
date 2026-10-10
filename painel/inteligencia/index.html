@@ -138,7 +138,7 @@ function setProgress(job){
 }
 function showProgress(job){setProgress(job||{progress:2,step:'Preparando análise'});progressModal.classList.add('show')}
 function hideProgress(){progressModal.classList.remove('show')}
-let activeJobId=null,polling=false;
+let activeJobId=null,polling=false,captureWatch=null;
 async function pollAnalysis(jobId){
   if(!jobId||polling)return;
   polling=true;activeJobId=jobId;
@@ -167,13 +167,14 @@ async function pollAnalysis(jobId){
 async function ensureAnalysis(force){
   try{
     const j=await analysisPost(force?'start_analysis':'ensure_analysis');
-    if(j.audit&&j.complete){renderAudit(j.audit);return}
+    if(j.audit&&j.complete){if(captureWatch)clearTimeout(captureWatch);renderAudit(j.audit);return}
     if(j.needs_capture){
       sourceWarning.style.display='block';
       sourceWarning.innerHTML='O iFood bloqueou a leitura em nuvem. <b>Abra a loja no iFood com o Capturador MKTB instalado</b>; a captura será enviada automaticamente. <a href="'+esc(j.store_url||'#')+'" target="_blank" rel="noopener" style="color:var(--accent);text-decoration:underline;margin-left:6px">Abrir iFood para capturar</a>';
+      if(captureWatch)clearTimeout(captureWatch);captureWatch=setTimeout(()=>ensureAnalysis(false),5000);
       return;
     }
-    if(j.job){showProgress(j.job);pollAnalysis(j.job.id)}
+    if(j.job){if(captureWatch)clearTimeout(captureWatch);showProgress(j.job);pollAnalysis(j.job.id)}
   }catch(e){
     sourceWarning.style.display='block';
     sourceWarning.textContent='A análise automática não pôde ser iniciada: '+(e.message||e);
