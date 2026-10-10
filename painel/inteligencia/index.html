@@ -64,10 +64,10 @@ h1{font-size:34px;margin:0 0 5px}.sub{margin:0}.status{font-size:12px;color:var(
       <div id="findings"><div class="empty">Aguardando análise.</div></div>
     </div>
     <div class="box">
-      <h2>Assistente MKTB</h2><p>A auditoria é executada automaticamente pelo navegador da OpenAI.</p>
+      <h2>Assistente MKTB</h2><p>A coleta agora é feita pelo seu próprio Chrome e a análise pela OpenAI no servidor.</p>
       <div id="openaiState" class="ai-state ok"><span class="ai-dot"></span><span>OpenAI conectada no servidor</span></div>
-      <div class="finding"><b>Análise automática</b><div class="muted">Se o relatório estiver ausente ou desatualizado, o sistema inicia uma nova leitura sozinho. Não é necessário digitar chave administrativa para analisar.</div></div>
-      <div class="source">A credencial da OpenAI fica protegida no Supabase Vault. Modelo atual: <b id="modelName">GPT-6 Astra</b>.</div>
+      <div class="finding"><b>Coleta própria, sem terceiros</b><div class="muted">O iFood bloqueia navegadores automatizados em nuvem. O Capturador MKTB lê apenas o cardápio público no seu Chrome e envia os dados para a IA analisar. Não é necessário digitar chave administrativa para gerar relatório.</div></div>
+      <div class="source">A credencial da OpenAI fica protegida no Supabase Vault. Modelo atual: <b id="modelName">GPT-6.1 Sol</b>.</div>
     </div>
   </div>
 
@@ -168,6 +168,11 @@ async function ensureAnalysis(force){
   try{
     const j=await analysisPost(force?'start_analysis':'ensure_analysis');
     if(j.audit&&j.complete){renderAudit(j.audit);return}
+    if(j.needs_capture){
+      sourceWarning.style.display='block';
+      sourceWarning.innerHTML='O iFood bloqueou a leitura em nuvem. <b>Abra a loja no iFood com o Capturador MKTB instalado</b>; a captura será enviada automaticamente. <a href="'+esc(j.store_url||'#')+'" target="_blank" rel="noopener" style="color:var(--accent);text-decoration:underline;margin-left:6px">Abrir iFood para capturar</a>';
+      return;
+    }
     if(j.job){showProgress(j.job);pollAnalysis(j.job.id)}
   }catch(e){
     sourceWarning.style.display='block';
@@ -201,7 +206,7 @@ async function load(startAuto=true){
   try{
     const r=await fetch(API+'?client='+encodeURIComponent(CLIENT),{cache:'no-store'}),j=await r.json();
     renderAudit(j.audit);renderCompetitors(j.competitors);
-    modelName.textContent='GPT-6 Astra';
+    modelName.textContent='GPT-6.1 Sol';
     openaiState.className='ai-state '+(j.openai_configured?'ok':'bad');
     openaiState.innerHTML='<span class="ai-dot"></span><span>'+(j.openai_configured?'OpenAI conectada no servidor':'OpenAI não configurada')+'</span>';
     status.textContent='Dados atualizados';
