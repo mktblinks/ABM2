@@ -16,11 +16,19 @@ h1{font-size:34px;margin:0 0 5px}.sub{margin:0}.status{font-size:12px;color:var(
 .section{display:grid;grid-template-columns:1.15fr .85fr;gap:14px;margin-top:14px}.box h2{font-size:16px;margin:0 0 5px}.box p{color:var(--muted);font-size:13px;margin:0}.finding{margin-top:12px;padding:14px;background:var(--panel2);border:1px solid var(--line);border-radius:12px}.finding b{display:block;margin-bottom:5px}.tag{font-size:10px;text-transform:uppercase;letter-spacing:.07em;padding:4px 7px;border:1px solid var(--line);border-radius:999px;color:var(--muted);margin-right:7px}.tag.alta{color:#ffaaaa;border-color:#64383a}.tag.media{color:#f4d77a;border-color:#5d5129}
 .table{margin-top:14px}.row{display:grid;grid-template-columns:1.5fr .65fr .65fr .65fr;gap:10px;padding:11px 0;border-bottom:1px solid var(--line);font-size:13px}.row.head{font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}.row span:nth-child(n+2){text-align:right}.itemdesc{color:var(--muted);font-size:11px;margin-top:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:520px}
 .authbox{margin-top:14px}.formrow{justify-content:flex-start;flex-wrap:wrap;margin-top:12px}.formrow input{flex:1;min-width:180px;background:#0d0f14;border:1px solid var(--line);color:#fff;padding:12px;border-radius:10px}.formrow input.url{min-width:320px}.btn.danger{color:#efaaaa}.btn.small{padding:7px 9px;font-size:11px}
-.comps{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:14px}.comp{background:var(--panel2);border:1px solid var(--line);border-radius:13px;padding:15px}.ai-state{display:inline-flex;align-items:center;gap:7px;padding:7px 10px;border:1px solid var(--line);border-radius:999px;font-size:11px;color:var(--muted);margin-top:12px}.ai-state.ok{color:#8ff0bd;border-color:#285b43}.ai-state.bad{color:#f2c94c;border-color:#5d5129}.ai-dot{width:7px;height:7px;border-radius:50%;background:currentColor}.sources a{display:block;color:var(--accent);font-size:12px;margin-top:8px;word-break:break-word}.actions-list{margin:12px 0 0;padding-left:20px;color:var(--text)}.actions-list li{margin:8px 0;color:var(--muted)}.comp h3{margin:0;font-size:15px}.compmetrics{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:14px}.cm{padding:9px;background:#111319;border-radius:9px}.cm span{display:block;color:var(--muted);font-size:10px}.cm b{font-size:16px}.empty{color:var(--muted);padding:22px 0;text-align:center}.source{margin-top:8px;font-size:11px;color:var(--muted)}.warning{padding:12px 14px;background:#17150e;border:1px solid #554b22;border-radius:11px;color:#dec86d;font-size:12px;margin-top:14px}
+.comps{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:14px}.comp{background:var(--panel2);border:1px solid var(--line);border-radius:13px;padding:15px}.progress-modal{position:fixed;inset:0;background:rgba(5,6,9,.88);backdrop-filter:blur(12px);z-index:9999;display:none;align-items:center;justify-content:center;padding:20px}.progress-modal.show{display:flex}.progress-card{width:min(480px,100%);background:#111319;border:1px solid var(--line);border-radius:22px;padding:34px;text-align:center;box-shadow:0 28px 80px rgba(0,0,0,.45)}.progress-ring{--p:0;width:176px;height:176px;border-radius:50%;margin:0 auto 24px;background:conic-gradient(var(--accent) calc(var(--p)*1%),#252934 0);display:grid;place-items:center;position:relative}.progress-ring:after{content:"";position:absolute;width:142px;height:142px;border-radius:50%;background:#111319}.progress-number{position:relative;z-index:2;font-size:36px;font-weight:900}.progress-title{font-size:20px;font-weight:800;margin-bottom:8px}.progress-detail{color:var(--muted);font-size:13px;min-height:38px;line-height:1.5}.progress-note{font-size:11px;color:var(--muted);margin-top:18px}.progress-error{color:#ffaaaa}.ai-state{display:inline-flex;align-items:center;gap:7px;padding:7px 10px;border:1px solid var(--line);border-radius:999px;font-size:11px;color:var(--muted);margin-top:12px}.ai-state.ok{color:#8ff0bd;border-color:#285b43}.ai-state.bad{color:#f2c94c;border-color:#5d5129}.ai-dot{width:7px;height:7px;border-radius:50%;background:currentColor}.sources a{display:block;color:var(--accent);font-size:12px;margin-top:8px;word-break:break-word}.actions-list{margin:12px 0 0;padding-left:20px;color:var(--text)}.actions-list li{margin:8px 0;color:var(--muted)}.comp h3{margin:0;font-size:15px}.compmetrics{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:14px}.cm{padding:9px;background:#111319;border-radius:9px}.cm span{display:block;color:var(--muted);font-size:10px}.cm b{font-size:16px}.empty{color:var(--muted);padding:22px 0;text-align:center}.source{margin-top:8px;font-size:11px;color:var(--muted)}.warning{padding:12px 14px;background:#17150e;border:1px solid #554b22;border-radius:11px;color:#dec86d;font-size:12px;margin-top:14px}
 @media(max-width:900px){.grid{grid-template-columns:repeat(2,1fr)}.section{grid-template-columns:1fr}.comps{grid-template-columns:1fr}.head{align-items:flex-start;flex-direction:column}.top{align-items:flex-start;flex-direction:column}.compmetrics{grid-template-columns:repeat(2,1fr)}}@media(max-width:540px){.grid{grid-template-columns:1fr}.formrow input,.formrow input.url{min-width:100%;width:100%}.actions{align-items:flex-start;flex-direction:column}h1{font-size:29px}}
 </style>
 </head>
 <body>
+<div class="progress-modal" id="progressModal">
+  <div class="progress-card">
+    <div class="progress-ring" id="progressRing"><div class="progress-number" id="progressNumber">0%</div></div>
+    <div class="progress-title" id="progressTitle">Preparando análise</div>
+    <div class="progress-detail" id="progressDetail">O agente está preparando o navegador.</div>
+    <div class="progress-note">Você pode manter esta tela aberta. O relatório é salvo automaticamente quando a análise termina.</div>
+  </div>
+</div>
 <div class="wrap">
   <div class="top">
     <div class="brand"><div class="mark">M</div><div><b>MKTB LINKS</b><small>Inteligência de cardápio</small></div></div>
@@ -56,13 +64,10 @@ h1{font-size:34px;margin:0 0 5px}.sub{margin:0}.status{font-size:12px;color:var(
       <div id="findings"><div class="empty">Aguardando análise.</div></div>
     </div>
     <div class="box">
-      <h2>Assistente MKTB</h2><p>A análise agora é feita pelo nosso agente usando OpenAI e busca pública na web.</p>
-      <div id="openaiState" class="ai-state bad"><span class="ai-dot"></span><span>OpenAI não configurado</span></div>
-      <div class="authbox">
-        <div class="formrow"><input id="adminKey" name="mktb-admin-code" type="password" autocomplete="one-time-code" autocapitalize="none" spellcheck="false" placeholder="Chave administrativa MKTB"></div>
-        <div class="formrow"><input id="openaiKey" type="password" autocomplete="new-password" placeholder="OpenAI API Key"><button class="btn primary" id="saveOpenAI">Salvar OpenAI</button></div>
-      </div>
-      <div class="source">A chave da OpenAI é enviada somente ao backend e armazenada criptografada no Supabase Vault. Ela não é gravada no GitHub nem fica salva no navegador. Modelo atual: <b id="modelName">GPT</b>.</div>
+      <h2>Assistente MKTB</h2><p>A auditoria é executada automaticamente pelo navegador da OpenAI.</p>
+      <div id="openaiState" class="ai-state ok"><span class="ai-dot"></span><span>OpenAI conectada no servidor</span></div>
+      <div class="finding"><b>Análise automática</b><div class="muted">Se o relatório estiver ausente ou desatualizado, o sistema inicia uma nova leitura sozinho. Não é necessário digitar chave administrativa para analisar.</div></div>
+      <div class="source">A credencial da OpenAI fica protegida no Supabase Vault. Modelo atual: <b id="modelName">GPT-6 Astra</b>.</div>
     </div>
   </div>
 
@@ -94,12 +99,14 @@ h1{font-size:34px;margin:0 0 5px}.sub{margin:0}.status{font-size:12px;color:var(
       <input id="competitorUrl" class="url" placeholder="Cole o link da loja no iFood">
       <button class="btn primary" id="addCompetitor">Adicionar</button>
     </div>
+    <details style="margin-top:10px"><summary class="source" style="cursor:pointer">Administração de concorrentes</summary><div class="formrow"><input id="adminKey" name="mktb-admin-code" type="password" autocomplete="one-time-code" autocapitalize="none" spellcheck="false" placeholder="Chave administrativa, somente para editar concorrentes"></div></details>
     <div class="comps" id="competitors"><div class="empty">Nenhum concorrente cadastrado.</div></div>
   </div>
 </div>
 
 <script>
 const API='https://rqpemniasklmmlaknlrs.supabase.co/functions/v1/mktb-menu-intelligence';
+const ANALYSIS_API='https://rqpemniasklmmlaknlrs.supabase.co/functions/v1/mktb-analysis-async';
 const params=new URLSearchParams(location.search),CLIENT=params.get('client')||'';
 const clients={saexpress:{name:'SA EXPRESS',back:'../saexpress/'},classysmash:{name:'CLASSY SMASH',back:'../classysmash/'},originalfabrica:{name:'ORIGINAL FÁBRICA',back:'../originalfabrica/'}};
 if(!clients[CLIENT])location.replace('../');
@@ -108,29 +115,67 @@ const money=v=>v==null?'--':Number(v).toLocaleString('pt-BR',{style:'currency',c
 const num=v=>v==null?'--':Number(v).toLocaleString('pt-BR');
 const esc=s=>String(s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 function setScore(id,bar,v){document.getElementById(id).textContent=v==null?'--':v+'/100';document.getElementById(bar).style.width=(v==null?0:v)+'%'}
-function admin(){const v=adminKey.value.normalize('NFKC').replace(/\s+/g,'').trim();if(!v){alert('Digite a chave administrativa.');return null}adminKey.value=v;return v}
-async function post(action,extra){
-  const k=admin();if(!k)return null;status.textContent='Processando...';
+function admin(){const v=adminKey.value.normalize('NFKC').replace(/\s+/g,'').trim();if(!v){alert('A chave administrativa só é necessária para adicionar ou remover concorrentes.');return null}adminKey.value=v;sessionStorage.setItem('mktb_admin_session',v);return v}
+async function adminPost(action,extra){
+  const k=admin();if(!k)return null;
   const r=await fetch(API,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(Object.assign({client:CLIENT,action:action,admin_key:k},extra||{}))});
   const j=await r.json().catch(()=>({}));
-  if(!r.ok){
-    status.textContent='Erro';
-    const errors={
-      unauthorized:'Chave administrativa incorreta.',
-      openai_not_configured:'Configure a OpenAI API Key antes de gerar a análise.',
-      openai_invalid_key:'A OpenAI API Key informada é inválida ou não tem acesso à API.',
-      openai_rate_limit:'A OpenAI atingiu o limite momentâneo de uso. Tente novamente em alguns instantes.',
-      openai_invalid_json:'O agente concluiu a pesquisa, mas a resposta veio fora do formato esperado. Gere novamente.',
-      openai_missing_client_analysis:'O agente não conseguiu concluir a análise do cliente.',
-      openai_agents_error:'O navegador da OpenAI não conseguiu concluir a leitura do iFood. Tente novamente em alguns instantes.'
-    };
-    alert(errors[j.error]||(j.detail?'OpenAI: '+j.detail:'Não foi possível concluir a análise. Tente novamente.'));
-    return null
+  if(!r.ok){alert(j.error==='unauthorized'?'Chave administrativa incorreta.':'Não foi possível concluir a alteração.');return null}
+  return j;
+}
+async function analysisPost(action,extra){
+  const r=await fetch(ANALYSIS_API,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(Object.assign({client:CLIENT,action:action},extra||{}))});
+  const j=await r.json().catch(()=>({}));
+  if(!r.ok)throw new Error(j.detail||j.error||'Falha na análise');
+  return j;
+}
+function setProgress(job){
+  const p=Math.max(0,Math.min(100,Number(job&&job.progress||0)));
+  progressRing.style.setProperty('--p',p);
+  progressNumber.textContent=Math.round(p)+'%';
+  progressTitle.textContent=(job&&job.step)||'Analisando cardápio';
+  progressDetail.textContent=(job&&job.last_activity)||'O agente está trabalhando no iFood.';
+}
+function showProgress(job){setProgress(job||{progress:2,step:'Preparando análise'});progressModal.classList.add('show')}
+function hideProgress(){progressModal.classList.remove('show')}
+let activeJobId=null,polling=false;
+async function pollAnalysis(jobId){
+  if(!jobId||polling)return;
+  polling=true;activeJobId=jobId;
+  try{
+    for(let i=0;i<240;i++){
+      const j=await analysisPost('analysis_status',{job_id:jobId});
+      const job=j.job||{};setProgress(job);
+      if(job.status==='completed'){
+        progressTitle.textContent='Relatório concluído';progressDetail.textContent='Atualizando o painel...';
+        if(j.audit)renderAudit(j.audit);
+        await new Promise(r=>setTimeout(r,700));hideProgress();activeJobId=null;await load(false);return;
+      }
+      if(job.status==='failed'){
+        progressTitle.textContent='Análise não concluída';progressDetail.innerHTML='<span class="progress-error">'+esc(job.error_message||'O navegador não conseguiu concluir a leitura.')+'</span>';
+        await new Promise(r=>setTimeout(r,2200));hideProgress();activeJobId=null;return;
+      }
+      await new Promise(r=>setTimeout(r,3000));
+    }
+    progressTitle.textContent='Análise demorando mais que o esperado';progressDetail.textContent='O job continua salvo. Reabra o painel para consultar o andamento.';
+    await new Promise(r=>setTimeout(r,2200));hideProgress();
+  }catch(e){
+    progressTitle.textContent='Falha ao consultar progresso';progressDetail.innerHTML='<span class="progress-error">'+esc(e.message||e)+'</span>';
+    await new Promise(r=>setTimeout(r,2200));hideProgress();
+  }finally{polling=false}
+}
+async function ensureAnalysis(force){
+  try{
+    const j=await analysisPost(force?'start_analysis':'ensure_analysis');
+    if(j.audit&&j.complete){renderAudit(j.audit);return}
+    if(j.job){showProgress(j.job);pollAnalysis(j.job.id)}
+  }catch(e){
+    sourceWarning.style.display='block';
+    sourceWarning.textContent='A análise automática não pôde ser iniciada: '+(e.message||e);
   }
-  status.textContent='Atualizando...';return j;
 }
 function renderAudit(a){
-  if(!a){sourceWarning.style.display='block';sourceWarning.textContent='Ainda não há uma análise da OpenAI para este cardápio. Configure a OpenAI uma única vez e toque em “Gerar nova análise”.';totalScore.innerHTML='--<small>/100</small>';itemCount.textContent='0';categoryCount.textContent='0';avgPrice.textContent='--';agentSummary.innerHTML='<div class="muted">Aguardando análise.</div>';topActions.innerHTML='<li>Aguardando análise.</li>';auditSources.innerHTML='<div class="empty">Nenhuma fonte registrada ainda.</div>';return}
+  if(!a){sourceWarning.style.display='block';sourceWarning.textContent='Ainda não há relatório concluído. A análise automática será iniciada em seguida.';totalScore.innerHTML='--<small>/100</small>';itemCount.textContent='0';categoryCount.textContent='0';avgPrice.textContent='--';agentSummary.innerHTML='<div class="muted">Aguardando análise.</div>';topActions.innerHTML='<li>Aguardando análise.</li>';auditSources.innerHTML='<div class="empty">Nenhuma fonte registrada ainda.</div>';return}
   totalScore.innerHTML=(a.score_total==null?'--':a.score_total)+'<small>/100</small>';
   itemCount.textContent=num(a.item_count);categoryCount.textContent=num(a.category_count);avgPrice.textContent=money(a.avg_price);
   auditDate.textContent='Atualizado '+new Date(a.captured_at).toLocaleString('pt-BR');
@@ -149,38 +194,24 @@ function renderAudit(a){
 function renderCompetitors(list){
   if(!list||!list.length){competitors.innerHTML='<div class="empty">Nenhum concorrente cadastrado.</div>';return}
   competitors.innerHTML=list.map(c=>{const s=c.latest||{};return '<div class="comp"><div class="comphead"><div><h3>'+esc(c.name)+'</h3><div class="source">'+esc((s.data&&s.data.title)||'iFood')+'</div></div><button class="btn danger small" data-remove="'+esc(c.id)+'">Remover</button></div><div class="compmetrics"><div class="cm"><span>Score</span><b>'+(s.score_total==null?'--':s.score_total)+'</b></div><div class="cm"><span>Preço médio</span><b>'+money(s.avg_price)+'</b></div><div class="cm"><span>Itens</span><b>'+num(s.item_count||0)+'</b></div><div class="cm"><span>Categorias</span><b>'+num(s.category_count||0)+'</b></div></div><div class="source">'+(s.captured_at?'Atualizado '+new Date(s.captured_at).toLocaleString('pt-BR'):'Ainda não analisado')+'</div></div>'}).join('');
-  document.querySelectorAll('[data-remove]').forEach(b=>b.onclick=async()=>{if(!confirm('Remover este concorrente do painel?'))return;const j=await post('remove_competitor',{id:b.dataset.remove});if(j)load()});
+  document.querySelectorAll('[data-remove]').forEach(b=>b.onclick=async()=>{if(!confirm('Remover este concorrente do painel?'))return;const j=await adminPost('remove_competitor',{id:b.dataset.remove});if(j)load()});
 }
-async function load(){
+async function load(startAuto=true){
   status.textContent='Carregando...';
   try{
     const r=await fetch(API+'?client='+encodeURIComponent(CLIENT),{cache:'no-store'}),j=await r.json();
     renderAudit(j.audit);renderCompetitors(j.competitors);
-    modelName.textContent=j.model||'OpenAI';
+    modelName.textContent='GPT-6 Astra';
     openaiState.className='ai-state '+(j.openai_configured?'ok':'bad');
-    openaiState.innerHTML='<span class="ai-dot"></span><span>'+(j.openai_configured?'OpenAI conectada':'OpenAI não configurada')+'</span>';
-    if(!j.openai_configured){sourceWarning.style.display='block';sourceWarning.textContent='Configure sua OpenAI API Key no quadro Assistente MKTB para habilitar a análise.'}
-    status.textContent='Dados atualizados'
+    openaiState.innerHTML='<span class="ai-dot"></span><span>'+(j.openai_configured?'OpenAI conectada no servidor':'OpenAI não configurada')+'</span>';
+    status.textContent='Dados atualizados';
+    if(startAuto)await ensureAnalysis(false);
   }catch(e){status.textContent='Indisponível';sourceWarning.style.display='block';sourceWarning.textContent='Não foi possível carregar a inteligência de cardápio agora.'}
 }
-saveOpenAI.onclick=async()=>{const key=openaiKey.value.trim();if(!key){alert('Cole sua OpenAI API Key.');return}const j=await post('save_openai_key',{openai_api_key:key});if(j){openaiKey.value='';alert('OpenAI conectada ao MKTB Intelligence.');load()}};
-runAudit.onclick=async()=>{
-    const original=runAudit.textContent;
-    runAudit.disabled=true;runAudit.textContent='Abrindo iFood com IA...';status.textContent='Navegador da OpenAI analisando o cardápio...';
-    try{
-      const j=await post('analyze_client');
-      if(j){status.textContent='Análise concluída';await load()}
-    }finally{
-      runAudit.disabled=false;runAudit.textContent=original;
-    }
-  };
-scanCompetitors.onclick=async()=>{
-    const original=scanCompetitors.textContent;
-    scanCompetitors.disabled=true;scanCompetitors.textContent='Lendo concorrentes...';status.textContent='Navegador da OpenAI analisando concorrentes...';
-    try{const j=await post('analyze_competitors');if(j)await load()}
-    finally{scanCompetitors.disabled=false;scanCompetitors.textContent=original}
-  };
-addCompetitor.onclick=async()=>{const url=competitorUrl.value.trim(),name=competitorName.value.trim();if(!url){alert('Cole o link da loja concorrente no iFood.');return}const j=await post('add_competitor',{ifood_url:url,name:name});if(j){competitorUrl.value='';competitorName.value='';load()}};
+if(sessionStorage.getItem('mktb_admin_session'))adminKey.value=sessionStorage.getItem('mktb_admin_session');
+runAudit.onclick=()=>ensureAnalysis(true);
+scanCompetitors.onclick=()=>ensureAnalysis(true);
+addCompetitor.onclick=async()=>{const url=competitorUrl.value.trim(),name=competitorName.value.trim();if(!url){alert('Cole o link da loja concorrente no iFood.');return}const j=await adminPost('add_competitor',{ifood_url:url,name:name});if(j){competitorUrl.value='';competitorName.value='';await load(false)}};
 load();
 </script>
 </body>
