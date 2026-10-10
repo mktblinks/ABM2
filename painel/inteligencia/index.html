@@ -19,8 +19,9 @@ h1{font-size:34px;margin:0 0 5px}.sub{margin:0}.status{font-size:12px;color:var(
 .comps{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:14px}.comp{background:var(--panel2);border:1px solid var(--line);border-radius:13px;padding:15px}.progress-modal{position:fixed;inset:0;background:rgba(5,6,9,.88);backdrop-filter:blur(12px);z-index:9999;display:none;align-items:center;justify-content:center;padding:20px}.progress-modal.show{display:flex}.progress-card{width:min(480px,100%);background:#111319;border:1px solid var(--line);border-radius:22px;padding:34px;text-align:center;box-shadow:0 28px 80px rgba(0,0,0,.45)}.progress-ring{--p:0;width:176px;height:176px;border-radius:50%;margin:0 auto 24px;background:conic-gradient(var(--accent) calc(var(--p)*1%),#252934 0);display:grid;place-items:center;position:relative}.progress-ring:after{content:"";position:absolute;width:142px;height:142px;border-radius:50%;background:#111319}.progress-number{position:relative;z-index:2;font-size:36px;font-weight:900}.progress-title{font-size:20px;font-weight:800;margin-bottom:8px}.progress-detail{color:var(--muted);font-size:13px;min-height:38px;line-height:1.5}.progress-note{font-size:11px;color:var(--muted);margin-top:18px}.progress-error{color:#ffaaaa}.ai-state{display:inline-flex;align-items:center;gap:7px;padding:7px 10px;border:1px solid var(--line);border-radius:999px;font-size:11px;color:var(--muted);margin-top:12px}.ai-state.ok{color:#8ff0bd;border-color:#285b43}.ai-state.bad{color:#f2c94c;border-color:#5d5129}.ai-dot{width:7px;height:7px;border-radius:50%;background:currentColor}.sources a{display:block;color:var(--accent);font-size:12px;margin-top:8px;word-break:break-word}.actions-list{margin:12px 0 0;padding-left:20px;color:var(--text)}.actions-list li{margin:8px 0;color:var(--muted)}.comp h3{margin:0;font-size:15px}.compmetrics{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:14px}.cm{padding:9px;background:#111319;border-radius:9px}.cm span{display:block;color:var(--muted);font-size:10px}.cm b{font-size:16px}.empty{color:var(--muted);padding:22px 0;text-align:center}.source{margin-top:8px;font-size:11px;color:var(--muted)}.warning{padding:12px 14px;background:#17150e;border:1px solid #554b22;border-radius:11px;color:#dec86d;font-size:12px;margin-top:14px}
 @media(max-width:900px){.grid{grid-template-columns:repeat(2,1fr)}.section{grid-template-columns:1fr}.comps{grid-template-columns:1fr}.head{align-items:flex-start;flex-direction:column}.top{align-items:flex-start;flex-direction:column}.compmetrics{grid-template-columns:repeat(2,1fr)}}@media(max-width:540px){.grid{grid-template-columns:1fr}.formrow input,.formrow input.url{min-width:100%;width:100%}.actions{align-items:flex-start;flex-direction:column}h1{font-size:29px}}
 </style>
+<link rel="stylesheet" href="../ui-v2.css?v=2">
 </head>
-<body>
+<body class="intelligence-dashboard">
 <div class="progress-modal" id="progressModal">
   <div class="progress-card">
     <div class="progress-ring" id="progressRing"><div class="progress-number" id="progressNumber">0%</div></div>
@@ -60,7 +61,7 @@ h1{font-size:34px;margin:0 0 5px}.sub{margin:0}.status{font-size:12px;color:var(
 
   <div class="section">
     <div class="box">
-      <div class="actions"><div><h2>Sugestões prioritárias</h2><p>Problemas e oportunidades encontrados na análise.</p></div><button class="btn primary" id="runAudit">Gerar nova análise</button></div>
+      <div class="actions"><div><h2>O que está atrapalhando suas vendas</h2><p>Problemas encontrados e instruções simples para corrigir cada um.</p></div><button class="btn primary" id="runAudit">Atualizar análise</button></div>
       <div id="findings"><div class="empty">Aguardando análise.</div></div>
     </div>
     <div class="box">
@@ -73,17 +74,17 @@ h1{font-size:34px;margin:0 0 5px}.sub{margin:0}.status{font-size:12px;color:var(
 
   <div class="section">
     <div class="box">
-      <h2>Leitura do agente</h2><p>Resumo estratégico gerado a partir das evidências públicas encontradas.</p>
+      <h2>Diagnóstico do cardápio</h2><p>Uma leitura direta do que está funcionando e do que merece atenção.</p>
       <div class="finding" id="agentSummary"><div class="muted">Aguardando análise.</div></div>
     </div>
     <div class="box">
-      <h2>Ações prioritárias</h2><p>Recomendações para melhorar conversão, ticket e organização.</p>
+      <h2>Plano de melhoria</h2><p>As ações que devem entrar primeiro na fila para melhorar o cardápio.</p>
       <ol class="actions-list" id="topActions"><li>Aguardando análise.</li></ol>
     </div>
   </div>
 
   <div class="box" style="margin-top:14px">
-    <h2>Itens identificados</h2><p>Produtos que o assistente conseguiu observar em fontes públicas.</p>
+    <h2>Produtos analisados</h2><p>Visão rápida dos itens encontrados, preços e pontos que merecem revisão.</p>
     <div class="table" id="itemsTable"><div class="empty">Nenhum item identificado ainda.</div></div>
   </div>
 
@@ -93,7 +94,7 @@ h1{font-size:34px;margin:0 0 5px}.sub{margin:0}.status{font-size:12px;color:var(
   </div>
 
   <div class="box" style="margin-top:14px">
-    <div class="actions"><div><h2>Painel de concorrentes</h2><p>Cadastre URLs públicas de lojas no iFood e compare preço, tamanho do cardápio e estrutura.</p></div><button class="btn" id="scanCompetitors">Atualizar concorrentes</button></div>
+    <div class="actions"><div><h2>Radar de concorrentes</h2><p>Compare posicionamento, preço médio, variedade e estrutura do cardápio.</p></div><button class="btn" id="scanCompetitors">Atualizar concorrentes</button></div>
     <div class="formrow">
       <input id="competitorName" placeholder="Nome do concorrente">
       <input id="competitorUrl" class="url" placeholder="Cole o link da loja no iFood">
@@ -193,7 +194,14 @@ function renderAudit(a){
   const acts=(st.market_summary&&st.market_summary.top_actions)||st.opportunities||[];topActions.innerHTML=acts.length?acts.slice(0,8).map(x=>'<li>'+esc(x)+'</li>').join(''):'<li>Nenhuma ação prioritária registrada.</li>';
   const src=st.sources||[];auditSources.innerHTML=src.length?src.map(x=>'<a href="'+esc(x.url)+'" target="_blank" rel="noopener">'+esc(x.title||x.url)+'</a>').join(''):'<div class="empty">Nenhuma fonte registrada nesta análise.</div>';
   const fs=a.findings||[];
-  findings.innerHTML=fs.length?fs.map(x=>'<div class="finding"><span class="tag '+esc(x.priority)+'">'+esc(x.priority)+'</span><span class="tag">'+esc(x.type)+'</span><b>'+esc(x.title)+'</b><div class="muted">'+esc(x.detail)+'</div></div>').join(''):'<div class="finding"><b>Nenhum alerta crítico na captura atual</b><div class="muted">Continue acompanhando preço, cobertura de fotos, descrições e estrutura.</div></div>';
+  findings.innerHTML=fs.length?fs.map(x=>{
+    const cls=x.priority==='alta'?'high':(x.priority==='media'?'medium':'low');
+    const problem=x.detail||'O agente identificou um ponto que merece revisão.';
+    const impact=x.impact||'Esse ponto pode deixar a escolha mais difícil ou reduzir a percepção de valor do produto.';
+    const fix=x.how_to_fix||'Revise esse ponto no cardápio e deixe a oferta mais clara, direta e fácil de escolher.';
+    const example=x.example||'';
+    return '<div class="issue-card '+cls+'"><div class="issue-top"><div><span class="tag '+esc(x.priority)+'">'+esc(x.priority)+'</span><span class="tag">'+esc(x.type)+'</span></div><span class="issue-title">'+esc(x.title)+'</span></div><div class="issue-grid"><div class="issue-block"><strong>O que está errado</strong><div>'+esc(problem)+'</div></div><div class="issue-block"><strong>Por que isso importa</strong><div>'+esc(impact)+'</div></div><div class="issue-block fix"><strong>O que fazer para melhorar</strong><div>'+esc(fix)+'</div>'+(example?'<div class="issue-example"><b>Exemplo:</b> '+esc(example)+'</div>':'')+'</div></div></div>';
+  }).join(''):'<div class="finding"><b>Nenhum problema importante encontrado</b><div class="muted">O cardápio está com uma boa base. Continue acompanhando fotos, descrições, preço e organização.</div></div>';
   const its=a.menu_items||[];
   itemsTable.innerHTML=its.length?'<div class="row head"><span>Produto</span><span>Preço</span><span>Foto</span><span>Descrição</span></div>'+its.slice(0,100).map(x=>'<div class="row"><span><b>'+esc(x.name)+'</b><div class="itemdesc">'+esc(x.description||'Sem descrição capturada')+'</div></span><span>'+money(x.price)+'</span><span>'+(x.photo_observed||x.image_url?'Sim':'Não observado')+'</span><span>'+(x.description&&x.description.length>=25?'OK':'Revisar')+'</span></div>').join(''):'<div class="empty">O cardápio público não entregou itens suficientes nesta captura.</div>';
 }
