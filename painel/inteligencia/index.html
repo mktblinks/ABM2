@@ -47,7 +47,7 @@ h1{font-size:34px;margin:0 0 5px}.sub{margin:0}.status{font-size:12px;color:var(
     <div class="card"><div class="label">Preço</div><div class="value" id="sPrice">--</div><div class="scorebar"><i id="bPrice" style="width:0%"></i></div><div class="source">Comparação com concorrentes</div></div>
     <div class="card"><div class="label">Descrições</div><div class="value" id="sDescriptions">--</div><div class="scorebar"><i id="bDescriptions" style="width:0%"></i></div><div class="source">Cobertura e completude</div></div>
     <div class="card"><div class="label">Upsell</div><div class="value" id="sUpsell">--</div><div class="scorebar"><i id="bUpsell" style="width:0%"></i></div><div class="source">Combos, adicionais e complementos</div></div>
-    <div class="card"><div class="label">Disponibilidade</div><div class="value" id="sAvailability">--</div><div class="scorebar"><i id="bAvailability" style="width:0%"></i></div><div class="source">Exige API oficial para precisão</div></div>
+    <div class="card"><div class="label">Disponibilidade</div><div class="value" id="sAvailability">--</div><div class="scorebar"><i id="bAvailability" style="width:0%"></i></div><div class="source">Status dos itens no cardápio coletado</div></div>
   </div>
 
   <div class="section">
@@ -56,9 +56,9 @@ h1{font-size:34px;margin:0 0 5px}.sub{margin:0}.status{font-size:12px;color:var(
       <div id="findings"><div class="empty">Aguardando análise.</div></div>
     </div>
     <div class="box">
-      <h2>Controle da análise</h2><p>Use a mesma chave administrativa utilizada na configuração do Pixel.</p>
-      <div class="authbox"><div class="formrow"><input id="adminKey" type="password" autocomplete="off" placeholder="Chave administrativa"></div></div>
-      <div class="source">A chave não é salva no navegador. A análise pública é uma leitura best-effort. Para disponibilidade, estoque e catálogo integral, será necessária a integração oficial da loja com a API do iFood.</div>
+      <h2>Controle da análise</h2><p>Use a chave administrativa do MKTB e uma chave de coleta para ler o cardápio público do iFood.</p>
+      <div class="authbox"><div class="formrow"><input id="adminKey" type="password" autocomplete="off" placeholder="Chave administrativa"><input id="brscrappKey" type="password" autocomplete="off" placeholder="Chave de coleta iFood (sk_live_...)"></div></div>
+      <div class="source">O iFood bloqueia coleta direta por servidores externos. A chave de coleta usa a BrScrapp para acessar somente dados públicos do cardápio. Ela fica apenas nesta sessão do navegador e não é salva no banco. <a href="https://brscrapp.com/signup" target="_blank" rel="noopener" style="color:var(--accent);text-decoration:underline">Criar chave gratuita</a>.</div>
     </div>
   </div>
 
@@ -83,7 +83,7 @@ const API='https://rqpemniasklmmlaknlrs.supabase.co/functions/v1/mktb-menu-intel
 const params=new URLSearchParams(location.search),CLIENT=params.get('client')||'';
 const clients={saexpress:{name:'SA EXPRESS',back:'../saexpress/'},classysmash:{name:'CLASSY SMASH',back:'../classysmash/'},originalfabrica:{name:'ORIGINAL FÁBRICA',back:'../originalfabrica/'}};
 if(!clients[CLIENT])location.replace('../');
-clientName.textContent=clients[CLIENT].name;backLink.href=clients[CLIENT].back;
+clientName.textContent=clients[CLIENT].name;backLink.href=clients[CLIENT].back;brscrappKey.value=sessionStorage.getItem('mktb_brscrapp_key')||'';brscrappKey.addEventListener('input',()=>sessionStorage.setItem('mktb_brscrapp_key',brscrappKey.value.trim()));
 const money=v=>v==null?'--':Number(v).toLocaleString('pt-BR',{style:'currency',currency:'BRL'});
 const num=v=>v==null?'--':Number(v).toLocaleString('pt-BR');
 const esc=s=>String(s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -91,20 +91,33 @@ function setScore(id,bar,v){document.getElementById(id).textContent=v==null?'--'
 function admin(){const v=adminKey.value.trim();if(!v){alert('Digite a chave administrativa.');return null}return v}
 async function post(action,extra){
   const k=admin();if(!k)return null;status.textContent='Processando...';
-  const r=await fetch(API,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(Object.assign({client:CLIENT,action:action,admin_key:k},extra||{}))});
+  const provider=brscrappKey.value.trim();sessionStorage.setItem('mktb_brscrapp_key',provider);
+  const r=await fetch(API,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(Object.assign({client:CLIENT,action:action,admin_key:k,brscrapp_key:provider},extra||{}))});
   const j=await r.json().catch(()=>({}));
-  if(!r.ok){status.textContent='Erro';alert(j.error==='unauthorized'?'Chave administrativa incorreta.':'Não foi possível concluir a operação.');return null}
+  if(!r.ok){
+    status.textContent='Erro';
+    const errors={
+      unauthorized:'Chave administrativa incorreta.',
+      provider_key_required:'Informe a chave de coleta iFood. Você pode criar uma gratuitamente no link ao lado.',
+      provider_unauthorized:'A chave de coleta iFood é inválida ou foi revogada.',
+      provider_no_credits:'A chave de coleta está sem créditos.',
+      provider_rate_limit:'Muitas consultas em sequência. Aguarde alguns instantes e tente novamente.',
+      provider_pending:'O iFood ainda está sendo coletado. Aguarde alguns segundos e gere a análise novamente.'
+    };
+    alert(errors[j.error]||'Não foi possível concluir a análise. Tente novamente.');
+    return null
+  }
   status.textContent='Atualizando...';return j;
 }
 function renderAudit(a){
-  if(!a){sourceWarning.style.display='block';sourceWarning.textContent='Ainda não há uma análise disponível para este cardápio.';return}
+  if(!a){sourceWarning.style.display='block';sourceWarning.textContent='Ainda não há uma análise concluída. Informe as duas chaves em Controle da análise e toque em “Gerar nova análise”.';totalScore.innerHTML='--<small>/100</small>';itemCount.textContent='0';categoryCount.textContent='0';avgPrice.textContent='--';return}
   totalScore.innerHTML=(a.score_total==null?'--':a.score_total)+'<small>/100</small>';
   itemCount.textContent=num(a.item_count);categoryCount.textContent=num(a.category_count);avgPrice.textContent=money(a.avg_price);
   auditDate.textContent='Atualizado '+new Date(a.captured_at).toLocaleString('pt-BR');
   setScore('sPhotos','bPhotos',a.score_photos);setScore('sStructure','bStructure',a.score_structure);setScore('sPrice','bPrice',a.score_price);
   setScore('sDescriptions','bDescriptions',a.score_descriptions);setScore('sUpsell','bUpsell',a.score_upsell);setScore('sAvailability','bAvailability',a.score_availability);
   const st=a.stats||{};priceCompare.textContent=st.competitor_avg_price?'Concorrentes: '+money(st.competitor_avg_price):'Cadastre concorrentes para comparar';
-  if(a.source_status!=='ok'){sourceWarning.style.display='block';sourceWarning.textContent='Leitura pública parcial do iFood. O painel mostra apenas o que foi possível identificar automaticamente. A integração oficial da loja permitirá uma auditoria integral.'}else sourceWarning.style.display='none';
+  if(a.source_status!=='ok'){sourceWarning.style.display='block';sourceWarning.textContent='A última captura não foi concluída.'}else sourceWarning.style.display='none';
   const fs=a.findings||[];
   findings.innerHTML=fs.length?fs.map(x=>'<div class="finding"><span class="tag '+esc(x.priority)+'">'+esc(x.priority)+'</span><span class="tag">'+esc(x.type)+'</span><b>'+esc(x.title)+'</b><div class="muted">'+esc(x.detail)+'</div></div>').join(''):'<div class="finding"><b>Nenhum alerta crítico na captura atual</b><div class="muted">Continue acompanhando preço, cobertura de fotos, descrições e estrutura.</div></div>';
   const its=a.menu_items||[];
@@ -117,7 +130,12 @@ function renderCompetitors(list){
 }
 async function load(){
   status.textContent='Carregando...';
-  try{const r=await fetch(API+'?client='+encodeURIComponent(CLIENT),{cache:'no-store'}),j=await r.json();renderAudit(j.audit);renderCompetitors(j.competitors);status.textContent='Dados atualizados'}catch(e){status.textContent='Indisponível';sourceWarning.style.display='block';sourceWarning.textContent='Não foi possível carregar a inteligência de cardápio agora.'}
+  try{
+    const r=await fetch(API+'?client='+encodeURIComponent(CLIENT),{cache:'no-store'}),j=await r.json();
+    renderAudit(j.audit);renderCompetitors(j.competitors);
+    if(j.provider_required&&!j.audit){sourceWarning.style.display='block';sourceWarning.textContent='Para a primeira análise, informe a chave administrativa e a chave de coleta iFood em Controle da análise.'}
+    status.textContent='Dados atualizados'
+  }catch(e){status.textContent='Indisponível';sourceWarning.style.display='block';sourceWarning.textContent='Não foi possível carregar a inteligência de cardápio agora.'}
 }
 runAudit.onclick=async()=>{const j=await post('analyze_client');if(j)load()};
 scanCompetitors.onclick=async()=>{const j=await post('analyze_competitors');if(j)load()};
