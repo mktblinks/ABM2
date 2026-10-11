@@ -284,7 +284,7 @@ async function loadAudit(){
 }
 function auditScore(){
   if(!audit)return null;
-  const vals=[audit.score_photos,audit.score_structure,audit.score_price,audit.score_descriptions,audit.score_upsell,audit.score_availability].filter(v=>v!=null&&Number.isFinite(Number(v)));
+  const vals=[audit?.score_photos,audit?.score_structure,audit?.score_price,audit?.score_descriptions,audit?.score_upsell,audit.score_availability].filter(v=>v!=null&&Number.isFinite(Number(v)));
   return audit.score_total??(vals.length?Math.round(vals.reduce((a,b)=>a+Number(b),0)/vals.length):null);
 }
 function renderAudit(){
@@ -306,14 +306,13 @@ function renderAudit(){
 function renderScoreCards(){
   const wrap=$('menuScoreOverview');
   wrap.querySelectorAll('.score-mini').forEach(x=>x.remove());
-  if(!audit)return;
   const scores=[
     ['Fotos',audit.score_photos,'camera'],
     ['Estrutura',audit.score_structure,'layout-grid'],
     ['Preço',audit.score_price,'badge-dollar-sign'],
     ['Descrições',audit.score_descriptions,'file-text'],
     ['Upsell',audit.score_upsell,'trending-up'],
-    ['Disponibilidade',audit.score_availability,'package-check']
+    ['Disponibilidade',audit?.score_availability,'package-check']
   ];
   scores.forEach(([name,value,icon])=>{
     const div=document.createElement('div');div.className='score-mini';
