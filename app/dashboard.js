@@ -108,7 +108,7 @@ async function loadSubscription(){
   const label=labels[subscription?.status]||'Avaliação';
   $('subscriptionBadge').textContent=label;
   $('planStatus').textContent=label;
-  $('overviewPlan').textContent='MKTB Intelligence';
+  $('overviewPlan').textContent='AVORI';
   if(subscription?.plan_code==='annual')selectedPlan='annual';
   if(subscription?.plan_code==='monthly')selectedPlan='monthly';
   updateSelectedPlanUI();
