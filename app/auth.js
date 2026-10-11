@@ -4,6 +4,7 @@ import { SUPABASE_URL, SUPABASE_KEY } from './config.js';
 const sb=createClient(SUPABASE_URL,SUPABASE_KEY);
 const $=id=>document.getElementById(id);
 const notice=$('notice');
+let navigating=false;
 
 function msg(text,type='info'){
   notice.textContent=text;
@@ -24,54 +25,110 @@ function mode(which){
 $('loginTab').onclick=()=>mode('login');
 $('signupTab').onclick=()=>mode('signup');
 
+async function existingRestaurant(){
+  const {data,error}=await sb.from('mktb_restaurants').select('id').order('created_at',{ascending:true}).limit(1);
+  if(error) throw error;
+  return data&&data.length?data[0]:null;
+}
+async function isPlatformAdmin(){
+  try{
+    const {data,error}=await sb.rpc('mktb_is_platform_admin');
+    return !error&&data===true;
+  }catch{return false}
+}
 async function ensureRestaurant(){
+  const existing=await existingRestaurant();
+  if(existing)return existing;
+
   const pending=JSON.parse(localStorage.getItem('mktb_pending_restaurant')||'null');
-  const {data:existing}=await sb.from('mktb_restaurants').select('id').limit(1);
-  if(existing&&existing.length) return existing[0];
-  if(!pending) return null;
-  const {data,error}=await sb.rpc('mktb_create_restaurant',{p_name:pending.name,p_ifood_url:pending.ifood_url});
+  if(!pending)return null;
+
+  const {data,error}=await sb.rpc('mktb_create_restaurant',{
+    p_name:pending.name,
+    p_ifood_url:pending.ifood_url
+  });
   if(error) throw error;
   localStorage.removeItem('mktb_pending_restaurant');
   return data;
+}
+async function routeAuthenticatedUser(){
+  if(navigating)return;
+  const restaurant=await ensureRestaurant();
+  if(restaurant){
+    navigating=true;
+    location.replace('./dashboard.html');
+    return;
+  }
+
+  if(await isPlatformAdmin()){
+    navigating=true;
+    location.replace('./admin/');
+    return;
+  }
+
+  await sb.auth.signOut();
+  msg('Esta conta ainda não possui um restaurante vinculado. Crie uma conta do restaurante para continuar.','error');
 }
 
 $('loginForm').addEventListener('submit',async e=>{
   e.preventDefault();
   const btn=e.submitter;btn.disabled=true;btn.textContent='Entrando...';
   try{
-    const {error}=await sb.auth.signInWithPassword({email:$('loginEmail').value.trim(),password:$('loginPassword').value});
-    if(error) throw error;
-    await ensureRestaurant();
-    location.href='./dashboard.html';
-  }catch(err){msg(err.message||'Não foi possível entrar.','error')}
-  finally{btn.disabled=false;btn.textContent='Entrar no painel'}
+    const {error}=await sb.auth.signInWithPassword({
+      email:$('loginEmail').value.trim(),
+      password:$('loginPassword').value
+    });
+    if(error)throw error;
+    await routeAuthenticatedUser();
+  }catch(err){
+    msg(err.message||'Não foi possível entrar.','error');
+    try{await sb.auth.signOut()}catch{}
+  }finally{
+    if(!navigating){btn.disabled=false;btn.textContent='Entrar no painel'}
+  }
 });
 
 $('signupForm').addEventListener('submit',async e=>{
   e.preventDefault();
   const btn=e.submitter;btn.disabled=true;btn.textContent='Criando conta...';
-  const pending={name:$('restaurantName').value.trim(),ifood_url:$('ifoodUrl').value.trim()};
+  const pending={
+    name:$('restaurantName').value.trim(),
+    ifood_url:$('ifoodUrl').value.trim()
+  };
   localStorage.setItem('mktb_pending_restaurant',JSON.stringify(pending));
+
   try{
     const {data,error}=await sb.auth.signUp({
       email:$('signupEmail').value.trim(),
       password:$('signupPassword').value,
       options:{data:{full_name:$('signupName').value.trim()}}
     });
-    if(error) throw error;
+    if(error)throw error;
+
     if(data.session){
-      await ensureRestaurant();
-      location.href='./dashboard.html';
+      await routeAuthenticatedUser();
     }else{
-      msg('Conta criada. Confirme seu e-mail e depois entre no painel. O restaurante e o link serão criados automaticamente no primeiro acesso.');
       mode('login');
+      msg('Conta criada. Confirme seu e-mail e depois entre no painel. O restaurante e o link serão criados automaticamente no primeiro acesso.');
     }
-  }catch(err){msg(err.message||'Não foi possível criar a conta.','error')}
-  finally{btn.disabled=false;btn.textContent='Criar minha conta'}
+  }catch(err){
+    msg(err.message||'Não foi possível criar a conta.','error');
+  }finally{
+    if(!navigating){btn.disabled=false;btn.textContent='Criar minha conta'}
+  }
 });
+
+const params=new URLSearchParams(location.search);
+if(params.get('error')==='no_restaurant'){
+  msg('Esta conta não possui um restaurante vinculado. Entre com a conta correta ou crie um novo restaurante.','error');
+}
 
 const {data:{session}}=await sb.auth.getSession();
 if(session){
-  try{await ensureRestaurant()}catch{}
-  location.href='./dashboard.html';
+  try{
+    await routeAuthenticatedUser();
+  }catch(err){
+    await sb.auth.signOut();
+    msg('Sua sessão foi encerrada para evitar um erro de acesso. Entre novamente.','error');
+  }
 }
