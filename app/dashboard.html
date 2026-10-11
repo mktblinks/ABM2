@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="robots" content="noindex,nofollow">
-<title>MKTB Dashboard</title>
+<title>AVORI</title>
 <link rel="stylesheet" href="./styles.css?v=5">
 <link rel="stylesheet" href="./dashboard-v2.css?v=2">
 <script src="https://unpkg.com/lucide@0.468.0"></script>
@@ -13,8 +13,8 @@
 <div class="app">
   <aside class="sidebar">
     <div class="sidebar-brand">
-      <div class="mktb">MKTB</div>
-      <div class="descriptor">DASHBOARD</div>
+      <div class="mktb">AVORI</div>
+      <div class="descriptor">RESTAURANT INTELLIGENCE</div>
     </div>
 
     <nav class="nav">
@@ -46,7 +46,7 @@
   <main class="main">
     <header class="topbar">
       <div class="top-brand">
-        <h1>MKTB Dashboard</h1>
+        <h1>AVORI</h1>
         <p>Mais clientes para o seu restaurante no iFood.</p>
       </div>
       <div class="top-actions">
@@ -62,7 +62,7 @@
     <section class="section active" id="overview">
       <div class="page-hero">
         <div class="page-hero-copy">
-          <div class="eyebrow">BEM-VINDO AO MKTB DASHBOARD</div>
+          <div class="eyebrow">BEM-VINDO À AVORI</div>
           <h2>Mais visibilidade.<br>Mais pedidos. <span class="gold">Mais resultado.</span></h2>
           <p>Acompanhe o desempenho do seu restaurante no iFood, identifique oportunidades e veja com clareza onde agir para crescer.</p>
         </div>
@@ -104,7 +104,7 @@
           </div>
         </div>
         <div class="plan-card">
-          <div class="plan-meta"><small>Plano atual</small><b id="overviewPlan">MKTB Intelligence</b><span class="pill" id="subscriptionBadge">Avaliação</span></div>
+          <div class="plan-meta"><small>Plano atual</small><b id="overviewPlan">AVORI</b><span class="pill" id="subscriptionBadge">Avaliação</span></div>
           <button class="btn ghost" data-section-go="plan">Gerenciar plano →</button>
         </div>
       </div>
@@ -151,7 +151,7 @@
         <div class="panel"><div class="panel-head"><div><h3>Desempenho das campanhas</h3><p>Resultados das campanhas com UTM e identificadores.</p></div></div><div id="campaignPerformance"></div></div>
       </div>
 
-      <div class="panel" style="margin-top:10px"><div class="panel-head"><div><h3>Recomendações da MKTB</h3><p>Ações práticas para melhorar os resultados.</p></div></div><div class="reco-list" id="performanceRecommendations"></div></div>
+      <div class="panel" style="margin-top:10px"><div class="panel-head"><div><h3>Recomendações AVORI</h3><p>Ações práticas para melhorar os resultados.</p></div></div><div class="reco-list" id="performanceRecommendations"></div></div>
     </section>
 
     <section class="section" id="menu">
@@ -194,7 +194,7 @@
     </section>
 
     <section class="section" id="campaigns">
-      <div class="page-hero"><div class="page-hero-copy"><div class="eyebrow">CAMPANHAS</div><h2>Saiba quais campanhas<br><span class="gold">trazem movimento.</span></h2><p>Visualize UTMs, origens e tráfego identificado no link MKTB.</p></div><div class="hero-media"></div></div>
+      <div class="page-hero"><div class="page-hero-copy"><div class="eyebrow">CAMPANHAS</div><h2>Saiba quais campanhas<br><span class="gold">trazem movimento.</span></h2><p>Visualize UTMs, origens e tráfego identificado no link AVORI.</p></div><div class="hero-media"></div></div>
       <div class="panel"><div class="panel-head"><div><h3>Campanhas identificadas</h3><p>Campanhas registradas nos últimos 30 dias.</p></div></div><div id="campaignsFull"></div></div>
     </section>
 
@@ -204,7 +204,7 @@
     </section>
 
     <section class="section" id="audience">
-      <div class="page-hero"><div class="page-hero-copy"><div class="eyebrow">AUDIÊNCIA</div><h2>Entenda quem chega<br><span class="gold">até a sua loja.</span></h2><p>Veja origens, dispositivos e comportamento de acesso ao link MKTB.</p></div><div class="hero-media"></div></div>
+      <div class="page-hero"><div class="page-hero-copy"><div class="eyebrow">AUDIÊNCIA</div><h2>Entenda quem chega<br><span class="gold">até a sua loja.</span></h2><p>Veja origens, dispositivos e comportamento de acesso ao link AVORI.</p></div><div class="hero-media"></div></div>
       <div class="dash-grid equal"><div class="panel"><div class="panel-head"><div><h3>Origem do tráfego</h3><p>Participação por canal.</p></div></div><div id="audienceSources"></div></div><div class="panel"><div class="panel-head"><div><h3>Dispositivos</h3><p>Participação por dispositivo.</p></div></div><div id="audienceDevices"></div></div></div>
     </section>
 
@@ -222,15 +222,15 @@
       <div class="page-hero"><div class="page-hero-copy"><div class="eyebrow">CONFIGURAÇÕES</div><h2>Controle sua operação<br><span class="gold">em um só lugar.</span></h2><p>Gerencie Pixel, URL do iFood, conta e preferências do restaurante.</p></div><div class="hero-media"></div></div>
       <div class="settings-grid">
         <div class="panel"><div class="panel-head"><div><h3>Meta Pixel</h3><p>Informe o ID numérico do Pixel do restaurante.</p></div><span class="pill" id="pixelStatus">Não configurado</span></div><div class="formrow"><input id="pixelInput" inputmode="numeric" placeholder="Ex.: 123456789012345"><button class="btn gold" id="savePixel">Salvar Pixel</button></div></div>
-        <div class="panel"><div class="panel-head"><div><h3>URL do iFood</h3><p>Destino oficial usado pelo seu link MKTB.</p></div></div><div class="formrow"><input id="settingsIfoodUrlInput" placeholder="https://www.ifood.com.br/..."><button class="btn primary" id="saveSettingsIfoodUrl">Salvar URL</button></div></div>
+        <div class="panel"><div class="panel-head"><div><h3>URL do iFood</h3><p>Destino oficial usado pelo seu link AVORI.</p></div></div><div class="formrow"><input id="settingsIfoodUrlInput" placeholder="https://www.ifood.com.br/..."><button class="btn primary" id="saveSettingsIfoodUrl">Salvar URL</button></div></div>
       </div>
     </section>
 
     <section class="section" id="plan">
-      <div class="page-hero"><div class="page-hero-copy"><div class="eyebrow">PLANO MKTB</div><h2>Performance e inteligência<br><span class="gold">em um só produto.</span></h2><p>Escolha a forma de pagamento. O produto é o mesmo e todos os recursos estão incluídos.</p></div><div class="hero-media"></div></div>
+      <div class="page-hero"><div class="page-hero-copy"><div class="eyebrow">PLANO AVORI</div><h2>Performance e inteligência<br><span class="gold">em um só produto.</span></h2><p>Escolha a forma de pagamento. O produto é o mesmo e todos os recursos estão incluídos.</p></div><div class="hero-media"></div></div>
       <div class="panel">
         <div class="panel-head">
-          <div><h3>MKTB Intelligence</h3><p>Tudo incluso: link inteligente, performance, campanhas, Pixel, análise de cardápio, recomendações, concorrentes e relatórios.</p></div>
+          <div><h3>AVORI</h3><p>Tudo incluso: link inteligente, performance, campanhas, Pixel, análise de cardápio, recomendações, concorrentes e relatórios.</p></div>
           <span class="pill" id="planStatus">Avaliação</span>
         </div>
 
@@ -257,7 +257,7 @@
             <b id="planPrice">R$ 149,90/mês</b>
             <span id="planBillingHint">Cobrança mensal</span>
           </div>
-          <button class="btn gold" id="subscribeBtn">Contratar MKTB Intelligence</button>
+          <button class="btn gold" id="subscribeBtn">Contratar AVORI</button>
         </div>
       </div>
     </section>
