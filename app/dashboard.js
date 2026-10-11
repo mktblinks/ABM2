@@ -45,12 +45,17 @@ async function ensureRestaurant(){
   }
 
   try{
-    const {data:isAdmin}=await sb.rpc('mktb_is_platform_admin');
+    const {data:isAdmin,error:adminError}=await sb.rpc('mktb_is_platform_admin');
+    if(adminError)throw adminError;
     if(isAdmin===true){
       location.replace('./admin/');
       return false;
     }
-  }catch{}
+  }catch(error){
+    console.error('AVORI: erro ao verificar acesso administrativo',error);
+    showLoadError();
+    return false;
+  }
 
   await sb.auth.signOut();
   location.replace('./?error=no_restaurant');
