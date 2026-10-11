@@ -19,16 +19,30 @@ let events=[];
 async function ensureRestaurant(){
   const {data,error}=await sb.from('mktb_restaurants').select('*').order('created_at',{ascending:true}).limit(1);
   if(error) throw error;
-  if(data&&data.length){restaurant=data[0];return}
+  if(data&&data.length){restaurant=data[0];return true}
+
   const pending=JSON.parse(localStorage.getItem('mktb_pending_restaurant')||'null');
   if(pending){
     const {data:r,error:e}=await sb.rpc('mktb_create_restaurant',{p_name:pending.name,p_ifood_url:pending.ifood_url});
     if(e) throw e;
-    restaurant=r;localStorage.removeItem('mktb_pending_restaurant');return;
+    restaurant=r;
+    localStorage.removeItem('mktb_pending_restaurant');
+    return true;
   }
-  location.href='./';
+
+  try{
+    const {data:isAdmin}=await sb.rpc('mktb_is_platform_admin');
+    if(isAdmin===true){
+      location.replace('./admin/');
+      return false;
+    }
+  }catch{}
+
+  await sb.auth.signOut();
+  location.replace('./?error=no_restaurant');
+  return false;
 }
-await ensureRestaurant();
+if(!(await ensureRestaurant())) throw new Error('routing');
 
 publicLink=LINK_BASE+restaurant.public_code;
 $('sideEmail').textContent=session.user.email||'';
