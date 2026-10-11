@@ -17,7 +17,16 @@ async function isAdmin(){
 if(await isAdmin()){location.replace('./admin/');throw new Error('admin_routing')}
 
 const {data:restaurants,error:rerr}=await sb.from('mktb_restaurants').select('*').order('created_at',{ascending:true}).limit(1);
-if(rerr||!restaurants?.length){
+if(rerr){
+  console.error('AVORI: erro ao consultar restaurante para pagamento',rerr);
+  const warning=document.createElement('div');
+  warning.style.cssText='position:fixed;z-index:99999;inset:0;display:grid;place-items:center;padding:24px;background:#f7f7f5;font-family:Inter,system-ui,sans-serif';
+  warning.innerHTML='<div style="max-width:440px;padding:30px;border:1px solid #e9e7e1;border-radius:20px;background:#fff"><h2>Falha temporária de conexão</h2><p>Não foi possível consultar sua conta. Sua sessão foi preservada. Tente novamente em instantes.</p><button type="button" style="padding:12px 20px;background:#111;color:#d7b85d;border:0;border-radius:10px;cursor:pointer">Tentar novamente</button></div>';
+  warning.querySelector('button').onclick=()=>location.reload();
+  document.body.append(warning);
+  throw new Error('temporary_restaurant_query_failure');
+}
+if(!restaurants?.length){
   await sb.auth.signOut();
   location.replace('./?error=no_restaurant');
   throw new Error('restaurant_not_found');
@@ -26,7 +35,12 @@ restaurant=restaurants[0];
 
 async function loadSubscription(){
   const {data,error}=await sb.from('mktb_subscriptions').select('*').eq('restaurant_id',restaurant.id).maybeSingle();
-  if(error)throw error;
+  if(error){
+    console.error('AVORI: erro ao verificar assinatura',error);
+    status('Não foi possível consultar sua assinatura agora. Tente verificar novamente em instantes.','bad');
+    $('payBtn').disabled=true;
+    return false;
+  }
   subscription=data;
   if(subscription?.status==='active'){
     location.replace('./dashboard.html');
