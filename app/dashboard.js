@@ -9,6 +9,20 @@ const money=n=>n==null?'--':Number(n).toLocaleString('pt-BR',{style:'currency',c
 const esc=s=>String(s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const COLORS=['#b77d16','#e0af4e','#111214','#df2b74','#24aa68','#5c7ce5','#c8cbd1','#e4934d'];
 
+function showLoadError(){
+  if(document.getElementById('avori-load-error'))return;
+  const overlay=document.createElement('div');
+  overlay.id='avori-load-error';
+  overlay.style.cssText='position:fixed;inset:0;z-index:99999;display:grid;place-items:center;background:#f4f5f6;padding:24px;font-family:Inter,system-ui,sans-serif;color:#111';
+  const card=document.createElement('div');
+  card.style.cssText='background:#fff;border:1px solid #e9eaec;border-radius:20px;padding:30px;max-width:430px;width:100%;box-shadow:0 20px 55px #0000000d';
+  const heading=document.createElement('h2');heading.textContent='Não foi possível carregar o AVORI';heading.style.cssText='font-size:24px;margin:0 0 10px';
+  const description=document.createElement('p');description.textContent='A conexão com os dados falhou temporariamente. Sua sessão e as informações do restaurante foram preservadas.';description.style.cssText='color:#666;line-height:1.6';
+  const button=document.createElement('button');button.textContent='Tentar novamente';button.style.cssText='border:0;background:#111;color:#e6bc60;border-radius:12px;padding:13px 20px;font-weight:700;cursor:pointer';
+  button.onclick=()=>location.reload();
+  card.append(heading,description,button);overlay.append(card);document.body.append(overlay);
+}
+
 const {data:{session}}=await sb.auth.getSession();
 if(!session){location.href='./';throw new Error('not_authenticated')}
 
@@ -18,7 +32,7 @@ let events=[];
 
 async function ensureRestaurant(){
   const {data,error}=await sb.from('mktb_restaurants').select('*').order('created_at',{ascending:true}).limit(1);
-  if(error) throw error;
+  if(error){console.error('AVORI: erro ao consultar restaurante',error);showLoadError();return false}
   if(data&&data.length){restaurant=data[0];return true}
 
   const pending=JSON.parse(localStorage.getItem('mktb_pending_restaurant')||'null');
@@ -45,7 +59,8 @@ async function ensureRestaurant(){
 if(!(await ensureRestaurant())) throw new Error('routing');
 
 async function enforcePaidAccess(){
-  const {data:sub}=await sb.from('mktb_subscriptions').select('*').eq('restaurant_id',restaurant.id).maybeSingle();
+  const {data:sub,error}=await sb.from('mktb_subscriptions').select('*').eq('restaurant_id',restaurant.id).maybeSingle();
+  if(error){console.error('AVORI: erro ao verificar assinatura',error);showLoadError();return false}
   let current=sub||null;
 
   if(current?.provider_subscription_id){
