@@ -190,7 +190,7 @@
 
       <div class="panel avori-roadmap-panel" style="margin-top:10px">
         <div class="panel-head"><div><h3>Plano de ação recomendado <span class="subtle-info">ⓘ</span></h3><p>Siga esta ordem para atacar primeiro o que tende a gerar mais impacto.</p></div></div>
-        <div class="roadmap" id="actionRoadmap"></div>
+        <div class="roadmap" id="actionRoadmap"></div><div class="avori-progress"><div><b>Execução das melhorias</b><p>Marque cada ação concluída e acompanhe seu progresso.</p></div><strong id="actionProgress">0/0</strong></div>
       </div>
     </section>
 
@@ -216,7 +216,7 @@
 
     <section class="section" id="reports">
       <div class="page-hero"><div class="page-hero-copy"><div class="eyebrow">RELATÓRIOS</div><h2>Transforme os dados<br><span class="gold">em decisões.</span></h2><p>Resumo executivo da performance, campanhas e inteligência do cardápio.</p></div><div class="hero-media"></div></div>
-      <div class="feature-empty"><span data-lucide="file-chart-column"></span><b>Relatório executivo</b><p>Esta área vai reunir exportações e relatórios consolidados do período, mantendo o mesmo padrão premium do Dashboard.</p></div>
+      <div class="panel"><div class="panel-head"><div><h3>Relatório de acompanhamento</h3><p>Exporte as métricas de encaminhamento e as prioridades do cardápio, com distinção entre dados medidos e estimativas.</p></div></div><button class="btn gold" id="exportAvoriReport">Exportar relatório CSV</button><p style="font-size:12px;color:#888;margin-top:12px">O relatório não atribui pedidos ou faturamento às campanhas sem integração oficial.</p></div>
     </section>
 
     <section class="section" id="settings">
@@ -225,6 +225,7 @@
         <div class="panel"><div class="panel-head"><div><h3>Meta Pixel</h3><p>Informe o ID numérico do Pixel do restaurante.</p></div><span class="pill" id="pixelStatus">Não configurado</span></div><div class="formrow"><input id="pixelInput" inputmode="numeric" placeholder="Ex.: 123456789012345"><button class="btn gold" id="savePixel">Salvar Pixel</button></div></div>
         <div class="panel"><div class="panel-head"><div><h3>URL do iFood</h3><p>Destino oficial usado pelo seu link AVORI.</p></div></div><div class="formrow"><input id="settingsIfoodUrlInput" placeholder="https://www.ifood.com.br/..."><button class="btn primary" id="saveSettingsIfoodUrl">Salvar URL</button></div></div>
       </div>
+      <div class="panel" style="margin-top:12px"><div class="panel-head"><div><h3>Integração oficial iFood Analytics</h3><p>Conexão de BI com dados agregados de pedidos e faturamento, sujeita à homologação e autorização oficial do iFood.</p></div><span class="pill" id="ifoodApiStatus">Aguardando homologação</span></div><p style="font-size:12px;line-height:1.7;color:#747474">Enquanto a integração não estiver autorizada, o AVORI mostra somente visitas, encaminhamentos e análises disponíveis. Nenhuma venda é atribuída automaticamente a um anúncio.</p><a class="btn gold" style="display:inline-block;margin-top:10px" href="https://developer.ifood.com.br/pt-BR/" target="_blank" rel="noopener noreferrer">Portal oficial de desenvolvedores ↗</a></div>
     </section>
 
     <section class="section" id="plan">
@@ -265,6 +266,7 @@
   </main>
 </div>
 
-<script src="./demo.js?v=1"></script>
+<script src="./demo.js?v=2"></script>
+<script defer src="../avori-operations.js?v=1"></script>
 </body>
 </html>
