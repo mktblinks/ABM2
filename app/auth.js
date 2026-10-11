@@ -51,18 +51,42 @@ async function ensureRestaurant(){
   localStorage.removeItem('mktb_pending_restaurant');
   return data;
 }
+async function refreshSubscription(restaurantId){
+  const {data:{session}}=await sb.auth.getSession();
+  if(!session)return null;
+
+  const {data:sub}=await sb.from('mktb_subscriptions').select('*').eq('restaurant_id',restaurantId).maybeSingle();
+  if(!sub)return null;
+
+  if(sub.provider_subscription_id){
+    try{
+      const r=await fetch(SUPABASE_URL+'/functions/v1/mktb-billing-sync',{
+        method:'POST',
+        headers:{'Content-Type':'application/json','Authorization':'Bearer '+session.access_token,'apikey':SUPABASE_KEY},
+        body:JSON.stringify({restaurant_id:restaurantId})
+      });
+      if(r.ok){
+        const j=await r.json();
+        return j.subscription||sub;
+      }
+    }catch{}
+  }
+  return sub;
+}
 async function routeAuthenticatedUser(){
   if(navigating)return;
-  const restaurant=await ensureRestaurant();
-  if(restaurant){
-    navigating=true;
-    location.replace('./dashboard.html');
-    return;
-  }
 
   if(await isPlatformAdmin()){
     navigating=true;
     location.replace('./admin/');
+    return;
+  }
+
+  const restaurant=await ensureRestaurant();
+  if(restaurant){
+    const sub=await refreshSubscription(restaurant.id);
+    navigating=true;
+    location.replace(sub?.status==='active'?'./dashboard.html':'./payment.html');
     return;
   }
 
@@ -109,7 +133,7 @@ $('signupForm').addEventListener('submit',async e=>{
       await routeAuthenticatedUser();
     }else{
       mode('login');
-      msg('Conta criada. Confirme seu e-mail e depois entre no painel. O restaurante e o link serão criados automaticamente no primeiro acesso.');
+      msg('Conta criada. Confirme seu e-mail. No primeiro acesso você será direcionado ao pagamento e o Dashboard será liberado somente após a aprovação.');
     }
   }catch(err){
     msg(err.message||'Não foi possível criar a conta.','error');
