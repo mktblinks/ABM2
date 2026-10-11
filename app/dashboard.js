@@ -11,7 +11,7 @@ const {data:{session}}=await sb.auth.getSession();
 if(!session){location.href='./';throw new Error('not_authenticated')}
 $('sideEmail').textContent=session.user.email||'';
 
-let restaurant=null,subscription=null,settings=null,audit=null,publicLink='';
+let restaurant=null,subscription=null,settings=null,audit=null,plan=null,publicLink='';
 
 async function ensureRestaurant(){
   const {data,error}=await sb.from('mktb_restaurants').select('*').order('created_at',{ascending:true}).limit(1);
@@ -35,6 +35,11 @@ $('mainLink').textContent=publicLink;
 $('overviewLink').textContent=publicLink;
 $('ifoodUrlInput').value=restaurant.ifood_url||'';
 
+async function loadPlan(){
+  const {data}=await sb.from('mktb_plans').select('*').eq('code','starter').maybeSingle();
+  plan=data||null;
+  $('planPrice').textContent=plan&&plan.amount?money(plan.amount)+'/mês':'Valor a definir';
+}
 async function loadSubscription(){
   const {data}=await sb.from('mktb_subscriptions').select('*').eq('restaurant_id',restaurant.id).maybeSingle();
   subscription=data||null;
@@ -120,9 +125,25 @@ $('savePixel').onclick=async()=>{
   alert('Pixel atualizado.');
 };
 
-$('subscribeBtn').onclick=()=>{
-  alert('A área de checkout já está preparada no painel. Falta apenas conectar a conta de cobrança e definir o valor do plano.');
+$('subscribeBtn').onclick=async()=>{
+  const btn=$('subscribeBtn');const old=btn.textContent;btn.disabled=true;btn.textContent='Abrindo checkout...';
+  try{
+    const {data:{session}}=await sb.auth.getSession();
+    const r=await fetch(SUPABASE_URL+'/functions/v1/mktb-billing-checkout',{
+      method:'POST',
+      headers:{'Content-Type':'application/json','Authorization':'Bearer '+session.access_token,'apikey':SUPABASE_KEY},
+      body:JSON.stringify({restaurant_id:restaurant.id})
+    });
+    const j=await r.json().catch(()=>({}));
+    if(!r.ok){
+      if(j.error==='plan_price_not_set'){alert('O valor do plano ainda não foi definido.');return}
+      if(j.error==='billing_not_configured'){alert('A conta de cobrança ainda não foi conectada.');return}
+      throw new Error(j.detail||j.error||'Falha no checkout');
+    }
+    location.href=j.checkout_url;
+  }catch(e){alert(e.message||'Não foi possível abrir o checkout.')}
+  finally{btn.disabled=false;btn.textContent=old}
 };
 $('logoutBtn').onclick=async()=>{await sb.auth.signOut();location.href='./'};
 
-await Promise.all([loadSubscription(),loadSettings(),loadMetrics(),loadAudit()]);
+await Promise.all([loadPlan(),loadSubscription(),loadSettings(),loadMetrics(),loadAudit()]);
