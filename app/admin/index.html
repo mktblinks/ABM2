@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Admin MKTB</title>
+<link rel="stylesheet" href="../styles.css?v=2">
+</head>
+<body>
+<div id="loginView" class="admin-login">
+  <div class="admin-login-card">
+    <div class="brand"><div class="brandmark">M</div><div>MKTB ADMIN</div></div>
+    <h1>Painel master</h1>
+    <p>Entre com sua conta administrativa para acessar todos os clientes.</p>
+    <div class="notice" id="adminNotice"></div>
+    <form class="form" id="adminLoginForm">
+      <div class="field"><label>E-mail</label><input id="adminEmail" type="email" autocomplete="email" required placeholder="seu@email.com"></div>
+      <div class="field"><label>Senha</label><input id="adminPassword" type="password" autocomplete="current-password" required placeholder="Sua senha"></div>
+      <button class="btn primary" type="submit">Entrar no Admin</button>
+    </form>
+  </div>
+</div>
+
+<div id="adminView" class="admin-shell" style="display:none">
+  <header class="admin-top">
+    <div class="brand"><div class="brandmark">M</div><div>MKTB ADMIN</div></div>
+    <div class="admin-top-right">
+      <span class="pill">Super Admin</span>
+      <button class="btn ghost" id="adminLogout">Sair</button>
+    </div>
+  </header>
+
+  <main class="admin-wrap">
+    <div class="admin-head">
+      <div>
+        <div class="eyebrow">Gestão da plataforma</div>
+        <h1>Todos os clientes em um só lugar.</h1>
+        <p>Acompanhe clientes atuais e novas contas SaaS sem alterar os links antigos.</p>
+      </div>
+      <a class="btn gold" href="../" target="_blank" rel="noopener">Abrir área do cliente</a>
+    </div>
+
+    <section class="admin-kpis">
+      <div class="admin-kpi"><small>Clientes atuais</small><b id="kpiLegacy">0</b><span>Links antigos preservados</span></div>
+      <div class="admin-kpi"><small>Clientes SaaS</small><b id="kpiSaas">0</b><span>Novas contas cadastradas</span></div>
+      <div class="admin-kpi"><small>Assinaturas ativas</small><b id="kpiActive">0</b><span>Planos em cobrança</span></div>
+      <div class="admin-kpi"><small>Em avaliação</small><b id="kpiTrial">0</b><span>Contas em período de teste</span></div>
+    </section>
+
+    <div class="admin-toolbar">
+      <input class="admin-search" id="clientSearch" placeholder="Buscar cliente, e-mail ou slug">
+      <button class="admin-filter active" data-filter="all">Todos</button>
+      <button class="admin-filter" data-filter="legacy">Atuais</button>
+      <button class="admin-filter" data-filter="saas">SaaS</button>
+    </div>
+
+    <div class="admin-section-title">Clientes</div>
+    <div class="client-list" id="clientList"></div>
+  </main>
+</div>
+
+<script type="module" src="./admin.js?v=1"></script>
+</body>
+</html>
