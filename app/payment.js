@@ -69,7 +69,7 @@ async function syncPayment({silent=false}={}){
     const j=await r.json().catch(()=>({}));
     if(!r.ok){
       if(!silent){
-        if(j.error==='billing_not_configured')status('A cobrança ainda não foi conectada. Entre em contato com a MKTB.','bad');
+        if(j.error==='billing_not_configured')status('A cobrança ainda não foi conectada. Entre em contato com a AVORI.','bad');
         else status('Não foi possível consultar o pagamento agora. Tente novamente em alguns instantes.','bad');
       }
       return false;
@@ -116,7 +116,7 @@ $('payBtn').onclick=async()=>{
     });
     const j=await r.json().catch(()=>({}));
     if(!r.ok){
-      if(j.error==='billing_not_configured'){status('A conta Mercado Pago da MKTB ainda não foi conectada.','bad');return}
+      if(j.error==='billing_not_configured'){status('A conta Mercado Pago da AVORI ainda não foi conectada.','bad');return}
       throw new Error(j.detail||j.error||'checkout_failed');
     }
     location.href=j.checkout_url;
