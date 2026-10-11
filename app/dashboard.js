@@ -44,6 +44,38 @@ async function ensureRestaurant(){
 }
 if(!(await ensureRestaurant())) throw new Error('routing');
 
+async function enforcePaidAccess(){
+  const {data:sub}=await sb.from('mktb_subscriptions').select('*').eq('restaurant_id',restaurant.id).maybeSingle();
+  let current=sub||null;
+
+  if(current?.provider_subscription_id){
+    try{
+      const {data:{session}}=await sb.auth.getSession();
+      const r=await fetch(SUPABASE_URL+'/functions/v1/mktb-billing-sync',{
+        method:'POST',
+        headers:{
+          'Content-Type':'application/json',
+          'Authorization':'Bearer '+session.access_token,
+          'apikey':SUPABASE_KEY
+        },
+        body:JSON.stringify({restaurant_id:restaurant.id})
+      });
+      if(r.ok){
+        const j=await r.json();
+        current=j.subscription||current;
+      }
+    }catch{}
+  }
+
+  subscription=current;
+  if(current?.status!=='active'){
+    location.replace('./payment.html');
+    return false;
+  }
+  return true;
+}
+if(!(await enforcePaidAccess())) throw new Error('payment_required');
+
 publicLink=LINK_BASE+restaurant.public_code;
 $('sideEmail').textContent=session.user.email||'';
 $('sideRestaurant').textContent=restaurant.name;
