@@ -12,7 +12,7 @@ const COLORS=['#b77d16','#e0af4e','#111214','#df2b74','#24aa68','#5c7ce5','#c8cb
 const {data:{session}}=await sb.auth.getSession();
 if(!session){location.href='./';throw new Error('not_authenticated')}
 
-let restaurant=null,subscription=null,settings=null,audit=null,plan=null,publicLink='';
+let restaurant=null,subscription=null,settings=null,audit=null,plans={},selectedPlan='monthly',publicLink='';
 let summary={loads:0,redirects:0,rate:0,campaigns:0,sources:[],devices:[]};
 let events=[];
 
@@ -55,9 +55,19 @@ $('ifoodUrlInput').value=restaurant.ifood_url||'';
 $('settingsIfoodUrlInput').value=restaurant.ifood_url||'';
 
 async function loadPlan(){
-  const {data}=await sb.from('mktb_plans').select('*').eq('code','starter').maybeSingle();
-  plan=data||null;
-  $('planPrice').textContent=plan&&plan.amount?money(plan.amount)+'/mês':'Valor a definir';
+  const {data}=await sb.from('mktb_plans').select('*').in('code',['monthly','annual']).eq('active',true);
+  plans=Object.fromEntries((data||[]).map(x=>[x.code,x]));
+  updateSelectedPlanUI();
+}
+function updateSelectedPlanUI(){
+  document.querySelectorAll('[data-plan-choice]').forEach(btn=>btn.classList.toggle('active',btn.dataset.planChoice===selectedPlan));
+  if(selectedPlan==='annual'){
+    $('planPrice').textContent='R$ 139,90/mês';
+    $('planBillingHint').textContent='R$ 1.678,80 cobrados por ano';
+  }else{
+    $('planPrice').textContent='R$ 149,90/mês';
+    $('planBillingHint').textContent='Cobrança mensal';
+  }
 }
 async function loadSubscription(){
   const {data}=await sb.from('mktb_subscriptions').select('*').eq('restaurant_id',restaurant.id).maybeSingle();
@@ -66,7 +76,10 @@ async function loadSubscription(){
   const label=labels[subscription?.status]||'Avaliação';
   $('subscriptionBadge').textContent=label;
   $('planStatus').textContent=label;
-  $('overviewPlan').textContent=subscription?.plan_code==='starter'?'MKTB Intelligence':'MKTB Intelligence';
+  $('overviewPlan').textContent='MKTB Intelligence';
+  if(subscription?.plan_code==='annual')selectedPlan='annual';
+  if(subscription?.plan_code==='monthly')selectedPlan='monthly';
+  updateSelectedPlanUI();
 }
 async function loadSettings(){
   const {data}=await sb.from('mktb_restaurant_settings').select('*').eq('restaurant_id',restaurant.id).maybeSingle();
@@ -339,15 +352,25 @@ $('savePixel').onclick=async()=>{
   alert('Pixel atualizado.');
 };
 
+document.querySelectorAll('[data-plan-choice]').forEach(btn=>btn.onclick=()=>{
+  selectedPlan=btn.dataset.planChoice;
+  updateSelectedPlanUI();
+});
+
 $('subscribeBtn').onclick=async()=>{
   const btn=$('subscribeBtn'),old=btn.textContent;btn.disabled=true;btn.textContent='Abrindo checkout...';
   try{
     const {data:{session}}=await sb.auth.getSession();
-    const r=await fetch(SUPABASE_URL+'/functions/v1/mktb-billing-checkout',{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+session.access_token,'apikey':SUPABASE_KEY},body:JSON.stringify({restaurant_id:restaurant.id})});
+    const r=await fetch(SUPABASE_URL+'/functions/v1/mktb-billing-checkout',{
+      method:'POST',
+      headers:{'Content-Type':'application/json','Authorization':'Bearer '+session.access_token,'apikey':SUPABASE_KEY},
+      body:JSON.stringify({restaurant_id:restaurant.id,plan_code:selectedPlan})
+    });
     const j=await r.json().catch(()=>({}));
     if(!r.ok){
       if(j.error==='plan_price_not_set'){alert('O valor do plano ainda não foi definido.');return}
       if(j.error==='billing_not_configured'){alert('A conta de cobrança ainda não foi conectada.');return}
+      if(j.error==='invalid_plan'){alert('Selecione um plano válido.');return}
       throw new Error(j.detail||j.error||'Falha no checkout');
     }
     location.href=j.checkout_url;
