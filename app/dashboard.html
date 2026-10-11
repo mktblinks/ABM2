@@ -4,122 +4,235 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="robots" content="noindex,nofollow">
-<title>Painel | MKTB</title>
-<link rel="stylesheet" href="./styles.css?v=1">
+<title>MKTB Dashboard</title>
+<link rel="stylesheet" href="./styles.css?v=3">
+<link rel="stylesheet" href="./dashboard-v2.css?v=1">
+<script src="https://unpkg.com/lucide@0.468.0"></script>
 </head>
-<body>
+<body class="dashboard-v3">
 <div class="app">
   <aside class="sidebar">
-    <div class="brand"><div class="brandmark">M</div><div>MKTB</div></div>
+    <div class="sidebar-brand">
+      <div class="mktb">MKTB</div>
+      <div class="descriptor">DASHBOARD</div>
+    </div>
+
     <nav class="nav">
-      <button class="active" data-section="overview"><i></i>Visão geral</button>
-      <button data-section="link"><i></i>Meu link</button>
-      <button data-section="pixel"><i></i>Pixel</button>
-      <button data-section="menu"><i></i>Análise do cardápio</button>
-      <button data-section="plan"><i></i>Plano e cobrança</button>
+      <button class="active" data-section="overview"><i></i><span data-lucide="house"></span>Visão Geral</button>
+      <button data-section="performance"><i></i><span data-lucide="chart-no-axes-combined"></span>Desempenho</button>
+      <button data-section="menu"><i></i><span data-lucide="utensils"></span>Análise do Cardápio</button>
+      <button data-section="campaigns"><i></i><span data-lucide="send"></span>Campanhas</button>
+      <button data-section="link"><i></i><span data-lucide="link-2"></span>Link da Loja</button>
+      <button data-section="audience"><i></i><span data-lucide="users"></span>Audiência</button>
+      <button data-section="competitors"><i></i><span data-lucide="network"></span>Concorrentes</button>
+      <button data-section="reports"><i></i><span data-lucide="file-chart-column"></span>Relatórios</button>
+      <button data-section="settings"><i></i><span data-lucide="settings"></span>Configurações</button>
     </nav>
+
+    <div class="sidebar-promo">
+      <div class="crown"><span data-lucide="crown"></span></div>
+      <h4>Tenha mais resultados com o plano Pro</h4>
+      <p>Recursos avançados, relatórios completos e mais oportunidades para o seu restaurante.</p>
+      <button class="btn" data-section-go="plan">Fazer upgrade →</button>
+    </div>
+
     <div class="sidebar-foot">
       <b id="sideRestaurant">Restaurante</b>
       <span id="sideEmail">Conta</span>
-      <div style="margin-top:14px"><button class="btn ghost" id="logoutBtn" style="width:100%">Sair</button></div>
+      <div style="margin-top:10px"><button class="btn ghost" id="logoutBtn" style="width:100%">Sair</button></div>
     </div>
   </aside>
 
   <main class="main">
     <header class="topbar">
-      <div><h1 id="restaurantName">Carregando...</h1><p>Performance, rastreamento e inteligência do seu iFood.</p></div>
-      <div class="user"><span class="pill" id="subscriptionBadge">Plano em avaliação</span><div class="avatar" id="avatar">M</div></div>
+      <div class="top-brand">
+        <h1>MKTB Dashboard</h1>
+        <p>Mais clientes para o seu restaurante no iFood.</p>
+      </div>
+      <div class="top-actions">
+        <div class="date-pill"><span data-lucide="calendar-days"></span>Últimos 30 dias<span data-lucide="chevron-down"></span></div>
+        <button class="notify"><span data-lucide="bell"></span></button>
+        <div class="user">
+          <div class="avatar" id="avatar">M</div>
+          <div class="user-text"><b id="restaurantName">Carregando...</b><span>Restaurante no iFood</span></div>
+        </div>
+      </div>
     </header>
 
     <section class="section active" id="overview">
-      <div class="hero">
-        <div>
-          <div class="eyebrow">Inteligência de performance</div>
-          <h2>Seu iFood em uma visão simples.</h2>
-          <p>Acompanhe o caminho dos seus clientes e veja onde o cardápio pode ganhar clareza, valor e conversão.</p>
+      <div class="page-hero">
+        <div class="page-hero-copy">
+          <div class="eyebrow">BEM-VINDO AO MKTB DASHBOARD</div>
+          <h2>Mais visibilidade.<br>Mais pedidos. <span class="gold">Mais resultado.</span></h2>
+          <p>Acompanhe o desempenho do seu restaurante no iFood, identifique oportunidades e veja com clareza onde agir para crescer.</p>
         </div>
-        <div class="hero-score"><span>Score do cardápio</span><b id="heroScore">--</b></div>
+        <div class="hero-media">
+          <div class="hero-floating"><small>Performance do período</small><b id="overviewHeroRate">0%</b><span>taxa de encaminhamento ao iFood</span></div>
+        </div>
       </div>
 
-      <div class="grid4">
-        <div class="metric"><small>Visitas ao link</small><b id="mLoads">0</b><span>Últimos 30 dias</span></div>
-        <div class="metric"><small>Encaminhados ao iFood</small><b id="mRedirects">0</b><span>Últimos 30 dias</span></div>
-        <div class="metric"><small>Taxa de encaminhamento</small><b id="mRate">0%</b><span>Visitas que seguiram para o iFood</span></div>
-        <div class="metric"><small>Campanhas identificadas</small><b id="mCampaigns">0</b><span>UTM e identificadores de mídia</span></div>
+      <div class="kpi-grid kpi4">
+        <div class="kpi-card">
+          <div class="kpi-head"><span class="kpi-icon"><span data-lucide="eye"></span></span>Visitas ao seu link</div>
+          <div class="kpi-value" id="mLoads">0</div><div class="kpi-foot">Últimos 30 dias</div>
+          <svg class="mini-spark" viewBox="0 0 60 28"><path d="M1 22 C8 22,10 13,18 15 S29 7,35 11 S47 16,59 3"/></svg>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-head"><span class="kpi-icon"><span data-lucide="mouse-pointer-click"></span></span>Cliques para o iFood</div>
+          <div class="kpi-value" id="mRedirects">0</div><div class="kpi-foot">Encaminhamentos registrados</div>
+          <svg class="mini-spark" viewBox="0 0 60 28"><path d="M1 23 C9 18,14 18,18 15 S27 9,34 13 S46 12,59 2"/></svg>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-head"><span class="kpi-icon"><span data-lucide="shopping-cart"></span></span>Taxa de encaminhamento</div>
+          <div class="kpi-value" id="mRate">0%</div><div class="kpi-foot">Visitas que seguiram ao iFood</div>
+          <svg class="mini-spark" viewBox="0 0 60 28"><path d="M1 24 C10 25,14 17,20 19 S30 9,36 12 S47 14,59 3"/></svg>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-head"><span class="kpi-icon"><span data-lucide="target"></span></span>Campanhas identificadas</div>
+          <div class="kpi-value" id="mCampaigns">0</div><div class="kpi-foot">UTM e mídia reconhecida</div>
+          <svg class="mini-spark" viewBox="0 0 60 28"><path d="M1 23 C7 18,15 23,20 16 S30 15,36 10 S47 12,59 4"/></svg>
+        </div>
       </div>
 
-      <div class="layout2">
+      <div class="dash-grid">
         <div class="panel">
-          <h3>Seu link de performance</h3>
-          <p>Use este endereço nos anúncios e canais do restaurante.</p>
-          <div class="linkbox"><code id="overviewLink">Gerando link...</code><button class="btn" data-copy-link>Copiar</button></div>
+          <div class="panel-head"><div><h3>Seu link da loja</h3><p>Use este link nas campanhas, bio, Google e materiais digitais.</p></div></div>
+          <div class="premium-link">
+            <div class="link-icon"><span data-lucide="link-2"></span></div>
+            <code id="overviewLink">Gerando link...</code>
+            <button class="btn" data-copy-link>Copiar link</button>
+          </div>
         </div>
-        <div class="panel">
-          <h3>Próxima melhor ação</h3>
-          <p id="nextAction">Conectando os dados do restaurante...</p>
-          <div style="margin-top:16px"><button class="btn gold" data-section-go="menu">Ver análise do cardápio</button></div>
+        <div class="plan-card">
+          <div class="plan-meta"><small>Plano atual</small><b id="overviewPlan">MKTB Intelligence</b><span class="pill" id="subscriptionBadge">Avaliação</span></div>
+          <button class="btn ghost" data-section-go="plan">Gerenciar plano →</button>
         </div>
       </div>
 
-      <div class="layout2">
-        <div class="panel"><h3>Origem das visitas</h3><p>De onde vêm as pessoas que chegam ao seu link.</p><div class="table" id="sourcesTable"></div></div>
-        <div class="panel"><h3>Dispositivos</h3><p>Como seus clientes acessam o link.</p><div class="table" id="devicesTable"></div></div>
+      <div class="dash-grid three">
+        <div class="panel"><div class="panel-head"><div><h3>De onde vêm seus clientes?</h3><p>Origem das visitas do período.</p></div><button class="panel-link" data-section-go="audience">Ver detalhes →</button></div><div id="overviewSources"></div></div>
+        <div class="panel"><div class="panel-head"><div><h3>Dispositivos</h3><p>Como seus clientes acessam.</p></div><button class="panel-link" data-section-go="audience">Ver detalhes →</button></div><div id="overviewDevices"></div></div>
+        <div class="panel"><div class="panel-head"><div><h3>Próximas ações para mais resultados</h3><p>Recomendações personalizadas para o restaurante.</p></div></div><div class="reco-list" id="overviewRecommendations"></div></div>
       </div>
     </section>
 
-    <section class="section" id="link">
-      <div class="hero">
-        <div><div class="eyebrow">Link exclusivo</div><h2>Um endereço para medir tudo.</h2><p>Seu link é criado automaticamente e pode ser usado em Meta Ads, Google Ads, Instagram, bio, QR Code e campanhas.</p></div>
-        <div class="hero-score"><span>Status</span><b style="font-size:31px">Ativo</b></div>
+    <section class="section" id="performance">
+      <div class="page-hero">
+        <div class="page-hero-copy">
+          <div class="eyebrow">DESEMPENHO</div>
+          <h2>Dados que viram<br><span class="gold">mais pedidos.</span></h2>
+          <p>Acompanhe o tráfego, o encaminhamento e o resultado das suas campanhas no iFood. Entenda o que funciona e onde existe oportunidade real de crescimento.</p>
+        </div>
+        <div class="hero-media"><div class="hero-floating"><small>Melhor janela do período</small><b id="bestTimeHero">--</b><span>horário com mais encaminhamentos</span></div></div>
       </div>
-      <div class="panel">
-        <h3>Link do restaurante</h3><p>Copie e use no lugar do link comum do iFood.</p>
-        <div class="linkbox"><code id="mainLink">Gerando link...</code><button class="btn" data-copy-link>Copiar link</button></div>
-        <div class="formrow"><input id="ifoodUrlInput" placeholder="URL da loja no iFood"><button class="btn primary" id="saveIfoodUrl">Salvar URL</button></div>
-      </div>
-    </section>
 
-    <section class="section" id="pixel">
-      <div class="hero">
-        <div><div class="eyebrow">Mídia e atribuição</div><h2>Conecte o Meta Pixel.</h2><p>Centralize o ID do Pixel do restaurante para usar o mesmo rastreamento no link de performance.</p></div>
-        <div class="hero-score"><span>Status</span><b id="pixelStatus" style="font-size:28px">Não configurado</b></div>
+      <div class="kpi-grid">
+        <div class="kpi-card"><div class="kpi-head"><span class="kpi-icon"><span data-lucide="eye"></span></span>Visitas ao seu link</div><div class="kpi-value" id="pLoads">0</div><div class="kpi-foot">Últimos 30 dias</div></div>
+        <div class="kpi-card"><div class="kpi-head"><span class="kpi-icon"><span data-lucide="mouse-pointer-click"></span></span>Cliques para o iFood</div><div class="kpi-value" id="pRedirects">0</div><div class="kpi-foot">Encaminhamentos registrados</div></div>
+        <div class="kpi-card"><div class="kpi-head"><span class="kpi-icon"><span data-lucide="shopping-cart"></span></span>Taxa de encaminhamento</div><div class="kpi-value" id="pRate">0%</div><div class="kpi-foot">Visitas → iFood</div></div>
+        <div class="kpi-card"><div class="kpi-head"><span class="kpi-icon"><span data-lucide="users-round"></span></span>Tráfego de campanhas</div><div class="kpi-value" id="pCampaignTraffic">0</div><div class="kpi-foot">Acessos com campanha</div></div>
+        <div class="kpi-card"><div class="kpi-head"><span class="kpi-icon"><span data-lucide="chart-column-big"></span></span>Potencial de faturamento</div><div class="kpi-value">--</div><div class="kpi-foot">Requer integração de pedidos</div></div>
       </div>
-      <div class="panel">
-        <h3>Meta Pixel</h3><p>Informe somente o ID numérico do Pixel.</p>
-        <div class="formrow"><input id="pixelInput" inputmode="numeric" placeholder="Ex.: 123456789012345"><button class="btn gold" id="savePixel">Salvar Pixel</button></div>
+
+      <div class="dash-grid">
+        <div class="panel">
+          <div class="panel-head"><div><h3>Tráfego e cliques no iFood</h3><p>Evolução das visitas e dos encaminhamentos para o iFood.</p></div><span class="panel-link">Diário</span></div>
+          <div class="chart-wrap" id="trafficChart"></div>
+        </div>
+        <div class="panel">
+          <div class="panel-head"><div><h3>Melhores horários de conversão</h3><p>Quando os visitantes mais seguem para o iFood.</p></div></div>
+          <div class="heat-layout"><div class="heatmap" id="heatmap"></div><div class="best-time"><small>Seu melhor horário</small><b id="bestTimeLabel">--</b><p id="bestTimeDescription">Aguardando volume suficiente para identificar o melhor horário.</p></div></div>
+        </div>
       </div>
+
+      <div class="dash-grid three">
+        <div class="panel"><div class="panel-head"><div><h3>Origem do tráfego</h3><p>De onde vêm seus visitantes.</p></div></div><div id="performanceSources"></div></div>
+        <div class="panel"><div class="panel-head"><div><h3>Dispositivos</h3><p>Em quais dispositivos seus clientes acessam.</p></div></div><div id="performanceDevices"></div></div>
+        <div class="panel"><div class="panel-head"><div><h3>Desempenho das campanhas</h3><p>Resultados das campanhas com UTM e identificadores.</p></div></div><div id="campaignPerformance"></div></div>
+      </div>
+
+      <div class="panel" style="margin-top:10px"><div class="panel-head"><div><h3>Recomendações da MKTB</h3><p>Ações práticas para melhorar os resultados.</p></div></div><div class="reco-list" id="performanceRecommendations"></div></div>
     </section>
 
     <section class="section" id="menu">
-      <div class="hero">
-        <div><div class="eyebrow">Inteligência de cardápio</div><h2>Veja o que está atrapalhando suas vendas.</h2><p>O relatório transforma problemas em instruções claras: o erro, o impacto e o que fazer para melhorar.</p></div>
-        <div class="hero-score"><span>Score atual</span><b id="menuScore">--</b></div>
+      <div class="page-hero">
+        <div class="page-hero-copy">
+          <div class="eyebrow">ANÁLISE DO CARDÁPIO</div>
+          <h2>Seu cardápio pode vender mais.<br><span class="gold">E nós mostramos como.</span></h2>
+          <p>Analisamos os itens do seu cardápio e transformamos os problemas encontrados em ações simples para melhorar clareza, valor percebido e potencial de venda.</p>
+        </div>
+        <div class="hero-media"><div class="hero-floating"><small>Score geral do cardápio</small><b id="menuHeroScore">--</b><span>diagnóstico mais recente</span></div></div>
       </div>
+
+      <div class="score-overview" id="menuScoreOverview">
+        <div class="score-master">
+          <div class="score-ring" id="menuScoreRing" style="--score:0"><div><b id="menuScore">--</b><span>de 100</span></div></div>
+          <div><h4 id="menuScoreTitle">Aguardando análise</h4><p id="menuScoreText">Assim que a primeira análise estiver disponível, o diagnóstico completo aparece aqui.</p></div>
+        </div>
+      </div>
+
       <div class="panel">
-        <h3>Notas por área</h3><p>A análise considera apenas o que foi possível observar no cardápio.</p>
-        <div class="scoregrid" id="scoreGrid"></div>
+        <div class="panel-head"><div><h3>Principais erros encontrados</h3><p>Ajuste estes pontos para melhorar a experiência e o potencial de venda.</p></div></div>
+        <div class="issues-grid" id="findingsBox"></div>
       </div>
-      <div class="panel" style="margin-top:14px">
-        <h3>Principais pontos de melhoria</h3><p>Prioridades em linguagem simples para o restaurante executar.</p>
-        <div id="findingsBox"></div>
+
+      <div class="dash-grid" style="grid-template-columns:1.45fr .55fr">
+        <div class="panel">
+          <div class="panel-head"><div><h3>Análise dos produtos</h3><p>Veja como estão os principais itens do cardápio e o que pode ser melhorado.</p></div></div>
+          <div class="products-grid" id="productsGrid"></div>
+        </div>
+        <div class="panel">
+          <div class="panel-head"><div><h3>Comparativo com concorrentes</h3><p>Compare seu posicionamento com lojas monitoradas.</p></div></div>
+          <div id="competitorPreview" class="feature-empty"><span data-lucide="network"></span><b>Radar de concorrentes</b><p>Os comparativos aparecem aqui quando houver concorrentes cadastrados para esta conta.</p></div>
+        </div>
+      </div>
+
+      <div class="panel" style="margin-top:10px">
+        <div class="panel-head"><div><h3>Plano de ação recomendado</h3><p>Siga esta ordem para atacar primeiro o que tende a gerar mais impacto.</p></div></div>
+        <div class="roadmap" id="actionRoadmap"></div>
+      </div>
+    </section>
+
+    <section class="section" id="campaigns">
+      <div class="page-hero"><div class="page-hero-copy"><div class="eyebrow">CAMPANHAS</div><h2>Saiba quais campanhas<br><span class="gold">trazem movimento.</span></h2><p>Visualize UTMs, origens e tráfego identificado no link MKTB.</p></div><div class="hero-media"></div></div>
+      <div class="panel"><div class="panel-head"><div><h3>Campanhas identificadas</h3><p>Campanhas registradas nos últimos 30 dias.</p></div></div><div id="campaignsFull"></div></div>
+    </section>
+
+    <section class="section" id="link">
+      <div class="page-hero"><div class="page-hero-copy"><div class="eyebrow">LINK DA LOJA</div><h2>Um link para medir<br><span class="gold">todo o tráfego.</span></h2><p>Use seu endereço MKTB em anúncios, bio, Google, QR Code e materiais digitais.</p></div><div class="hero-media"></div></div>
+      <div class="panel"><div class="panel-head"><div><h3>Seu link exclusivo</h3><p>Copie e use no lugar do link comum do iFood.</p></div></div><div class="premium-link"><div class="link-icon"><span data-lucide="link-2"></span></div><code id="mainLink">Gerando link...</code><button class="btn" data-copy-link>Copiar link</button></div><div class="formrow"><input id="ifoodUrlInput" placeholder="URL da loja no iFood"><button class="btn primary" id="saveIfoodUrl">Salvar URL</button></div></div>
+    </section>
+
+    <section class="section" id="audience">
+      <div class="page-hero"><div class="page-hero-copy"><div class="eyebrow">AUDIÊNCIA</div><h2>Entenda quem chega<br><span class="gold">até a sua loja.</span></h2><p>Veja origens, dispositivos e comportamento de acesso ao link MKTB.</p></div><div class="hero-media"></div></div>
+      <div class="dash-grid equal"><div class="panel"><div class="panel-head"><div><h3>Origem do tráfego</h3><p>Participação por canal.</p></div></div><div id="audienceSources"></div></div><div class="panel"><div class="panel-head"><div><h3>Dispositivos</h3><p>Participação por dispositivo.</p></div></div><div id="audienceDevices"></div></div></div>
+    </section>
+
+    <section class="section" id="competitors">
+      <div class="page-hero"><div class="page-hero-copy"><div class="eyebrow">CONCORRENTES</div><h2>Compare para encontrar<br><span class="gold">novas oportunidades.</span></h2><p>O radar competitivo reúne preço, estrutura e força do cardápio das lojas monitoradas.</p></div><div class="hero-media"></div></div>
+      <div class="feature-empty"><span data-lucide="network"></span><b>Radar competitivo preparado</b><p>A estrutura visual está pronta. Os concorrentes serão vinculados automaticamente à conta nesta área.</p></div>
+    </section>
+
+    <section class="section" id="reports">
+      <div class="page-hero"><div class="page-hero-copy"><div class="eyebrow">RELATÓRIOS</div><h2>Transforme os dados<br><span class="gold">em decisões.</span></h2><p>Resumo executivo da performance, campanhas e inteligência do cardápio.</p></div><div class="hero-media"></div></div>
+      <div class="feature-empty"><span data-lucide="file-chart-column"></span><b>Relatório executivo</b><p>Esta área vai reunir exportações e relatórios consolidados do período, mantendo o mesmo padrão premium do Dashboard.</p></div>
+    </section>
+
+    <section class="section" id="settings">
+      <div class="page-hero"><div class="page-hero-copy"><div class="eyebrow">CONFIGURAÇÕES</div><h2>Controle sua operação<br><span class="gold">em um só lugar.</span></h2><p>Gerencie Pixel, URL do iFood, conta e preferências do restaurante.</p></div><div class="hero-media"></div></div>
+      <div class="settings-grid">
+        <div class="panel"><div class="panel-head"><div><h3>Meta Pixel</h3><p>Informe o ID numérico do Pixel do restaurante.</p></div><span class="pill" id="pixelStatus">Não configurado</span></div><div class="formrow"><input id="pixelInput" inputmode="numeric" placeholder="Ex.: 123456789012345"><button class="btn gold" id="savePixel">Salvar Pixel</button></div></div>
+        <div class="panel"><div class="panel-head"><div><h3>URL do iFood</h3><p>Destino oficial usado pelo seu link MKTB.</p></div></div><div class="formrow"><input id="settingsIfoodUrlInput" placeholder="https://www.ifood.com.br/..."><button class="btn primary" id="saveSettingsIfoodUrl">Salvar URL</button></div></div>
       </div>
     </section>
 
     <section class="section" id="plan">
-      <div class="hero">
-        <div><div class="eyebrow">Plano MKTB</div><h2>Performance e inteligência em um só lugar.</h2><p>Assinatura recorrente com acesso ao link rastreável, Pixel, métricas e análise de cardápio.</p></div>
-        <div class="hero-score"><span>Situação</span><b id="planStatus" style="font-size:28px">Avaliação</b></div>
-      </div>
-      <div class="panel">
-        <h3>Seu plano</h3><p>O checkout recorrente será conectado ao Mercado Pago.</p>
-        <div class="plan">
-          <div><h4>MKTB Intelligence</h4><p>Link + métricas + Pixel + análise de cardápio + concorrentes.</p><div style="margin-top:7px;font-weight:900" id="planPrice">Valor a definir</div></div>
-          <button class="btn gold" id="subscribeBtn">Contratar plano</button>
-        </div>
-      </div>
+      <div class="page-hero"><div class="page-hero-copy"><div class="eyebrow">PLANO MKTB</div><h2>Performance e inteligência<br><span class="gold">em um só produto.</span></h2><p>Gerencie sua assinatura e os recursos disponíveis para o restaurante.</p></div><div class="hero-media"></div></div>
+      <div class="panel"><div class="panel-head"><div><h3>Seu plano</h3><p>Link + métricas + Pixel + análise de cardápio + concorrentes.</p></div><span class="pill" id="planStatus">Avaliação</span></div><div class="plan-card"><div class="plan-meta"><small>MKTB Intelligence</small><b id="planPrice">Valor a definir</b></div><button class="btn gold" id="subscribeBtn">Contratar plano</button></div></div>
     </section>
   </main>
 </div>
-<script type="module" src="./dashboard.js?v=1"></script>
+
+<script type="module" src="./dashboard.js?v=3"></script>
 </body>
 </html>
