@@ -7,13 +7,14 @@
 <title>AVORI</title>
 <link rel="stylesheet" href="./styles.css?v=5">
 <link rel="stylesheet" href="./dashboard-v2.css?v=2">
+<link rel="stylesheet" href="./avori-premium.css?v=1">
 <script src="https://unpkg.com/lucide@0.468.0"></script>
 </head>
 <body class="dashboard-v3">
 <div class="app">
   <aside class="sidebar">
     <div class="sidebar-brand">
-      <div class="mktb">AVORI</div>
+      <div class="mktb">AVORI<span class="sidebar-monogram">◇</span></div>
       <div class="descriptor">RESTAURANT INTELLIGENCE</div>
     </div>
 
@@ -30,10 +31,10 @@
     </nav>
 
     <div class="sidebar-promo">
-      <div class="crown"><span data-lucide="crown"></span></div>
-      <h4>R$ 149,90/mês</h4>
-      <p>Ou R$ 139,90/mês no plano anual. Tudo incluso, sem módulos extras.</p>
-      <button class="btn" data-section-go="plan">Ver plano →</button>
+      <div class="crown"><span data-lucide="sparkles"></span></div>
+      <h4>Mais inteligência para o seu restaurante.</h4>
+      <p>Todos os recursos AVORI em uma única assinatura.</p>
+      <button class="btn" data-section-go="plan">Gerenciar plano <span aria-hidden="true">→</span></button>
     </div>
 
     <div class="sidebar-foot">
@@ -46,8 +47,8 @@
   <main class="main">
     <header class="topbar">
       <div class="top-brand">
-        <h1>AVORI</h1>
-        <p>Mais clientes para o seu restaurante no iFood.</p>
+        <h1 id="currentPageTitle">Visão Geral</h1>
+        <p>Inteligência para o seu restaurante no iFood.</p>
       </div>
       <div class="top-actions">
         <div class="date-pill"><span data-lucide="calendar-days"></span>Últimos 30 dias<span data-lucide="chevron-down"></span></div>
@@ -154,41 +155,41 @@
       <div class="panel" style="margin-top:10px"><div class="panel-head"><div><h3>Recomendações AVORI</h3><p>Ações práticas para melhorar os resultados.</p></div></div><div class="reco-list" id="performanceRecommendations"></div></div>
     </section>
 
-    <section class="section" id="menu">
-      <div class="page-hero">
+    <section class="section avori-menu" id="menu">
+      <div class="page-hero avori-menu-hero">
         <div class="page-hero-copy">
           <div class="eyebrow">ANÁLISE DO CARDÁPIO</div>
           <h2>Seu cardápio pode vender mais.<br><span class="gold">E nós mostramos como.</span></h2>
-          <p>Analisamos os itens do seu cardápio e transformamos os problemas encontrados em ações simples para melhorar clareza, valor percebido e potencial de venda.</p>
+          <p>Analisamos os itens do seu cardápio no iFood e identificamos oportunidades reais de melhoria na apresentação, no ticket médio e na atratividade.</p>
         </div>
-        <div class="hero-media"><div class="hero-floating"><small>Score geral do cardápio</small><b id="menuHeroScore">--</b><span>diagnóstico mais recente</span></div></div>
+        <div class="hero-media"><div class="hero-floating"><span data-lucide="trending-up"></span><small>Score do cardápio</small><b id="menuHeroScore">--</b><span>diagnóstico mais recente</span></div></div>
       </div>
 
       <div class="score-overview" id="menuScoreOverview">
         <div class="score-master">
           <div class="score-ring" id="menuScoreRing" style="--score:0"><div><b id="menuScore">--</b><span>de 100</span></div></div>
-          <div><h4 id="menuScoreTitle">Aguardando análise</h4><p id="menuScoreText">Assim que a primeira análise estiver disponível, o diagnóstico completo aparece aqui.</p></div>
+          <div><h3>Score Geral do Cardápio <span class="subtle-info">ⓘ</span></h3><h4 id="menuScoreTitle">Aguardando análise</h4><p id="menuScoreText">Assim que a primeira análise estiver disponível, o diagnóstico completo aparece aqui.</p><button class="score-cta" type="button" data-scroll-to="actionRoadmap">Ver plano de ação <span>→</span></button></div>
         </div>
       </div>
 
-      <div class="panel">
-        <div class="panel-head"><div><h3>Principais erros encontrados</h3><p>Ajuste estes pontos para melhorar a experiência e o potencial de venda.</p></div></div>
+      <div class="panel avori-issues-panel">
+        <div class="panel-head"><div><h3>Principais erros encontrados <span class="subtle-info">ⓘ</span></h3><p>Ajuste estes pontos para melhorar a experiência e o potencial de venda.</p></div></div>
         <div class="issues-grid" id="findingsBox"></div>
       </div>
 
-      <div class="dash-grid" style="grid-template-columns:1.45fr .55fr">
-        <div class="panel">
-          <div class="panel-head"><div><h3>Análise dos produtos</h3><p>Veja como estão os principais itens do cardápio e o que pode ser melhorado.</p></div></div>
+      <div class="dash-grid avori-menu-bottom">
+        <div class="panel avori-products-panel">
+          <div class="panel-head"><div><h3>Análise dos produtos <span class="subtle-info">ⓘ</span></h3><p>Veja como estão os principais itens do cardápio e o que pode ser melhorado.</p></div></div>
           <div class="products-grid" id="productsGrid"></div>
         </div>
-        <div class="panel">
-          <div class="panel-head"><div><h3>Comparativo com concorrentes</h3><p>Compare seu posicionamento com lojas monitoradas.</p></div></div>
+        <div class="panel avori-competitors-panel">
+          <div class="panel-head"><div><h3>Comparativo com concorrentes <span class="subtle-info">ⓘ</span></h3><p>Compare seu posicionamento com lojas monitoradas.</p></div></div>
           <div id="competitorPreview" class="feature-empty"><span data-lucide="network"></span><b>Radar de concorrentes</b><p>Os comparativos aparecem aqui quando houver concorrentes cadastrados para esta conta.</p></div>
         </div>
       </div>
 
-      <div class="panel" style="margin-top:10px">
-        <div class="panel-head"><div><h3>Plano de ação recomendado</h3><p>Siga esta ordem para atacar primeiro o que tende a gerar mais impacto.</p></div></div>
+      <div class="panel avori-roadmap-panel" style="margin-top:10px">
+        <div class="panel-head"><div><h3>Plano de ação recomendado <span class="subtle-info">ⓘ</span></h3><p>Siga esta ordem para atacar primeiro o que tende a gerar mais impacto.</p></div></div>
         <div class="roadmap" id="actionRoadmap"></div>
       </div>
     </section>
@@ -264,6 +265,6 @@
   </main>
 </div>
 
-<script type="module" src="./dashboard.js?v=8"></script>
+<script type="module" src="./dashboard.js?v=9"></script>
 </body>
 </html>
