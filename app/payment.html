@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Ativar MKTB Intelligence</title>
+<link rel="stylesheet" href="./styles.css?v=5">
+</head>
+<body>
+<div class="paywall">
+  <section class="paywall-side">
+    <div class="brand"><div class="brandmark">M</div><div>MKTB</div></div>
+    <div class="paywall-copy">
+      <div class="eyebrow">LIBERE SEU DASHBOARD</div>
+      <h1>Seu restaurante pronto para <span>crescer com dados.</span></h1>
+      <p>O acesso ao MKTB Intelligence é liberado automaticamente depois que o pagamento é aprovado.</p>
+      <div class="paywall-checks">
+        <div class="paywall-check">✓ <div><b>Link inteligente</b><br>Rastreamento e abertura do iFood.</div></div>
+        <div class="paywall-check">✓ <div><b>Performance e campanhas</b><br>Cliques, origens, dispositivos, horários e UTMs.</div></div>
+        <div class="paywall-check">✓ <div><b>Análise de cardápio</b><br>Erros, impacto, recomendações e plano de ação.</div></div>
+        <div class="paywall-check">✓ <div><b>Pixel, concorrentes e relatórios</b><br>Tudo incluso no mesmo plano.</div></div>
+      </div>
+    </div>
+    <div style="font-size:10px;color:#7f8186;position:relative;z-index:1">MKTB Intelligence · Tudo em um só lugar.</div>
+  </section>
+
+  <main class="paywall-main">
+    <div class="paywall-card">
+      <h2>Escolha como pagar</h2>
+      <p>O plano é completo nas duas opções. A diferença é apenas a forma de cobrança.</p>
+
+      <div class="paywall-status" id="paymentStatus"></div>
+
+      <div class="paywall-plans">
+        <button class="paywall-plan active" type="button" data-plan="monthly">
+          <span class="label">Mensal</span>
+          <strong>R$ 149,90</strong>
+          <small>por mês</small>
+          <span class="note">Cobrança mensal</span>
+        </button>
+
+        <button class="paywall-plan" type="button" data-plan="annual">
+          <span class="tag">Melhor valor</span>
+          <span class="label">Anual</span>
+          <strong>R$ 139,90</strong>
+          <small>por mês</small>
+          <span class="note">R$ 1.678,80 cobrados por ano</span>
+        </button>
+      </div>
+
+      <div class="paywall-total">
+        <span id="billingLabel">Valor da cobrança</span>
+        <b id="billingTotal">R$ 149,90</b>
+      </div>
+
+      <button class="btn paywall-action" id="payBtn">Pagar e liberar meu acesso</button>
+      <div class="paywall-safe">Pagamento processado pelo Mercado Pago. O Dashboard só é liberado após confirmação de pagamento aprovado.</div>
+
+      <div style="display:flex;justify-content:space-between;gap:10px;margin-top:18px">
+        <button class="btn ghost" id="checkPaymentBtn">Já paguei, verificar</button>
+        <button class="btn ghost" id="logoutBtn">Sair</button>
+      </div>
+    </div>
+  </main>
+</div>
+
+<script type="module" src="./payment.js?v=1"></script>
+</body>
+</html>
