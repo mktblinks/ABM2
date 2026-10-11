@@ -1,5 +1,5 @@
 import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
-import { SUPABASE_URL, SUPABASE_KEY, LINK_BASE } from './config.js';
+import { SUPABASE_URL, SUPABASE_KEY, LINK_BASE } from './config.js?v=2';
 
 const sb=createClient(SUPABASE_URL,SUPABASE_KEY);
 const $=id=>document.getElementById(id);
@@ -181,7 +181,7 @@ function campaignRows(){
 function renderCampaignTable(id){
   const el=$(id);if(!el)return;
   const rows=campaignRows();
-  if(!rows.length){el.innerHTML='<div class="feature-empty"><b>Nenhuma campanha identificada</b><p>Use parâmetros UTM nos anúncios para que o MKTB organize o desempenho por campanha.</p></div>';return}
+  if(!rows.length){el.innerHTML='<div class="feature-empty"><b>Nenhuma campanha identificada</b><p>Use parâmetros UTM nos anúncios para que a AVORI organize o desempenho por campanha.</p></div>';return}
   el.innerHTML='<table class="campaign-table"><thead><tr><th>Campanha</th><th>Visitas</th><th>Cliques</th><th>Taxa</th></tr></thead><tbody>'+rows.slice(0,8).map(x=>'<tr><td><b>'+esc(x.campaign)+'</b></td><td>'+fmt(x.loads)+'</td><td>'+fmt(x.redirects)+'</td><td>'+pct(x.loads?x.redirects/x.loads*100:0)+'</td></tr>').join('')+'</tbody></table>';
 }
 function localDateParts(date){
