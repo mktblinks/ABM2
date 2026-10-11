@@ -33,8 +33,9 @@ async function existingRestaurant(){
 async function isPlatformAdmin(){
   try{
     const {data,error}=await sb.rpc('mktb_is_platform_admin');
-    return !error&&data===true;
-  }catch{return false}
+    if(error)throw error;
+    return data===true;
+  }catch(error){throw error}
 }
 async function ensureRestaurant(){
   const existing=await existingRestaurant();
@@ -106,7 +107,6 @@ $('loginForm').addEventListener('submit',async e=>{
     await routeAuthenticatedUser();
   }catch(err){
     msg(err.message||'Não foi possível entrar.','error');
-    try{await sb.auth.signOut()}catch{}
   }finally{
     if(!navigating){btn.disabled=false;btn.textContent='Entrar no painel'}
   }
@@ -152,7 +152,7 @@ if(session){
   try{
     await routeAuthenticatedUser();
   }catch(err){
-    await sb.auth.signOut();
-    msg('Sua sessão foi encerrada para evitar um erro de acesso. Entre novamente.','error');
+    console.error('AVORI: falha ao verificar a conta',err);
+    msg('Não foi possível verificar sua conta agora. A sessão foi preservada. Atualize a página para tentar novamente.','error');
   }
 }
