@@ -373,9 +373,12 @@ document.querySelectorAll('[data-section-go]').forEach(btn=>btn.onclick=()=>open
 function openSection(id){
   document.querySelectorAll('.section').forEach(x=>x.classList.toggle('active',x.id===id));
   document.querySelectorAll('.nav button[data-section]').forEach(x=>x.classList.toggle('active',x.dataset.section===id));
+  const names={overview:'Visão Geral',performance:'Desempenho',menu:'Análise do Cardápio',campaigns:'Campanhas',link:'Link da Loja',audience:'Audiência',competitors:'Concorrentes',reports:'Relatórios',settings:'Configurações',plan:'Plano AVORI'};
+  if($('currentPageTitle'))$('currentPageTitle').textContent=names[id]||'AVORI';
   window.scrollTo({top:0,behavior:'smooth'});
 }
 
+document.querySelectorAll('[data-scroll-to]').forEach(btn=>btn.onclick=()=>$(btn.dataset.scrollTo)?.scrollIntoView({behavior:'smooth',block:'center'}));
 document.querySelectorAll('[data-copy-link]').forEach(btn=>btn.onclick=async()=>{
   await navigator.clipboard.writeText(publicLink);
   const old=btn.textContent;btn.textContent='Copiado';setTimeout(()=>btn.textContent=old,1200);
