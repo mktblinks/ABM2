@@ -67,3 +67,15 @@
 @media(max-width:1100px){.dashboard-v3 .avori-menu .issues-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.dashboard-v3 .avori-menu .avori-menu-bottom{grid-template-columns:1fr}.dashboard-v3 .avori-menu .score-overview{grid-template-columns:repeat(3,minmax(0,1fr))}}
 @media(max-width:980px){.dashboard-v3 .app{grid-template-columns:1fr}.dashboard-v3 .sidebar{height:auto;min-height:0;position:relative}.dashboard-v3 .sidebar-brand{display:flex;padding:4px 10px 12px}.dashboard-v3 .sidebar-brand .descriptor{display:none}.dashboard-v3 .nav{display:flex;overflow-x:auto}.dashboard-v3 .nav button{white-space:nowrap;flex-shrink:0}.dashboard-v3 .sidebar-promo,.dashboard-v3 .sidebar-foot{display:none}}
 @media(max-width:650px){.dashboard-v3 .avori-menu-hero{background:linear-gradient(90deg,#f7f4efee,#f7f3ebc0),url("https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=750&q=70") center/cover}.dashboard-v3 .avori-menu .score-overview{grid-template-columns:repeat(2,minmax(0,1fr))}.dashboard-v3 .avori-menu .score-master{grid-column:1/-1}.dashboard-v3 .avori-menu .issues-grid,.dashboard-v3 .avori-menu .products-grid,.dashboard-v3 .avori-menu .roadmap{grid-template-columns:1fr}}
+
+/* Operacao continua AVORI */
+.dashboard-v3 .avori-progress{display:flex;align-items:center;justify-content:space-between;gap:20px;margin-top:17px;border-top:1px solid #ececec;padding-top:14px}
+.dashboard-v3 .avori-progress b{font-size:13px;color:#212121}
+.dashboard-v3 .avori-progress p{color:#858585;font-size:11px;margin:4px 0}
+.dashboard-v3 .avori-progress strong{background:#f6eedf;color:#875d20;border-radius:9px;padding:8px 13px;font-size:14px}
+.dashboard-v3 .avori-menu .road-step{padding-bottom:44px;position:relative}
+.dashboard-v3 .avori-action-toggle{position:absolute;bottom:9px;left:9px;right:9px;text-align:center;font-size:10px;padding:7px 5px;border-radius:7px;border:1px solid #d9c7a2;color:#855b24;background:#fcf7eb;cursor:pointer;font-weight:750}
+.dashboard-v3 .avori-action-toggle[aria-pressed=true]{background:#edf8f0;color:#257b46;border-color:#a6d7b8}
+.dashboard-v3 .avori-action-done{border-color:#a6d7b8!important}
+.dashboard-v3 #exportAvoriReport{background:linear-gradient(125deg,#e0be79,#ae7c35);color:#20170a}
+.dashboard-v3 #ifoodApiStatus{background:#f7f1e5;color:#876522}
